@@ -1,7 +1,7 @@
 {
-  "name": "__BONES_NEEDS_A_NAME__",
+  "name": "social_media_royalty",
   "version": "0.0.1",
-  "description": "A happy little skeleton.",
+  "description": "A E-Commerce application that helps boosting your social media popularity.",
   "main": "index.js",
   "engines": {
     "node": ">= 7.0.0"
@@ -13,7 +13,7 @@
     "prep": "npm run validate && npm run setup",
     "postinstall": "npm run prep",
     "build": "webpack",
-    "build-watch": "npm run build -- -w",
+    "build-watch": "npm run build -- s-w",
     "build-dev": "cross-env NODE_ENV=development npm run build-watch",
     "build-branch": "bin/build-branch.sh",
     "start": "node server/start.js",
