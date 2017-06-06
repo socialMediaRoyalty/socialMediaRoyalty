@@ -36,9 +36,7 @@ module.exports = db => db.define('products', {
         }
 
     }
-    //might need category id (ex of foreignKey: Task.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' })
-
-
+ //might need category id (ex of foreignKey: Task.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' })
 })
 
 module.exports.associations = (Product, {Category}) => {
