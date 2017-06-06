@@ -1,6 +1,5 @@
 'use strict'
 
-
 // bcrypt docs: https://www.npmjs.com/package/bcrypt
 const bcrypt = require('bcryptjs')
     , {STRING, VIRTUAL} = require('sequelize')
