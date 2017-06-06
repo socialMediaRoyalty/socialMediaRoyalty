@@ -9,7 +9,6 @@ const app = require('APP')
     // Our model files export functions that take a database and return
     // a model. We call these functions "meta models" (they are models of
     // models).
-    //
     // This lets us avoid cyclic dependencies, which can be hard to reason
     // about.
     , metaModels = {
@@ -17,6 +16,8 @@ const app = require('APP')
       User: require('./user'),
       Thing: require('./thing'),
       Favorite: require('./favorite'),
+      Product: require('./product'),
+      Category: require('./category')
       // ---------- Add new models here ----------
     }
     , {mapValues} = require('lodash')
