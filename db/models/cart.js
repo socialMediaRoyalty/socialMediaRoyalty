@@ -2,7 +2,7 @@
 
 const {STRING, INTEGER} = require('sequelize')
 
-module.exports = db => db.define('orders', {
+module.exports = db => db.define('carts', {
   // cart id created automatically
 })
 

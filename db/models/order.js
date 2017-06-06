@@ -2,7 +2,7 @@
 
 const {STRING, INTEGER, FLOAT, ENUM, DATE} = require('sequelize')
 
-module.exports = db => db.define('carts', {
+module.exports = db => db.define('orders', {
   status: ENUM('processing', 'completed'),
   purchaseDate: DATE,
   purchasedPrice: FLOAT
