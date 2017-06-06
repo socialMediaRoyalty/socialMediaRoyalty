@@ -9,7 +9,7 @@ module.exports = db => db.define('cart_details', {
   }
 })
 
-module.exports.associations = (CartDetail, {Cart}) => {
+module.exports.associations = (CartDetail, {Cart, Product}) => {
   CartDetail.belongsTo(Cart)
-  // Cart_Detail.hasMany(Product), add this line after product model is defined
+  CartDetail.belongsToMany(Product, {as: 'products', through: 'cartDetail-product'})
 }

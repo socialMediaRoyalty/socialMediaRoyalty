@@ -14,8 +14,8 @@ module.exports = db => db.define('reviews', {
   comment: STRING(50)
 })
 
-module.exports.associations = (Review, {User}) => {
+module.exports.associations = (Review, {User, Product}) => {
   Review.belongsTo(User)
-  // Review belongsTo(Product)
+  Review.belongsTo(Product)
   // in product model: product.hasMany(Review, as: reviews, through: "product-review")???
 }

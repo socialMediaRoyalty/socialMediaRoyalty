@@ -17,7 +17,7 @@ module.exports = db => db.define('orders', {
   }
 })
 
-module.exports.associations = (Order, {User}) => {
+module.exports.associations = (Order, {User, Product}) => {
   Order.belongsTo(User)
-  // Order hasMany(Product, as: "products", through: "order-products")
+  Order.belongsToMany(Product, {as: 'products', through: 'order-products'})
 }
