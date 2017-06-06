@@ -19,7 +19,8 @@ const app = require('APP')
       Favorite: require('./favorite'),
       // ---------- Add new models here ----------
       Cart: require('./cart'),
-      CartDetail: require('./cart-detail')
+      CartDetail: require('./cart-detail'),
+      Order: require('./order')
     }
     , {mapValues} = require('lodash')
 

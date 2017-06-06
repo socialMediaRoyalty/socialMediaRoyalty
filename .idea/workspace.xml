@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5fbf347d-a7f8-47b4-92a9-9d3798adf1f2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/models/cart-detail.js" afterPath="$PROJECT_DIR$/db/models/cart-detail.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/models/cart.js" afterPath="$PROJECT_DIR$/db/models/cart.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/models/index.js" afterPath="$PROJECT_DIR$/db/models/index.js" />
     </list>
@@ -42,16 +41,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cart.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/db/models/cart.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="5" column="10" lean-forward="false" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="cart-detail.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/db/models/cart-detail.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -62,11 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="users.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/users.js">
+      <file leaf-file-name="order.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/db/models/order.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+            <state relative-caret-position="378">
+              <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -75,8 +64,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/db/models/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="21" column="10" lean-forward="false" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+            <state relative-caret-position="452">
+              <caret line="22" column="29" lean-forward="false" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -92,9 +81,11 @@
       <list>
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/db/models/user.js" />
-        <option value="$PROJECT_DIR$/db/models/index.js" />
         <option value="$PROJECT_DIR$/db/models/cart-detail.js" />
+        <option value="$PROJECT_DIR$/db/models/order-model.js" />
+        <option value="$PROJECT_DIR$/db/models/index.js" />
         <option value="$PROJECT_DIR$/db/models/cart.js" />
+        <option value="$PROJECT_DIR$/db/models/order.js" />
       </list>
     </option>
   </component>
@@ -313,12 +304,12 @@
       <option name="presentableId" value="Default" />
       <updated>1496689036512</updated>
       <workItem from="1496689039349" duration="945000" />
-      <workItem from="1496697285803" duration="5358000" />
+      <workItem from="1496697285803" duration="6622000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6303000" />
+    <option name="totallyTimeSpent" value="7567000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="29" y="23" width="1317" height="808" extended-state="0" />
@@ -386,24 +377,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/models/thing.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="43" lean-forward="false" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/models/user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-657">
-          <caret line="21" column="4" lean-forward="true" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
@@ -412,10 +385,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/db/models/order-model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/db/models/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="21" column="10" lean-forward="false" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+        <state relative-caret-position="452">
+          <caret line="22" column="29" lean-forward="false" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -436,10 +417,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/db/models/user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-657">
+          <caret line="21" column="4" lean-forward="true" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/db/models/cart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="10" lean-forward="false" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+        <state relative-caret-position="225">
+          <caret line="9" column="6" lean-forward="false" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/models/thing.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="8" column="43" lean-forward="false" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/models/order.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
           <folding />
         </state>
       </provider>
