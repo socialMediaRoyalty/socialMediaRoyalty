@@ -10,7 +10,7 @@ router.get('/:id/reviews', (req, res, next) => {
   }).then(reviews => {
     res.send(reviews)
   }).catch(next)
-}) 
+})
 
 // post product review
 router.post('/:id', (req, res, next) => {
