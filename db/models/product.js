@@ -33,13 +33,9 @@ module.exports = db => db.define('products', {
     validate: {
       isUrl: true
     }
-
-  }
-  // might need category id (ex of foreignKey: Task.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' })
+  } // might need category id (ex of foreignKey: Task.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' })
 })
 
-module.exports.associations = (Product, {Category, Order, Review}) => {
+module.exports.associations = (Product, {Category}) => {
   Product.belongsToMany(Category, {as: 'categories', through: 'CategoryProduct'})
-  Product.belongsToMany(Order, {as: 'orders', through: 'order-products'})
-  Product.belongsToMany(Review, {as: 'reviews', through: 'product-reviews'})
 }
