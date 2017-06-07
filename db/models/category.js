@@ -7,7 +7,6 @@ module.exports = db => db.define('categories', {
     type: STRING,
     allowNull: false
   }
-
 })
 
 module.exports.associations = (Category, {Product}) => {
