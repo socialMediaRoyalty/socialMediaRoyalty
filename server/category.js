@@ -3,6 +3,7 @@
 const db = require('APP/db')
 const Product = db.model('products')
 const Category = db.model('categories')
+const {assertAdmin} = require('./auth.filters')
 
 module.exports = require('express').Router()
 // get all the categories
@@ -13,6 +14,7 @@ module.exports = require('express').Router()
         .catch(next))
   // create a new Category
   .post('/',
+    assertAdmin,
     (req, res, next) =>
       Category.create(req.body)
         .then(categories => res.status(201).json(categories))
@@ -25,6 +27,7 @@ module.exports = require('express').Router()
         .catch(next))
   // Edit a Category, find the category by Id first, then edit it
   .put('/',
+    assertAdmin,
     (req, res, next) =>
       Category.findById(req.body.cid)
         .then(category => {
@@ -46,6 +49,7 @@ module.exports = require('express').Router()
         .catch(next))
   // DELETE a category
   .delete('/:cid',
+    assertAdmin,
     (req, res, next) =>
       Category.findById(req.params.cid)
         .then(category => {

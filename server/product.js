@@ -3,6 +3,7 @@
 const db = require('APP/db')
 const Product = db.model('products')
 const Category = db.model('categories')
+const {assertAdmin} = require('./auth.filters')
 
 module.exports = require('express').Router()
 // get all the products
@@ -13,6 +14,7 @@ module.exports = require('express').Router()
         .catch(next))
   // create a new product
   .post('/',
+    assertAdmin,
     (req, res, next) =>
       Product.create(req.body)
         .then(products => res.status(201).json(products))
@@ -36,6 +38,7 @@ module.exports = require('express').Router()
         .catch(next))
   // Edit a product, find the product by Id first, then edit it
   .put('/',
+    assertAdmin,
     (req, res, next) => Product.findById(req.body.pid)
         .then(product => {
           var name = req.body.name
