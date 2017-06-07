@@ -14,7 +14,7 @@ module.exports = require('express').Router()
         .catch(next))
   // create a new Category
   .post('/',
-    assertAdmin,
+    // assertAdmin,
     (req, res, next) =>
       Category.create(req.body)
         .then(categories => res.status(201).json(categories))
@@ -27,14 +27,14 @@ module.exports = require('express').Router()
         .catch(next))
   // Edit a Category, find the category by Id first, then edit it
   .put('/',
-    assertAdmin,
+    // assertAdmin,
     (req, res, next) =>
       Category.findById(req.body.cid)
         .then(category => {
           var name = req.body.name
           if (!category) {
             var err = new Error('Product Not Found')
-            err.status = 404
+            err.status = 401
             throw err
           } else {
             if (name) {
@@ -49,13 +49,13 @@ module.exports = require('express').Router()
         .catch(next))
   // DELETE a category
   .delete('/:cid',
-    assertAdmin,
+    // assertAdmin,
     (req, res, next) =>
       Category.findById(req.params.cid)
         .then(category => {
           if (!category) {
             var err = new Error('Category not found')
-            err.status = 404
+            err.status = 401
             throw err
           } else {
             Category.destroy({

@@ -16,15 +16,16 @@ const forbidden = message => (req, res) => {
   res.status(403).send(message)
 }
 
-const assertAdmin = (req, res, next) => {
+const assertAdmin = () => (req, res, next) => {
+  var err
   if (!req.user) {
-    var err = new Error('not logged in')
-    err.status = 401;
+    err = new Error('not logged in')
+    err.status = 401
     next(err)
   } else if (req.user.isAdmin) {
     next()
   } else {
-    var err = new Error('not an admin')
+    err = new Error('not an admin')
     err.status = 403
     next(err)
   }

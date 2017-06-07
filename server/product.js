@@ -14,16 +14,31 @@ module.exports = require('express').Router()
         .catch(next))
   // create a new product
   .post('/',
-    assertAdmin,
-    (req, res, next) =>
-      Product.create(req.body)
-        .then(products => res.status(201).json(products))
-        .catch(next))
+    // assertAdmin,
+    (req, res, next) => {
+      // req.body.categories is an array sent from the form
+      Product.create(req.body, {
+        include: [{
+          model: Category,
+          as: 'categories'
+        }]
+      })
+        .then(product => res.status(201).json(product))
+        .catch(next)
+    })
   // get a product by ID
   .get('/:pid',
     (req, res, next) =>
       Product.findById(req.params.pid)
-        .then(product => res.status(200).json(product))
+        .then(product => {
+          if (!product) {
+            var err = new Error('product not found')
+            err.status = 401
+            throw err
+          } else {
+            res.status(200).json(product)
+          }
+        })
         .catch(next))
   // get all products for a specific category
   .get('/categories/:cid',
@@ -38,7 +53,7 @@ module.exports = require('express').Router()
         .catch(next))
   // Edit a product, find the product by Id first, then edit it
   .put('/',
-    assertAdmin,
+    // assertAdmin,
     (req, res, next) => Product.findById(req.body.pid)
         .then(product => {
           var name = req.body.name
@@ -49,7 +64,7 @@ module.exports = require('express').Router()
           var imageUrl = req.body.imageUrl
           if (!product) {
             var err = new Error('Product Not Found')
-            err.status = 404
+            err.status = 401
             throw err
           } else {
             if (name) {
