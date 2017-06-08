@@ -3,7 +3,6 @@
 const db = require('APP/db')
     , {User} = db
     , {expect} = require('chai')
-
 /* global describe it before afterEach */
 
 describe('User', () => {
@@ -21,4 +20,6 @@ describe('User', () => {
         .then(user => user.authenticate('not ok'))
         .then(result => expect(result).to.be.false))
   })
+
+  
 })

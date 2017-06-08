@@ -17,6 +17,18 @@ describe('/api/users', () => {
           .expect(401)
       )))
 
+  // describe('GET / admin', () =>
+  //   describe('whenlogged in', () =>
+  //     it('passes with a 200 (authorized)', () =>
+  //       request(app)
+  //         .get(`/api/users`)
+  //         .expect(200))
+  //     it('fails with a 401 (Unauthorized)', () =>
+  //       request(app)
+  //         .get('/api/users')
+  //         .expect(401)
+  //         )))
+
   describe('POST', () =>
     describe('when not logged in', () => {
       it('creates a user', () =>
