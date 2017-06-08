@@ -1,6 +1,7 @@
 const request = require('supertest')
   , {expect} = require('chai')
   , db = require('APP/db')
+  , {Category, Product} = db
   , app = require('./start')
 
 /* global describe it before afterEach */
@@ -26,8 +27,33 @@ describe('/api/products', () => {
           })
           .expect(201))
     })
-
-    describe('GET method: ', () => {
+  })
+  describe('GET /', () =>
+    describe('get method: ', () => {
+      var product, category
+      before(function() {
+        return Category.create({
+          name: 'facebook'
+        })
+          .then(() => Category.create({
+            name: 'likes'
+          }))
+      })
+      before(function() {
+        return Product.create({
+          name: 'facebook 10 Likes',
+          price: 1.00,
+          quantity: 10,
+          description: 'put 10 likes on your specified facebook post',
+          ratings: 5,
+          categories: [
+            {id: 1, name: 'facebook'},
+            {id: 2, name: 'likes'}]
+        })
+          .then(p => {
+            product = p
+          })
+      })
       it('gets all the products', () =>
         request(app)
           .get(`/api/products`)
@@ -43,33 +69,9 @@ describe('/api/products', () => {
           .get(`/api/products/10`)
           .expect(401))
 
-      // it('gets all products for a specific category', () =>
-      //   request(app)
-      //     .get(`/api/products/categories/1`)
-      //     .expect(200))
-    })
-  })
-  //
-  // describe('GET /', () =>
-  //   describe('get method: ', () => {
-  //     it('gets all the products', () =>
-  //       request(app)
-  //         .get(`/api/products`)
-  //         .expect(200))
-  //
-  //     it('gets a product by id', () =>
-  //       request(app)
-  //         .get(`/api/products/1`)
-  //         .expect(200))
-  //
-  //     it('gets a product that does not exist', () =>
-  //       request(app)
-  //         .get(`/api/products/10`)
-  //         .expect(401))
-  //
-  //     // it('gets all products for a specific category', () =>
-  //     //   request(app)
-  //     //     .get(`/api/products/categories/1`)
-  //     //     .expect(200))
-  //   }))
+      it('gets all products for a specific category', () =>
+        request(app)
+          .get(`/api/products/categories/1`)
+          .expect(200))
+    }))
 })

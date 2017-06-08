@@ -15,10 +15,17 @@ module.exports = require('express').Router()
   // create a new Category
   .post('/',
     // assertAdmin,
-    (req, res, next) =>
-      Category.create(req.body)
+    (req, res, next) => {
+      console.log('>>>>>>>>>>>', req.body)
+      Category.create(req.body, {
+        include: [{
+          model: Product,
+          as: 'products'
+        }]
+      })
         .then(categories => res.status(201).json(categories))
-        .catch(next))
+        .catch(next)
+    })
   // get a category by ID
   .get('/:cid',
     (req, res, next) =>

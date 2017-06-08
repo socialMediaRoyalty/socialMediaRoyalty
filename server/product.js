@@ -14,10 +14,17 @@ module.exports = require('express').Router()
         .catch(next))
   // create a new product
   .post('/',
-    // assertAdmin,
     (req, res, next) => {
       // req.body.categories is an array sent from the form
-      Product.create(req.body, {
+      Product.create({
+        'name': req.body.name,
+        'description': req.body.description,
+        'price': req.body.price,
+        'quantity': req.body.quantity,
+        'ratings': req.body.ratings,
+        'imageUrl': req.body.imageUrl,
+        'categories': req.body.categories || [] // array of catagory objects
+      }, {
         include: [{
           model: Category,
           as: 'categories'
@@ -33,7 +40,7 @@ module.exports = require('express').Router()
         .then(product => {
           if (!product) {
             var err = new Error('product not found')
-            err.status = 401
+            err.status = 404
             throw err
           } else {
             res.status(200).json(product)
@@ -46,7 +53,7 @@ module.exports = require('express').Router()
       Product.findAll({
         include: [{
           model: Category,
-          where: { category_id: req.params.cid }
+          where: { id: req.params.cid }
         }]
       })
         .then(products => res.status(201).json(products))
