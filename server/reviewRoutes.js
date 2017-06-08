@@ -1,11 +1,14 @@
-var router = require('express').Router()
-var Reviews = require('APP/db/models/review')
+'use strict'
 
+const db = require('APP/db')
+const Reviews = db.model('reviews')
+
+module.exports = require('express').Router()
 // get product reviews
-router.get('/:id/reviews', (req, res, next) => {
+.get('/:pid', (req, res, next) => {
   Reviews.findAll({
     where: {
-      productId: req.params.id
+      product_id: req.params.pid
     }
   }).then(reviews => {
     res.send(reviews)
@@ -13,7 +16,7 @@ router.get('/:id/reviews', (req, res, next) => {
 })
 
 // post product review
-router.post('/:id', (req, res, next) => {
+.post('/', (req, res, next) => {
   Reviews.create(req.body)
   .then(review => {
     res.send(review)
