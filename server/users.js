@@ -12,27 +12,35 @@ module.exports = require('express').Router()
       User.findAll()
         .then(users => res.json(users))
         .catch(next))
-  .post('/',
+  .post('/', // if used for signup consider who can give admin privileges, also consider who you want to login -- KHLP
     (req, res, next) =>
       User.create(req.body)
       .then(user => res.status(201).json(user))
       .catch(next))
+  // router.param
+  .param('id', (req, res, next, id)=> { // id === req.params.id
+    // find in db
+    // check if no user and send through error handling middleware 404 
+    // attach requestedUser (entire object) to req (req.requestedUser = foundUser)
+    // next() -- KHLP
+  })
   .get('/:id',
-    selfOnly,
+    selfOnly, // selfOrAdmin -- KHLP
     (req, res, next) =>
       User.findById(req.params.id)
-      .then(user => res.json(user))
+      .then(user => res.json(user)) // you don't check for no user -- KHLP
       .catch(next))
   .put('/:id',
-      assertAdmin,
+      assertAdmin, // selfOrAdmin, but then think of setting admin privileges -- KHLP
       (req, res, next) =>
+        // req.requestedUser.update instead of next 4 lines -- KHLP
         User.findById(req.params.id)
-        .then(user => user.update({
+        .then(user => user.update({ // admin should be able to update all the things -- KHLP
           isAdmin: req.body.isAdmin,
         }))
         .then(updatedUser => res.json(updatedUser))
         .catch(next))
-  .put('/:id',
+  .put('/:id', // we will never get here because we match the one ahead of us -- KHLP
     selfOnly,
     (req, res, next) =>
       User.findById(req.params.id)
@@ -54,5 +62,5 @@ module.exports = require('express').Router()
     (req, res, next) =>
       User.findById(req.params.id)
       .then(user => user.destroy())
-      .then(() => res.status(204).end())
+      .then(() => res.status(204).end()) // sendStatus -- KHLP
       .catch(next))

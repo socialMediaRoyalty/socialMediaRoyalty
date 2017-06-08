@@ -10,7 +10,7 @@ module.exports = db => db.define('reviews', {
       min: 1
     }
   },
-  date: DATE,
+  date: DATE, // default value of NOW -- KHLP
   comment: STRING(50)
 })
 

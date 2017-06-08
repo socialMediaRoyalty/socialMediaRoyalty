@@ -14,11 +14,11 @@ const app = require('APP')
     , metaModels = {
       OAuth: require('./oauth'),
       User: require('./user'),
-      Thing: require('./thing'),
-      Favorite: require('./favorite'),
+      Thing: require('./thing'), // delete -- KHLP
+      Favorite: require('./favorite'), // delete -- KHLP
       Product: require('./product'),
       Category: require('./category'),
-      // ---------- Add new models here ----------
+      // ---------- Add new models here ---------- // why is this here? -- KHLP
       Cart: require('./cart'),
       CartDetail: require('./cart-detail'),
       Order: require('./order'),

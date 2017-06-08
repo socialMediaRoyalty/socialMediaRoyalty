@@ -13,8 +13,8 @@ describe('/api/reviews', () => {
     describe('getting product reviews', () =>
       it('retrieves all reviews for a product', () =>
         request(app)
-          .get(`/api/reviews/1`)
-          .expect(200)
+          .get(`/api/reviews/1`) // where is your beforeEach where make the review you are finding? -- KHLP
+          .expect(200) // check body not jsut status -- KHLP
       )))
 
   describe('POST', () =>
@@ -26,6 +26,6 @@ describe('/api/reviews', () => {
             rating: 5,
             comment: 'Incredible!'
           })
-          .expect(200))
+          .expect(200)) // a good test would look at the body and make comparisons (check out wikistack testing solution for examples), also expect a 201 created -- KHLP
     }))
 })

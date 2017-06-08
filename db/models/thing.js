@@ -1,5 +1,5 @@
 'use strict'
-
+// delete me -- KHLP
 const {STRING} = require('sequelize')
 
 module.exports = db => db.define('things', {

@@ -12,12 +12,19 @@ const selfOnly = action => (req, res, next) => {
   next()
 }
 
+// assertSelfOrAdmin
+// if (!req.user) {
+//     return res.status(401).send('You must be logged in'); // semicolon :/ I want you to use error handling middleware -- KHLP
+//   } else if (!req.user.isAdmin || req.params.id !== req.user.id) {
+//     return res.status(403).send('You are unauthorized to view this page')
+//   } 
+
 // const forbidden = message => (req, res) => {
 //   res.status(403).send(message)
 // }
 const assertAdmin = (req, res, next) => {
   if (!req.user) {
-    return res.status(401).send('You must be logged in');
+    return res.status(401).send('You must be logged in'); // semicolon :/ I want you to use error handling middleware -- KHLP
   } else if (!req.user.isAdmin) {
     return res.status(403).send('You are unauthorized to view this page')
   } 
