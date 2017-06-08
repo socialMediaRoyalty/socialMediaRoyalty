@@ -16,12 +16,14 @@ const app = require('APP')
       User: require('./user'),
       Thing: require('./thing'),
       Favorite: require('./favorite'),
-      Product: require('./product'),
-      Category: require('./category'),
+      // ---------- Add new models here ----------
       Cart: require('./cart'),
       CartDetail: require('./cart-detail'),
       Order: require('./order'),
-      Review: require('./review')
+      Review: require('./review'),
+      Product: require('./product'),
+      Category: require('./category'),
+      OrderDetail: require('./order-detail')
     }
     , {mapValues} = require('lodash')
 
