@@ -6,14 +6,20 @@ const Category = db.model('categories')
 const {assertAdmin} = require('./auth.filters')
 
 module.exports = require('express').Router()
-// get all the products
+  // get all products, filter the available product in frontend
+// if there is query, get the products for a query (eg, ?category_id=1)
   .get('/',
     (req, res, next) =>
-      Product.findAll()
-        .then(products => res.status(200).json(products))
+      Product.findAll({
+        where: req.query
+      }, {
+        include: [Category]
+      })
+        .then(products => res.json(products))
         .catch(next))
   // create a new product
   .post('/',
+    assertAdmin,
     (req, res, next) => {
       // req.body.categories is an array sent from the form
       Product.create({
@@ -23,79 +29,43 @@ module.exports = require('express').Router()
         'quantity': req.body.quantity,
         'ratings': req.body.ratings,
         'imageUrl': req.body.imageUrl,
-        'categories': req.body.categories || [] // array of catagory objects
+        'categories': req.body.categories || [] // array of category objects
       }, {
-        include: [{
-          model: Category,
-          as: 'categories'
-        }]
+        include: [Category]
       })
         .then(product => res.status(201).json(product))
         .catch(next)
     })
+  .param('pid',
+    (req, res, next, pid) =>
+      Product.findById(pid)
+        .then(foundProduct => {
+          if (!foundProduct) {
+            var err = new Error('Product Not Found')
+            err.status = 404
+            next(err)
+          } else {
+            req.foundProduct = foundProduct
+            next()
+          }
+        })
+  )
   // get a product by ID
   .get('/:pid',
     (req, res, next) =>
-      Product.findById(req.params.pid)
-        .then(product => {
-          if (!product) {
-            var err = new Error('product not found')
-            err.status = 404
-            throw err
-          } else {
-            res.status(200).json(product)
-          }
-        })
-        .catch(next))
-  // get all products for a specific category
-  .get('/categories/:cid',
-    (req, res, next) =>
-      Product.findAll({
-        include: [{
-          model: Category,
-          where: { id: req.params.cid }
-        }]
-      })
-        .then(products => res.status(201).json(products))
-        .catch(next))
+      res.json(req.foundProduct)
+  )
   // Edit a product, find the product by Id first, then edit it
-  .put('/',
-    // assertAdmin,
-    (req, res, next) => Product.findById(req.body.pid)
-        .then(product => {
-          var name = req.body.name
-          var description = req.body.description
-          var price = req.body.price
-          var quantity = req.body.quantity
-          var ratings = req.body.ratings
-          var imageUrl = req.body.imageUrl
-          if (!product) {
-            var err = new Error('Product Not Found')
-            err.status = 401
-            throw err
-          } else {
-            if (name) {
-              product.name = name
-            }
-            if (description) {
-              product.description = description
-            }
-            if (price) {
-              product.price = price
-            }
-            if (quantity) {
-              product.quantity = quantity
-            }
-            if (ratings) {
-              product.ratings = ratings
-            }
-            if (imageUrl) {
-              product.imageUrl = imageUrl
-            }
-            product.save()
-              .then(updatedProduct => {
-                res.status(204).send(updatedProduct)
-              })
-          }
-        })
-        .catch(next))
+  .put('/:pid',
+    assertAdmin,
+    (req, res, next) => {
+      req.foundProduct.update(req.body)
+        .catch(next)
+    })
+  .delete('/:pid',
+    assertAdmin,
+    (req, res, next) =>
+      req.foundProduct.destroy()
+        .then(() => res.sendStatus(204))
+        .catch(next)
+  )
