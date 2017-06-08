@@ -11,5 +11,6 @@ module.exports = db => db.define('cart_details', {
 
 module.exports.associations = (CartDetail, {Cart, Product}) => {
   CartDetail.belongsTo(Cart)
-  CartDetail.belongsToMany(Product, {as: 'products', through: 'cartDetail-product'})
+  CartDetail.belongsTo(Product)
+  // CartDetail.hasMany(Product, {as: 'products', through: 'cartDetail-product'})
 }
