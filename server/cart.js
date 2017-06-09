@@ -90,4 +90,3 @@ module.exports = require('express').Router()
     .then(() => res.sendStatus(204))
     .catch(next)
   })
-
