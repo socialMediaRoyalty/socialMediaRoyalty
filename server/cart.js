@@ -2,7 +2,7 @@
 
 const db = require('APP/db')
 const Cart = db.model('carts')
-const CartDetail = db.model('cart_details')
+// const CartDetail = db.model('cart_details')
 const Product = db.model('products')
 const Order = db.model('orders')
 const OrderDetail = db.model('order-details')
@@ -13,17 +13,31 @@ module.exports = require('express').Router()
 // JUST A TESTING ROUTE
 // get all carts - test to check Carts model
   .get('/', (req, res, next) => {
-    User.findAll()
+    Cart.findAll()
     .then(carts => {
       res.status(201).json(carts)
     })
     .catch(next)
   })
 
-// find the cart and add it to req.cart
-  .param('cartId', (req, res, next, cartId) => {
-    CartDetail.findAll({
-      where: { cart_id: cartId },
+// Create a cart when a visitor opens the site
+  // .post('/', (req, res, next) => {
+
+  //   console.log('this is req.user', req.user)
+  //   res.json(req.user)
+
+  //   if (!req.user) {
+  //     Cart.create({
+  //       unAuthUser: 'THIS SHOULD BE THE SESSION COOKIE???'
+  //     })
+  //   }
+
+  // })
+
+// ** Find a cart and add it to req.cart
+  .param('cid', (req, res, next, cartId) => {
+    Cart.find({
+      where: { id: cartId },
       include: [
         {
           model: Product
@@ -35,93 +49,74 @@ module.exports = require('express').Router()
     .catch(next)
   })
 
-// get a cart by id
-  .get('/:cartId', (req, res, next) => {
+// ** get a cart by id
+  .get('/:cid', (req, res, next) => {
     res.status(201).json(req.cart)
   })
 
-// NEEDS TESTING
-// add product to cart and update quantity
-  .post('/:cartId', (req, res, next) => {
+// **  add product to cart and update quantity
+  .post('/:cid', (req, res, next) => {
+    const products = req.cart.products
     const productId = req.body.productId
     const quantity = req.body.quantity
-    const cartDetails = req.cart
     let match
 
-    cartDetails.forEach(cartDetail => {
-      if (cartDetail.product_id === productId) {
-        match = cartDetail
+    products.forEach(product => {
+      if (product.id === productId) {
+        match = product
       }
     })
 
   // if the product is already in the cart, update quantity
     if (match) {
       match.update({ quantity: quantity })
-      .then(updatedCart => res.status(201).end())
+      .then(updatedCart => res.sendStatus(201))
       .catch(next)
+
   // otherwise, create a new cart detail
     } else {
-      CartDetail.create({
-        cart_id: req.params.id,
-        quantity: quantity,
-        product_id: productId
-      }).then(newCartDetail => {
-        res.send(newCartDetail)
+      req.cart.addProduct(productId, { through: { quantity: quantity } })
+      .then(updatedCart => {
+        res.send(updatedCart)
       })
       .catch(next)
     }
   })
 
-// NEEDS TESTING
-// delete an item from the cart
-  .delete('/:cartId', (req, res, next) => {
-    const productId = req.body.productId
 
-    CartDetail.findOne({
-      where: {
-        cart_id: req.params.id,
-        product_iD: productId
+// ** delete an item from the cart
+  .delete('/:cid', (req, res, next) => {
+    const productId = req.body.productId
+    const products = req.cart.products
+    let match
+
+    products.forEach(product => {
+      if (product.id === productId) {
+        match = product
       }
     })
-    .then(cartDetail => {
-      cartDetail.destroy()
+    .then(match => {
+      match.destroy()
     })
     .then(() => {
-      res.status(201).end()
+      res.sendStatus(201)
     })
     .catch(next)
   })
 
-// IN PROGRESS - NEED TO COORDINATE WITH ORDER
-// Submit a cart as an order
-  .post('/:cartId/submitOrder', (req, res, next) => {
-    // get array of cartDetails
-    CartDetail.findAll({
-      where: { cart_id: req.params.id }
+// // IN PROGRESS - NEED TO COORDINATE WITH ORDER
+// ** Submit a cart as an order
+  .post('/:cid/submitOrder', (req, res, next) => {
+    Order.create({
+      status: 'processing'
     })
-    .then(cartDetails => {
-      // create order
-      Order.create({
-        status: 'processing'
-      })
-    // create order detail and relationship with product
     .then(order => {
-      const newOrderDetails = cartDetails.map(cartDetail => ({
-        forOrderDetail: {
-          purchasedPrice: cartDetail.product.price,
-          quantity: cartDetail.quantity,
-          order_id: order.id
-        },
-        product: cartDetails.product
-      }))
-
-      newOrderDetails.forEach(newOrderDetail => {
-        OrderDetail.create(newOrderDetail.forOrderDetail)
-        .then(createdOrderDetail => {
-          createdOrderDetail.addProduct(newOrderDetail.product)
-        })
-        .catch(next)
+      req.cart.products.forEach(product => {
+        order.addProduct(product, { through: { stuff: 'STUFF GOES HERE' } })
       })
     })
+    .then(order => {
+      res.json(order)
     })
+    .catch(next)
   })
