@@ -3,6 +3,7 @@
 const db = require('APP/db')
 const Product = db.model('products')
 const Category = db.model('categories')
+const Review = db.model('reviews')
 const {assertAdmin} = require('./auth.filters')
 
 module.exports = require('express').Router()
@@ -27,18 +28,23 @@ module.exports = require('express').Router()
         'description': req.body.description,
         'price': req.body.price,
         'quantity': req.body.quantity,
-        'ratings': req.body.ratings,
         'imageUrl': req.body.imageUrl,
         'categories': req.body.categories || [] // array of category objects
       }, {
-        include: [Category]
+        include: [Category, Review]
       })
         .then(product => res.status(201).json(product))
         .catch(next)
     })
   .param('pid',
     (req, res, next, pid) =>
-      Product.findById(pid)
+      Product.findOne({
+        where: {
+          id: pid
+        }
+      }, {
+        include: [Category, Review]
+      })
         .then(foundProduct => {
           if (!foundProduct) {
             var err = new Error('Product Not Found')
