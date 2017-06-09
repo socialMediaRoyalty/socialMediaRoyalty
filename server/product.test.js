@@ -1,14 +1,14 @@
-const request = require('supertest')
-  , {expect} = require('chai')
-  , db = require('APP/db')
-  , {Category, Product} = db
-  , app = require('./start')
+// const request = require('supertest')
+//   , {expect} = require('chai')
+//   , db = require('APP/db')
+//   , {Category, Product} = db
+//   , app = require('./start')
 
-/* global describe it before afterEach */
+// /* global describe it before afterEach */
 
-describe('/api/products', () => {
-  before('Await database sync', () => db.didSync)
-  afterEach('Clear the tables', () => db.truncate({cascade: true}))
+// describe('/api/products', () => {
+//   before('Await database sync', () => db.didSync)
+//   afterEach('Clear the tables', () => db.truncate({cascade: true}))
 
   describe('POST/GET', () => {
     describe('POST: add a new product', () => {

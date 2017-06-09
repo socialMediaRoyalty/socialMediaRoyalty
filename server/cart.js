@@ -2,7 +2,7 @@
 
 const db = require('APP/db')
 const Cart = db.model('carts')
-const CartDetail = db.model('cart_details')
+const CartDetail = db.model('cartDetail')
 const Product = db.model('products')
 const Order = db.model('orders')
 const OrderDetail = db.model('order-details')
@@ -13,115 +13,80 @@ module.exports = require('express').Router()
 // JUST A TESTING ROUTE
 // get all carts - test to check Carts model
   .get('/', (req, res, next) => {
-    User.findAll()
+    Cart.findAll()
     .then(carts => {
       res.status(201).json(carts)
     })
     .catch(next)
   })
 
-// find the cart and add it to req.cart
-  .param('cartId', (req, res, next, cartId) => {
-    CartDetail.findAll({
-      where: { cart_id: cartId },
+// ** Find a cart and add it to req.cart
+  .param('cid', (req, res, next, cid) => {
+    Cart.findOne({
+      where: { id: cid },
       include: [
         {
           model: Product
         }]
     }).then(cart => {
-      req.cart = cart
-      next()
+      if (!cart) {
+        const err = new Error('Cart Not Found')
+        err.status = 404
+        next(err)
+      } else {
+        req.cart = cart
+        next()
+        return null
+      }
     })
     .catch(next)
   })
 
-// get a cart by id
-  .get('/:cartId', (req, res, next) => {
+// ** get a cart by id
+  .get('/:cid', (req, res, next) => {
     res.status(201).json(req.cart)
   })
 
-// NEEDS TESTING
-// add product to cart and update quantity
-  .post('/:cartId', (req, res, next) => {
+// **  add product to cart and update quantity
+  .put('/:cid', (req, res, next) => {
+    const products = req.cart.products
     const productId = req.body.productId
     const quantity = req.body.quantity
-    const cartDetails = req.cart
-    let match
+    let match = false
 
-    cartDetails.forEach(cartDetail => {
-      if (cartDetail.product_id === productId) {
-        match = cartDetail
-      }
-    })
-
-  // if the product is already in the cart, update quantity
-    if (match) {
-      match.update({ quantity: quantity })
-      .then(updatedCart => res.status(201).end())
-      .catch(next)
-  // otherwise, create a new cart detail
-    } else {
-      CartDetail.create({
-        cart_id: req.params.id,
-        quantity: quantity,
-        product_id: productId
-      }).then(newCartDetail => {
-        res.send(newCartDetail)
+    if (quantity === '0') {
+      CartDetail.destroy({
+        where: {
+          cart_id: req.cart.id,
+          product_id: productId
+        }
       })
+      .then(() => res.sendStatus(204))
       .catch(next)
     }
-  })
 
-// NEEDS TESTING
-// delete an item from the cart
-  .delete('/:cartId', (req, res, next) => {
-    const productId = req.body.productId
-
-    CartDetail.findOne({
+    CartDetail.findOrCreate({
       where: {
-        cart_id: req.params.id,
-        product_iD: productId
+        cart_id: req.cart.id,
+        product_id: productId
       }
     })
-    .then(cartDetail => {
-      cartDetail.destroy()
+    .then(([cartDetail, createdBool]) => {
+      if (!createdBool) {
+        cartDetail.update({
+          quantity: quantity
+        })
+      } else {
+        req.cart.addProduct(productId, { through: { quantity: quantity } })
+      }
     })
-    .then(() => {
-      res.status(201).end()
-    })
+    .then(() => res.json(req.cart))
     .catch(next)
   })
 
-// IN PROGRESS - NEED TO COORDINATE WITH ORDER
-// Submit a cart as an order
-  .post('/:cartId/submitOrder', (req, res, next) => {
-    // get array of cartDetails
-    CartDetail.findAll({
-      where: { cart_id: req.params.id }
-    })
-    .then(cartDetails => {
-      // create order
-      Order.create({
-        status: 'processing'
-      })
-    // create order detail and relationship with product
-    .then(order => {
-      const newOrderDetails = cartDetails.map(cartDetail => ({
-        forOrderDetail: {
-          purchasedPrice: cartDetail.product.price,
-          quantity: cartDetail.quantity,
-          order_id: order.id
-        },
-        product: cartDetails.product
-      }))
-
-      newOrderDetails.forEach(newOrderDetail => {
-        OrderDetail.create(newOrderDetail.forOrderDetail)
-        .then(createdOrderDetail => {
-          createdOrderDetail.addProduct(newOrderDetail.product)
-        })
-        .catch(next)
-      })
-    })
-    })
+// ** delete cart
+  .delete('/:cid', (req, res, next) => {
+    req.cart.destroy()
+    .then(() => res.sendStatus(204))
+    .catch(next)
   })
