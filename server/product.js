@@ -27,7 +27,6 @@ module.exports = require('express').Router()
         'description': req.body.description,
         'price': req.body.price,
         'quantity': req.body.quantity,
-        'ratings': req.body.ratings,
         'imageUrl': req.body.imageUrl,
         'categories': req.body.categories || [] // array of category objects
       }, {
