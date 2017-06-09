@@ -10,7 +10,7 @@ module.exports = require('express').Router()
     User.findById(uid)
     .then(user => {
       if (!user) {
-        let err = new Error('You are not authorized to view this page')
+        const err = new Error('You are not authorized to view this page')
         err.status = 403
         throw err
       } else {
@@ -25,34 +25,34 @@ module.exports = require('express').Router()
       User.findAll()
         .then(users => res.json(users))
         .catch(next))
-  .get('/:uid', 
+  .get('/:uid',
     assertSelfOrAdmin,
-    (req, res, next) => 
+    (req, res, next) =>
       res.json(req.requestedUser)
       .catch(next))
   .put('/:uid',
       assertSelfOrAdmin,
       (req, res, next) => {
-          if (req.user.isAdmin) {
-            req.requestedUser.update(req.body)
-            .then(user => res.status(201).json(user))
-            .catch(next)
-          } else {
-            req.requestedUser.update({
-              name: req.body.name,
-              email: req.body.email,
-              password: req.body.password,
-              twitterLink: req.body.twitterLink,
-              instagramLink: req.body.instagramLink,
-              snapChatLink: req.body.snapChatLink,
-              address: req.body.address,
-              paypalId: req.body.paypalId,
-              amazonPayId: req.body.amazonPayId
-            })
-            .then(user => res.status(201).json(user))
-            .catch(next)
-          }
-        })
+        if (req.user.isAdmin) {
+          req.requestedUser.update(req.body)
+          .then(user => res.status(201).json(user))
+          .catch(next)
+        } else {
+          req.requestedUser.update({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+            twitterLink: req.body.twitterLink,
+            instagramLink: req.body.instagramLink,
+            snapChatLink: req.body.snapChatLink,
+            address: req.body.address,
+            paypalId: req.body.paypalId,
+            amazonPayId: req.body.amazonPayId
+          })
+          .then(user => res.status(201).json(user))
+          .catch(next)
+        }
+      })
   .delete('/:uid',
     assertAdmin,
     (req, res, next) =>

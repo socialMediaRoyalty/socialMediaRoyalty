@@ -17,7 +17,7 @@ const selfOnly = action => (req, res, next) => {
 // }
 
 const assertSelfOrAdmin = (req, res, next) => {
-  if(!req.user) {
+  if (!req.user) {
     return res.status(401).json('You must be logged in')
   } else if (!req.user.isAdmin && req.requestedUser.dataValues.id !== req.user.dataValues.id) {
     return res.status(403).json('You are unauthorized to view this page test')
@@ -30,7 +30,7 @@ const assertAdmin = (req, res, next) => {
     return res.status(401).json('You must be logged in')
   } else if (!req.user.isAdmin) {
     return res.status(403).json('You are unauthorized to view this page')
-  } 
+  }
   next()
 }
 
