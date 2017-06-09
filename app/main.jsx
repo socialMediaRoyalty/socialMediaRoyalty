@@ -10,7 +10,16 @@ import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 
+import RootContainer from './containers/RootContainer'
+
+// const mapStateToProps = (state, ownProps) => {
+//    const auth = state.auth
+//    const product = state.product
+//    return {user: auth}
+// }
+
 const ExampleApp = connect(
+  // mapStateToProps
   ({ auth }) => ({ user: auth })
 )(
   ({ user, children }) =>
@@ -26,8 +35,8 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={ExampleApp}>
-        <IndexRedirect to="/jokes" />
-        <Route path="/jokes" component={Jokes} />
+        <IndexRedirect to="/index" />
+        <Route path="/index" component={RootContainer} />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>
