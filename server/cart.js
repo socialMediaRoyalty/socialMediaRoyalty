@@ -2,7 +2,7 @@
 
 const db = require('APP/db')
 const Cart = db.model('carts')
-// const CartDetail = db.model('cart_details')
+const CartDetail = db.model('cartDetail')
 const Product = db.model('products')
 const Order = db.model('orders')
 const OrderDetail = db.model('order-details')
@@ -20,31 +20,24 @@ module.exports = require('express').Router()
     .catch(next)
   })
 
-// Create a cart when a visitor opens the site
-  // .post('/', (req, res, next) => {
-
-  //   console.log('this is req.user', req.user)
-  //   res.json(req.user)
-
-  //   if (!req.user) {
-  //     Cart.create({
-  //       unAuthUser: 'THIS SHOULD BE THE SESSION COOKIE???'
-  //     })
-  //   }
-
-  // })
-
 // ** Find a cart and add it to req.cart
-  .param('cid', (req, res, next, cartId) => {
-    Cart.find({
-      where: { id: cartId },
+  .param('cid', (req, res, next, cid) => {
+    Cart.findOne({
+      where: { id: cid },
       include: [
         {
           model: Product
         }]
     }).then(cart => {
-      req.cart = cart
-      next()
+      if (!cart) {
+        const err = new Error('Cart Not Found')
+        err.status = 404
+        next(err)
+      } else {
+        req.cart = cart
+        next()
+        return null
+      }
     })
     .catch(next)
   })
@@ -55,68 +48,46 @@ module.exports = require('express').Router()
   })
 
 // **  add product to cart and update quantity
-  .post('/:cid', (req, res, next) => {
+  .put('/:cid', (req, res, next) => {
     const products = req.cart.products
     const productId = req.body.productId
     const quantity = req.body.quantity
-    let match
+    let match = false
 
-    products.forEach(product => {
-      if (product.id === productId) {
-        match = product
-      }
-    })
-
-  // if the product is already in the cart, update quantity
-    if (match) {
-      match.update({ quantity: quantity })
-      .then(updatedCart => res.sendStatus(201))
-      .catch(next)
-
-  // otherwise, create a new cart detail
-    } else {
-      req.cart.addProduct(productId, { through: { quantity: quantity } })
-      .then(updatedCart => {
-        res.send(updatedCart)
+    if (quantity === '0') {
+      CartDetail.destroy({
+        where: {
+          cart_id: req.cart.id,
+          product_id: productId
+        }
       })
+      .then(() => res.sendStatus(204))
       .catch(next)
     }
-  })
 
-
-// ** delete an item from the cart
-  .delete('/:cid', (req, res, next) => {
-    const productId = req.body.productId
-    const products = req.cart.products
-    let match
-
-    products.forEach(product => {
-      if (product.id === productId) {
-        match = product
+    CartDetail.findOrCreate({
+      where: {
+        cart_id: req.cart.id,
+        product_id: productId
       }
     })
-    .then(match => {
-      match.destroy()
+    .then(([cartDetail, createdBool]) => {
+      if (!createdBool) {
+        cartDetail.update({
+          quantity: quantity
+        })
+      } else {
+        req.cart.addProduct(productId, { through: { quantity: quantity } })
+      }
     })
-    .then(() => {
-      res.sendStatus(201)
-    })
+    .then(() => res.json(req.cart))
     .catch(next)
   })
 
-// // IN PROGRESS - NEED TO COORDINATE WITH ORDER
-// ** Submit a cart as an order
-  .post('/:cid/submitOrder', (req, res, next) => {
-    Order.create({
-      status: 'processing'
-    })
-    .then(order => {
-      req.cart.products.forEach(product => {
-        order.addProduct(product, { through: { stuff: 'STUFF GOES HERE' } })
-      })
-    })
-    .then(order => {
-      res.json(order)
-    })
+// ** delete cart
+  .delete('/:cid', (req, res, next) => {
+    req.cart.destroy()
+    .then(() => res.sendStatus(204))
     .catch(next)
   })
+

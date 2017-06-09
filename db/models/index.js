@@ -20,7 +20,7 @@ const app = require('APP')
       Category: require('./category'),
       // ---------- Add new models here ----------
       Cart: require('./cart'),
-      CartDetail: require('./cart-detail'),
+      CartDetail: require('./cartDetail'),
       Order: require('./order'),
       Review: require('./review'),
       OrderDetail: require('./order-detail')
