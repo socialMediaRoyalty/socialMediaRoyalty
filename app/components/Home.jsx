@@ -1,12 +1,18 @@
 import React from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import { connect } from 'react-redux'
+import Login from './Login'
+import WhoAmI from './WhoAmI'
 
-const Home = () => (
-  <div>
-    <h1>"Hey I'm the Home Page"</h1>
-    <h3>Probably see a lot of stuff here</h3>
-  </div>
+export const Home = connect(
+  ({ auth }) => ({ user: auth })
+)(
+  ({ user, children }) =>
+    <div>
+      <nav>
+        {user ? <WhoAmI/> : <Login/>}
+      </nav>
+      {children}
+    </div>
 )
-
-export default Home
