@@ -6,14 +6,16 @@ module.exports = db => db.define('order-details', {
   purchasedPrice: {
     type: DECIMAL(10, 2),
     validate: {
-      $gt: 0
+      min: 0.01,
+      isDecimal: true
     }
   },
   quantity: {
     type: INTEGER,
     defaultValue: 1,
     validate: {
-      $gt: 0
+      min: 1,
+      isInt: true
     }
   }
 })

@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('APP/db')
-    , {User, CartDetail, Cart, Product, Review, Order, Category, Promise} = db
+    , {User, CartDetail, Cart, Product, Review, Order, Category, OrderDetail, Promise} = db
     , {mapValues} = require('lodash')
 
 function seedEverything() {
@@ -14,6 +14,7 @@ function seedEverything() {
   seeded.reviews = reviews(seeded)
   seeded.orders = orders(seeded)
   seeded.categories = categories(seeded)
+  seeded.orderDetails = orderDetails(seeded)
 
   return Promise.props(seeded)
 }
@@ -166,22 +167,22 @@ const reviews = seed(Review,
 
 const orders = seed(Order,
   ({users}) => ({
-    '1': {
+    'order1': {
       status: 'received',
       purchaseDate: new Date(),
       user_id: users.god.id,
     },
-    '2': {
+    'order2': {
       status: 'delivered',
       purchaseDate: new Date(),
       user_id: users.barack.id,
     },
-    '3': {
+    'order3': {
       status: 'processed',
       purchaseDate: new Date(),
       user_id: users.bo.id,
     },
-    '4': {
+    'order4': {
       status: 'received',
       purchaseDate: new Date(),
       user_id: users.michelle.id,
@@ -210,6 +211,34 @@ const categories = seed(Category,
   })
 )
 
+const orderDetails = seed(OrderDetail,
+  ({orders, products}) => ({
+    '1': {
+      purchasedPrice: 5.99,
+      quantity: 2,
+      order_id: orders.order1.id,
+      product_id: products.prod1.id,
+    },
+    '2': {
+      purchasedPrice: 5.99,
+      quantity: 1,
+      order_id: orders.order2.id,
+      product_id: products.prod4.id,
+    },
+    '3': {
+      purchasedPrice: 5.99,
+      quantity: 3,
+      order_id: orders.order3.id,
+      product_id: products.prod2.id,
+    },
+    '4': {
+      purchasedPrice: 5.99,
+      quantity: 2,
+      order_id: orders.order4.id,
+      product_id: products.prod3.id,
+    }
+  })
+)
 
 if (module === require.main) {
   db.didSync
@@ -279,4 +308,4 @@ function seed(Model, rows) {
   }
 }
 
-module.exports = Object.assign(seed, {users, products, carts, cartDetails, reviews, orders, categories})
+module.exports = Object.assign(seed, {users, products, carts, cartDetails, reviews, orders, categories, orderDetails})
