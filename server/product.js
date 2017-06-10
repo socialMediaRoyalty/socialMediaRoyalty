@@ -12,27 +12,29 @@ module.exports = require('express').Router()
   .get('/',
     (req, res, next) =>
       Product.findAll({
-        where: req.query
-      }, {
-        include: [Category]
+        where: req.query,
+        include: [{
+          model: Category
+        }, {
+          model: Review
+        }]
       })
         .then(products => res.json(products))
         .catch(next))
   // create a new product
   .post('/',
-    assertAdmin,
+    // assertAdmin,
     (req, res, next) => {
-      // req.body.categories is an array sent from the form
       Product.create({
         'name': req.body.name,
         'description': req.body.description,
         'price': req.body.price,
         'quantity': req.body.quantity,
-        'imageUrl': req.body.imageUrl,
-        'categories': req.body.categories || [] // array of category objects
-      }, {
-        include: [Category, Review]
+        'imageUrl': req.body.imageUrl
       })
+        .then(createdProduct =>
+          createdProduct.addCategory(req.body.categoriesId) // array of category IDs
+        )
         .then(product => res.status(201).json(product))
         .catch(next)
     })
@@ -41,9 +43,12 @@ module.exports = require('express').Router()
       Product.findOne({
         where: {
           id: pid
-        }
-      }, {
-        include: [Category, Review]
+        },
+        include: [{
+          model: Category
+        }, {
+          model: Review
+        }]
       })
         .then(foundProduct => {
           if (!foundProduct) {
@@ -63,13 +68,13 @@ module.exports = require('express').Router()
   )
   // Edit a product, find the product by Id first, then edit it
   .put('/:pid',
-    assertAdmin,
+    // assertAdmin,
     (req, res, next) => {
       req.foundProduct.update(req.body)
         .catch(next)
     })
   .delete('/:pid',
-    assertAdmin,
+    // assertAdmin,
     (req, res, next) =>
       req.foundProduct.destroy()
         .then(() => res.sendStatus(204))

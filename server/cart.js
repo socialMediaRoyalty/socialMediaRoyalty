@@ -19,6 +19,16 @@ module.exports = require('express').Router()
     })
     .catch(next)
   })
+  // create an empty cart for new user
+  .post('/',
+    (req, res, next) =>
+      Cart.create(req.body)
+        .then(createdCart => {
+          createdCart.setUser(req.user)
+          res.status(201).json(createdCart)
+        })
+        .catch(next)
+  )
 
 // ** Find a cart and add it to req.cart
   .param('cid', (req, res, next, cid) => {
