@@ -23,9 +23,7 @@
     "test-watch": "npm run test -- --watch --reporter=min",
     "seed": "node db/seed.js",
     "deploy-heroku": "bin/deploy-heroku.sh",
-    "lint": "esw . --ignore-path .gitignore --ext '.js,.jsx'",
-    "lint-watch": "npm run lint -- -w",
-    "prepush": "npm run lint && npm run test"
+    "prepush": "npm run test"
   },
   "repository": {
     "type": "git",
@@ -64,6 +62,7 @@
     "pg": "^6.1.0",
     "pretty-error": "^2.0.2",
     "react": "^15.3.2",
+    "react-bootstrap": "^0.31.0",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "react-router": "^3.0.0",

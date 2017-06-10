@@ -10,65 +10,48 @@ module.exports = require('express').Router()
   .get('/',
     (req, res, next) =>
       Category.findAll()
-        .then(categories => res.status(200).json(categories))
-        .catch(next))
+        .then(categories => res.json(categories))
+        .catch(next)
+  )
   // create a new Category
   .post('/',
-    // assertAdmin,
-    (req, res, next) => {
-      console.log('>>>>>>>>>>>', req.body)
-      Category.create(req.body, {
-        include: [{
-          model: Product,
-          as: 'products'
-        }]
-      })
+    assertAdmin,
+    (req, res, next) =>
+      Category.create(req.body)
         .then(categories => res.status(201).json(categories))
         .catch(next)
-    })
+  )
+  .param('cid',
+    (req, res, next, cid) =>
+      Category.findById(cid)
+        .then(foundCategory => {
+          if (!foundCategory) {
+            var err = new Error('Category Not Found')
+            err.status = 404
+            next(err)
+          } else {
+            req.foundCategory = foundCategory
+            next()
+          }
+        })
+  )
   // get a category by ID
   .get('/:cid',
     (req, res, next) =>
-      Category.findById(req.params.cid)
-        .then(category => res.status(200).json(category))
-        .catch(next))
+      res.json(req.foundCategory)
+  )
   // Edit a Category, find the category by Id first, then edit it
-  .put('/',
-    // assertAdmin,
+  .put('/pid',
+    assertAdmin,
     (req, res, next) =>
-      Category.findById(req.body.cid)
-        .then(category => {
-          var name = req.body.name
-          if (!category) {
-            var err = new Error('Product Not Found')
-            err.status = 401
-            throw err
-          } else {
-            if (name) {
-              category.name = name
-            }
-            category.save()
-              .then(updatedCategory => {
-                res.status(204).json(updatedCategory)
-              })
-          }
-        })
-        .catch(next))
+      req.foundCategory.update(req.body)
+        .catch(next)
+  )
   // DELETE a category
   .delete('/:cid',
-    // assertAdmin,
+    assertAdmin,
     (req, res, next) =>
-      Category.findById(req.params.cid)
-        .then(category => {
-          if (!category) {
-            var err = new Error('Category not found')
-            err.status = 401
-            throw err
-          } else {
-            Category.destroy({
-              where: {id: req.params.cid}
-            })
-              .then(() => res.status(200).json('deleted'))
-          }
-        })
+      req.foundCategory.destroy()
+        .then(() => res.sendStatus(204))
+        .catch(next)
   )
