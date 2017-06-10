@@ -1,9 +1,0 @@
-PROTOCOL 
-
-postgres://qkzpkuefiwpogl:46bf735ecdfe8733d52ab3f096f32de8edb81dec7632b8907ef9a799fc77b70b@ec2-54-204-0-88.compute-1.amazonaws.com:5432/daucb0nilb5qut
-
-username: qkzpkuefiwpogl
-password: 46bf735ecdfe8733d52ab3f096f32de8edb81dec7632b8907ef9a799fc77b70b
-host: ec2-54-204-0-88.compute-1.amazonaws.com
-port: 5432
-db: daucb0nilb5qut
