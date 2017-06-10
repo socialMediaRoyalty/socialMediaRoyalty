@@ -57,6 +57,32 @@ module.exports = require('express').Router()
     res.status(201).json(req.cart)
   })
 
+// ** add a new cart
+  .post('/', (req, res, next) => {
+    if (true) {  // if authorized user. replace 'true' with req.user when implemented, or other way to verify user
+      Cart.findOrCreate({
+        where: {
+          user_id: 1 // replace with req.user.id
+        },
+        include: [
+          {
+            model: Product
+          }
+        ]
+      })
+      .spread((cart, Bool) => {
+        if (Bool) {
+          res.status(201).json(cart)
+        } else {
+          res.status(200).json(cart)
+        }
+      })
+      .catch(next)
+    } else {
+      // unauthorized user, should use localStorage
+      res.end()
+    }
+  })
 // **  add product to cart and update quantity
   .put('/:cid', (req, res, next) => {
     const products = req.cart.products

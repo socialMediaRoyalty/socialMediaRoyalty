@@ -3,6 +3,7 @@ import React from 'react'
 import {Router, Route, IndexRedirect, browserHistory} from 'react-router'
 import {render} from 'react-dom'
 import {connect, Provider} from 'react-redux'
+import { Button } from 'react-bootstrap'
 
 import store from './store'
 import Jokes from './components/Jokes'
@@ -15,6 +16,7 @@ const ExampleApp = connect(
 )(
   ({ user, children }) =>
     <div>
+      <Button bsStyle="success">Hi I'm a Bootstrap Button!</Button>
       <nav>
         {user ? <WhoAmI/> : <Login/>}
       </nav>
