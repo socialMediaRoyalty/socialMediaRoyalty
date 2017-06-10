@@ -3,7 +3,6 @@
 const db = require('APP/db')
     , {User} = db
     , {expect} = require('chai')
-
 /* global describe it before afterEach */
 
 describe('User', () => {

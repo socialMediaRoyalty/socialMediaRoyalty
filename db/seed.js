@@ -210,6 +210,7 @@ const categories = seed(Category,
   })
 )
 
+
 if (module === require.main) {
   db.didSync
     .then(() => db.sync({force: true}))

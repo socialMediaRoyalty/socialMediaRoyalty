@@ -7,24 +7,22 @@ module.exports = db => db.define('products', {
     type: STRING,
     allowNull: false
   },
-  available: BOOLEAN,
   description: {
     type: TEXT,
     allowNull: false
   },
   quantity: {
     type: INTEGER,
-    allowNull: false
+    allowNull: false,
+    vallidate: {
+      min: 0
+    }
   },
   price: {
-    type: DECIMAL,
-    allowNull: false
-  },
-  ratings: {
-    type: INTEGER,
-    validate: {
-      min: 0,
-      max: 5
+    type: DECIMAL(10, 2),
+    allowNull: false,
+    vallidate: {
+      min: 0
     }
   },
   imageUrl: {
@@ -33,9 +31,12 @@ module.exports = db => db.define('products', {
     validate: {
       isUrl: true
     }
-  } // might need category id (ex of foreignKey: Task.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' })
+  }
 })
 
-module.exports.associations = (Product, {Category}) => {
-  Product.belongsToMany(Category, {as: 'categories', through: 'CategoryProduct'})
+module.exports.associations = (Product, {Category, Review, Cart, Order}) => {
+  Product.belongsToMany(Category, {through: 'CategoryProduct'})
+  Product.belongsToMany(Cart, {through: 'cartDetail'})
+  Product.belongsToMany(Review, {through: 'ProductReview'})
+  Product.belongsToMany(Order, {through: 'OrderDetail'})
 }

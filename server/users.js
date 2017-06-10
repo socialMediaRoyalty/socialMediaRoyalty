@@ -3,29 +3,59 @@
 const db = require('APP/db')
 const User = db.model('users')
 
-const {mustBeLoggedIn, forbidden} = require('./auth.filters')
+const {mustBeLoggedIn, assertAdmin, selfOnly, assertSelfOrAdmin} = require('./auth.filters')
 
 module.exports = require('express').Router()
+  .param('uid', (req, res, next, uid) => {
+    User.findById(uid)
+    .then(user => {
+      if (!user) {
+        const err = new Error('You are not authorized to view this page')
+        err.status = 403
+        throw err
+      } else {
+        req.requestedUser = user
+        next()
+      }
+    })
+  })
   .get('/',
-    // The forbidden middleware will fail *all* requests to list users.
-    // Remove it if you want to allow anyone to list all users on the site.
-    //
-    // If you want to only let admins list all the users, then you'll
-    // have to add a role column to the users table to support
-    // the concept of admin users.
-    // forbidden('listing users is not allowed'),
+    assertAdmin,
     (req, res, next) =>
       User.findAll()
         .then(users => res.json(users))
         .catch(next))
-  .post('/',
+  .get('/:uid',
+    assertSelfOrAdmin,
     (req, res, next) =>
-      User.create(req.body)
-      .then(user => res.status(201).json(user))
+      res.json(req.requestedUser)
       .catch(next))
-  .get('/:id',
-    mustBeLoggedIn,
+  .put('/:uid',
+      assertSelfOrAdmin,
+      (req, res, next) => {
+        if (req.user.isAdmin) {
+          req.requestedUser.update(req.body)
+          .then(user => res.status(201).json(user))
+          .catch(next)
+        } else {
+          req.requestedUser.update({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+            twitterLink: req.body.twitterLink,
+            instagramLink: req.body.instagramLink,
+            snapChatLink: req.body.snapChatLink,
+            address: req.body.address,
+            paypalId: req.body.paypalId,
+            amazonPayId: req.body.amazonPayId
+          })
+          .then(user => res.status(201).json(user))
+          .catch(next)
+        }
+      })
+  .delete('/:uid',
+    assertAdmin,
     (req, res, next) =>
-      User.findById(req.params.id)
-      .then(user => res.json(user))
+      req.requestedUser.destroy()
+      .then(() => res.sendStatus(204).end())
       .catch(next))
