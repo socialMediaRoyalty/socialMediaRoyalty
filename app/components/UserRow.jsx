@@ -2,13 +2,18 @@ import React from 'react'
 import { Table, Button } from 'react-bootstrap'
 
 const UserRow =
-  ({id, name, email, isAdmin, removeUser, updateUser}) => {
-
+  ({user, id, name, email, isAdmin, removeUser, updateUser}) => {
     const handleDelete = (event) => {
       removeUser(id)
       event.preventDefault()
     }
-
+    const handleUpgrade = (event) => {
+      const newPriv = !isAdmin
+      const updatedInfo = Object.assign(user, {isAdmin: newPriv})
+      console.log(updatedInfo)
+      updateUser(updatedInfo)
+      event.preventDefault()
+    }
     return (
       <tr key={id}>
         <td>{id}</td>
@@ -16,7 +21,9 @@ const UserRow =
         <td>{email}</td>
         <td>
           {isAdmin ? 'Admin'
-            : 'False' }
+            : <Button
+              onClick={handleUpgrade}
+              >Upgrade</Button> }
         </td>
         <td>
           <Button

@@ -1,5 +1,3 @@
-'use strict'
-
 import axios from 'axios'
 
 /* -----------------    ACTIONS     ------------------ */
@@ -46,11 +44,13 @@ export default reducer
 export const fetchAllUsers = () => dispatch => {
   axios.get('/api/users')
     .then(res => dispatch(allUsers(res.data)))
+    .catch(err => console.error(`Fetch all users: unsuccesful`, err))
 }
 
 export const fetchUser = uid => dispatch => {
   axios.get(`/api/users/${uid}`)
     .then(res => dispatch(getUser(res.data)))
+    .catch(err => console.error(`Fetch user: unsuccesful`, err))
 }
 
 export const updateUser = (uid, user) => dispatch => {
@@ -59,8 +59,9 @@ export const updateUser = (uid, user) => dispatch => {
     .catch(err => console.error(`Updating user: ${user} unsuccesful`, err))
 }
 
-export const removeUser = uid => dispatch => {
-  axios.delete(`/api/users/${uid}`)
-    .then(() => dispatch(remove(uid)))
-    .catch(err => console.error(`Removing user: ${uid} unsuccesful`, err))
-}
+export const removeUser = (uid) =>
+  dispatch => {
+    axios.delete(`/api/users/${uid}`)
+      .then(() => dispatch(remove(uid)))
+      .catch(err => console.error(`Removing user: ${uid} unsuccesful`, err))
+  }

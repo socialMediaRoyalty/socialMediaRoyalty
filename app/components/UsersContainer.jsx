@@ -30,6 +30,7 @@ const Users = ({users, fetchUser, updateUser, removeUser}) => {
                   <UserRow
                     key={user.id}
                     id={user.id}
+                    user={user}
                     name={user.name}
                     email={user.email}
                     isAdmin={user.isAdmin}
@@ -51,7 +52,6 @@ const Users = ({users, fetchUser, updateUser, removeUser}) => {
 
 const mapState = ({users}) => ({users})
 
-const mapDispatch = (dispatch) =>
-  ({ fetchUser, updateUser, removeUser })
+const mapDispatch = { fetchUser, updateUser, removeUser }
 
 export default connect(mapState, mapDispatch)(Users)
