@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Login from './Login'
 import WhoAmI from './WhoAmI'
 
-export const Home = connect(
+const Home = connect(
   ({ auth }) => ({ user: auth })
 )(
   ({ user, children }) =>
@@ -16,3 +16,5 @@ export const Home = connect(
       {children}
     </div>
 )
+
+export default Home
