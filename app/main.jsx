@@ -10,15 +10,15 @@ import Jokes from './components/Jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
-import Root from './components/Root'
 import { Home } from './components/Home'
+import RootContainer from './containers/RootContainer'
 
 /* OnEnter Functions go Here */
 
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={Root}>
+      <Route path="/" component={RootContainer}>
         <IndexRoute component={Home} />
         <Route path="/jokes" component={Jokes} />
       </Route>
