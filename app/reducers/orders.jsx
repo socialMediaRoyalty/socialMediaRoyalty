@@ -2,19 +2,19 @@ import axios from 'axios'
 
 /* -----------------    ACTIONS     ------------------ */
 
-const ALL_ORDERS = 'ALL_ORDERS'
-const USER_ORDERS = 'USER_ORDERS'
-const ORDERS_BY_STATUS = 'ORDERS_BY_STATUS'
+const FETCH_ORDERS = 'FETCH_ORDERS'
+const FETCH_USER_ORDER = 'FETCH_USER_ORDER'
+const FETCH_BY_STATUS = 'FETCH_BY_STATUS'
 const UPDATE_STATUS = 'UPDATE_STATUS'
-const NEW_ORDER = 'NEW_ORDER'
+const ADD_ORDER = 'ADD_ORDER'
 
 /* ------------   ACTION CREATORS     ------------------ */
 
-const getAllOrders = (orders) => ({ type: ALL_ORDERS, orders})
-const getUserOrders = (orders) => ({ type: USER_ORDERS, orders})
-const getByStatus = (orders) => ({ type: ORDERS_BY_STATUS, orders})
-const updateStatus = (order) => ({ type: UPDATE_STATUS, order})
-const createOrder = (order) => ({ type: NEW_ORDER, order})
+const getAllOrders = (orders) => ({type: FETCH_ORDERS, orders})
+const getUserOrders = (orders) => ({type: FETCH_USER_ORDER, orders})
+const getByStatus = (orders) => ({type: FETCH_BY_STATUS, orders})
+const updateStatus = (order) => ({type: UPDATE_STATUS, order})
+const createOrder = (order) => ({type: ADD_ORDER, order})
 
 /* ------------       INITIAL STATE     ------------------ */
 
@@ -28,19 +28,19 @@ export const reducer = (state=initialState, action) => {
   const newState = Object.assing({}, state)
 
   switch (action.type) {
-  case ALL_ORDERS:
+  case FETCH_ORDERS:
     newState.orders = action.orders
     break
-  case USER_ORDERS:
+  case FETCH_USER_ORDER:
     newState.orders = action.orders
     break
-  case ORDERS_BY_STATUS:
+  case FETCH_BY_STATUS:
     newState.orders = action.orders
     break
   case UPDATE_STATUS:
     newState.orders = action.orders
     break
-  case NEW_ORDER:
+  case ADD_ORDER:
     newState.orders = action.orders
     break
 
