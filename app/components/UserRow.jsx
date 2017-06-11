@@ -7,13 +7,13 @@ const UserRow =
       removeUser(id)
       event.preventDefault()
     }
+
     const handleUpgrade = (event) => {
-      const newPriv = !isAdmin
-      const updatedInfo = Object.assign(user, {isAdmin: newPriv})
-      console.log(updatedInfo)
-      updateUser(updatedInfo)
+      const updatedInfo = { isAdmin: true }
+      updateUser(id, updatedInfo)
       event.preventDefault()
     }
+
     return (
       <tr key={id}>
         <td>{id}</td>

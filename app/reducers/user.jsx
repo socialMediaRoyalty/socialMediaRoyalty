@@ -59,9 +59,8 @@ export const updateUser = (uid, user) => dispatch => {
     .catch(err => console.error(`Updating user: ${user} unsuccesful`, err))
 }
 
-export const removeUser = (uid) =>
-  dispatch => {
-    axios.delete(`/api/users/${uid}`)
-      .then(() => dispatch(remove(uid)))
-      .catch(err => console.error(`Removing user: ${uid} unsuccesful`, err))
-  }
+export const removeUser = (uid) => dispatch => {
+  axios.delete(`/api/users/${uid}`)
+    .then(() => dispatch(remove(uid)))
+    .catch(err => console.error(`Removing user: ${uid} unsuccesful`, err))
+}
