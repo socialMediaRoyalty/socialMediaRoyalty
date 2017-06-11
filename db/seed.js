@@ -173,7 +173,7 @@ const orders = seed(Order,
       user_id: users.god.id,
     },
     'order2': {
-      status: 'delivered',
+      status: 'shipped',
       purchaseDate: new Date(),
       user_id: users.barack.id,
     },

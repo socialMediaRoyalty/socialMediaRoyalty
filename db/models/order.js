@@ -6,7 +6,7 @@ module.exports = db => db.define('orders', {
   status: ENUM(
     'received',
     'processed',
-    'delivered'
+    'shipped'
     ),
   purchaseDate: DATE
 }, {
