@@ -4,12 +4,6 @@ export const Sidebar = ({ login }) => (
   <div className="container">
     <div className="col-lg-3 col-md-3">
       <h3>This is sidebar component</h3>
-      <h3>This is sidebar component</h3>
-      <h3>This is sidebar component</h3>
-      <h3>This is sidebar component</h3>
-      <h3>This is sidebar component</h3>
-      <h3>This is sidebar component</h3>
-      <h3>This is sidebar component</h3>
     </div>
   </div>
 )

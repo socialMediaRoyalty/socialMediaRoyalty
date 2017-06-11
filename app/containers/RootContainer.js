@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import FeaturedProducts from '../components/FeaturedProducts'
 
+import CategoriesContainer from './CategoriesContainer'
+
 export default class RootContainer extends Component {
   componentDidMount() {
     // this.nextJoke()
@@ -16,7 +18,7 @@ export default class RootContainer extends Component {
         </div>
         <div className="row">
           <Sidebar />
-          <FeaturedProducts />
+          <CategoriesContainer />
         </div>
       </div>
     )

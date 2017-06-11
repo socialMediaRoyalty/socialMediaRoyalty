@@ -41,8 +41,8 @@ export const getAllCategories = () => dispatch => {
     .then(resToData)
     .then(categories => {
       dispatch(get(categories))
-      return categories
     })
+    .catch(console.error)
 }
 
 // categoryInfo is an object of all the category information
@@ -51,8 +51,8 @@ export const addCategory = (categoryInfo) => dispatch => {
     .then(resToData)
     .then(category => {
       dispatch(add(category))
-      return category
     })
+    .catch(console.error)
 }
 
 export const updateCategory = (categoryInfo) => dispatch => {
@@ -60,14 +60,14 @@ export const updateCategory = (categoryInfo) => dispatch => {
     .then(resToData)
     .then(category => {
       dispatch(update(category))
-      return category
     })
+    .catch(console.error)
 }
 
 export const removeCategory = (cid) => dispatch => {
   return axios.delete(`/api/categories/cid`)
     .then(() => {
       dispatch(remove())
-      return null
     })
+    .catch(console.error)
 }
