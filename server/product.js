@@ -3,6 +3,7 @@
 const db = require('APP/db')
 const Product = db.model('products')
 const Category = db.model('categories')
+const Review = db.model('reviews')
 const {assertAdmin} = require('./auth.filters')
 
 module.exports = require('express').Router()
@@ -11,17 +12,19 @@ module.exports = require('express').Router()
   .get('/',
     (req, res, next) =>
       Product.findAll({
-        where: req.query
-      }, {
-        include: [Category]
+        where: req.query,
+        include: [{
+          model: Category
+        }, {
+          model: Review
+        }]
       })
         .then(products => res.json(products))
         .catch(next))
   // create a new product
   .post('/',
-    assertAdmin,
+    // assertAdmin,
     (req, res, next) => {
-      // req.body.categories is an array sent from the form
       Product.create({
         'name': req.body.name,
         'description': req.body.description,
@@ -32,12 +35,24 @@ module.exports = require('express').Router()
       }, {
         include: [Category]
       })
+        .then(createdProduct =>
+          createdProduct.addCategory(req.body.categoriesId) // array of category IDs
+        )
         .then(product => res.status(201).json(product))
         .catch(next)
     })
   .param('pid',
     (req, res, next, pid) =>
-      Product.findById(pid)
+      Product.findOne({
+        where: {
+          id: pid
+        },
+        include: [{
+          model: Category
+        }, {
+          model: Review
+        }]
+      })
         .then(foundProduct => {
           if (!foundProduct) {
             var err = new Error('Product Not Found')
@@ -56,13 +71,13 @@ module.exports = require('express').Router()
   )
   // Edit a product, find the product by Id first, then edit it
   .put('/:pid',
-    assertAdmin,
+    // assertAdmin,
     (req, res, next) => {
       req.foundProduct.update(req.body)
         .catch(next)
     })
   .delete('/:pid',
-    assertAdmin,
+    // assertAdmin,
     (req, res, next) =>
       req.foundProduct.destroy()
         .then(() => res.sendStatus(204))

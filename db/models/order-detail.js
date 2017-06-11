@@ -3,15 +3,19 @@
 const {STRING, INTEGER, DECIMAL, ENUM, DATE} = require('sequelize')
 
 module.exports = db => db.define('order-details', {
-  purchasedPrice: DECIMAL,
+  purchasedPrice: {
+    type: DECIMAL(10, 2),
+    validate: {
+      min: 0.01,
+      isDecimal: true
+    }
+  },
   quantity: {
     type: INTEGER,
-    defaultValue: 1
-  }
-}, {
-  setterMethods: {
-    setPrice: function(price) { // get the price from the product table
-      this.purchasedPrice = price
+    defaultValue: 1,
+    validate: {
+      min: 1,
+      isInt: true
     }
   }
 })
