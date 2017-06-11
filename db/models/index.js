@@ -22,7 +22,6 @@ const app = require('APP')
       Order: require('./order'),
       Review: require('./review'),
       OrderDetail: require('./order-detail')
-
     }
     , {mapValues} = require('lodash')
 

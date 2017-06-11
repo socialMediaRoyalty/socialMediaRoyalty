@@ -25,23 +25,14 @@ module.exports = db => db.define('users', {
       isUrl: true
     }
   },
-  twitterLink: {
+  twitterHandle: {
     type: STRING,
-    validate: {
-      isUrl: true
-    }
   },
-  instagramLink: {
+  instagramHandle: {
     type: STRING,
-    validate: {
-      isUrl: true
-    }
   },
-  snapChatLink: {
+  snapChatHandle: {
     type: STRING,
-    validate: {
-      isUrl: true
-    }
   },
   address: STRING,
   paypalId: {
