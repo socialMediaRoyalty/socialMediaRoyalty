@@ -26,16 +26,26 @@ module.exports = require('express').Router()
           res.json(statusOrders)
         })
       } else {
-        Order.findAll({})
+        OrderDetail.findAll({
+          include: [{
+            model: Product,
+            include: [{
+              model: Order
+            }]
+          }]
+        })
           .then(orders => {
             res.json(orders)
           })
       }
     } else {
-      Order.findAll({
+      OrderDetail.findAll({
         where: {
           user_id: req.user.id
-        }
+        },
+        include: [{
+          model: Product
+        }]
       }).then(orders => {
         res.json(orders)
       })
