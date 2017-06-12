@@ -18,38 +18,25 @@ import ProductsContainer from './containers/ProductsContainer'
 import ProductContainer from './containers/ProductContainer'
 
 import {getAllCategories} from './reducers/category'
-import {getAllProducts, getProductById} from './reducers/product'
+import {getAllProducts, getProductById, getProductByCategory} from './reducers/product'
 import { fetchAllUsers } from './reducers/user'
 
 /* OnEnter Functions go Here */
 const fetchInitialData = (newRouterState) => {
   store.dispatch(getAllCategories())
-// store.dispatch to get all Products too
+  store.dispatch(getAllProducts())
 }
 
 const onUsersEnter = (newRouterState) =>
   store.dispatch(fetchAllUsers())
 
-const onProductsEnter = () => {
-  store.dispatch(getAllProducts())
+const onProductByCategoryEnter = (newRouterState) => {
+  store.dispatch(getProductByCategory(newRouterState.params.cid))
 }
 
-const onProductEnter = (state) => {
-  store.dispatch(getProductById(state.params.pid))
+const onProductEnter = (newRouterState) => {
+  store.dispatch(getProductById(newRouterState.params.pid))
 }
-
-const ExampleApp = connect(
-  // mapStateToProps
-  ({ auth }) => ({ user: auth })
-)(
-  ({ user, children }) =>
-    <div>
-      <nav>
-        {user ? <WhoAmI/> : <Login/>}
-      </nav>
-      {children}
-    </div>
-)
 
 render(
   <Provider store={store}>
@@ -57,7 +44,8 @@ render(
       <Route path="/" component={RootContainer} onEnter={fetchInitialData}>
         <IndexRoute component={Home} />
         <Route path="/categories" components={CategoriesContainer} />
-        <Route path="/products" components={ProductsContainer} onEnter={onProductsEnter}/>
+        <Route path="/products" components={ProductsContainer} />
+        <Route path="/products/categories/:cid" components={ProductsContainer} onEnter={onProductByCategoryEnter}/>
         <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
         <Route path="/profile" component={ ProfileContainer } />
         <Route path="/admin/users"
