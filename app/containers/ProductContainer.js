@@ -5,7 +5,7 @@ import { getProductById } from '../reducers/product'
 
 export const ProductContainer = ({product}) => {
   return (
-    <div>
+    product && <div>
       <h1>This is Product Container</h1>
         <h2>Product Name: {product.name}</h2>
         <h2>Product Description: {product.description}</h2>

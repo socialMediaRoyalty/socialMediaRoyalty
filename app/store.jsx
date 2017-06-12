@@ -23,4 +23,3 @@ export default store
 // Set the auth info at start
 store.dispatch(whoami())
 store.dispatch(getAllCategories())
-// store.dispatch(getAllProducts())

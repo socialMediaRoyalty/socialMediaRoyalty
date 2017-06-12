@@ -13,8 +13,8 @@ const REMOVE_PRODUCT = 'DELETE_PRODUCT'
 /* --------------    ACTION CREATORS    ----------------- */
 
 const get = (products) => ({ type: GET_ALL_PRODUCTS, products })
-const getById = (pid) => ({ type: GET_PRODUCT_BY_ID, pid })
-const getByCategory =(cid) => ({type: GET_PRODUCT_BY_CATEGORY, products})
+const getById = (product) => ({ type: GET_PRODUCT_BY_ID, product })
+const getByCategory =(cid) => ({type: GET_PRODUCT_BY_CATEGORY, cid})
 const add = (product) => ({ type: ADD_PRODUCT, product })
 const update = (product) => ({type: UPDATE_PRODUCT, product})
 const remove = () => ({type: REMOVE_PRODUCT})
@@ -56,14 +56,15 @@ export const getAllProducts = () => dispatch => {
 export const getProductById = (pid) => dispatch => {
   return axios.get(`/api/products/${pid}`)
     .then(resToData)
-    .then(prodcuts => {
-      dispatch(getById(pid))
+    .then(product => {
+      dispatch(getById(product))
     })
     .catch(console.error)
 }
 
+// need help on query
 export const getProductByCategory = (cid) => dispatch => {
-  return axios.get(`/api/products/?category_id=${cid}`)
+  return axios.get(`/api/products?categoryId=${cid}`)
     .then(resToData)
     .then(prodcuts => {
       dispatch(getByCategory(cid))

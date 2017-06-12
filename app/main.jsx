@@ -23,7 +23,7 @@ const onProductsEnter = () => {
 }
 
 const onProductEnter = (state) => {
-  store.dispatch(getProductById(2))
+  store.dispatch(getProductById(state.params.pid))
 }
 
 const ExampleApp = connect(
@@ -43,8 +43,8 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={ExampleApp}>
-        <IndexRedirect to="/index" />
-        <Route path="/index" component={RootContainer} >
+        <IndexRedirect to="/" />
+        <Route path="/" component={RootContainer} >
           <Route path="/categories" components={CategoriesContainer} />
           <Route path="/products" components={ProductsContainer} onEnter={onProductsEnter}/>
           <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
