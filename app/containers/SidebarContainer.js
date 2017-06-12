@@ -3,13 +3,13 @@ import {connect} from 'react-redux'
 import store from '../store'
 import { getAllCategories } from '../reducers/category'
 
-export const CategoriesContainer = ({categories}) => {
+export const SidebarContainer = ({categories}) => {
   return (
     <div>
       <h1>This is Categories Container</h1>
       {
         categories && categories.map(category => {
-          return <h3 key={category.name}> >> {category.name}</h3>
+          return (<h3 key={category.name}> >> {category.name}</h3>)
         })
       }
     </div>
@@ -19,4 +19,4 @@ export const CategoriesContainer = ({categories}) => {
 export default connect(
   ({ category }) => ({ categories: category }), // state => ({}),
   {getAllCategories},
-)(CategoriesContainer)
+)(SidebarContainer)

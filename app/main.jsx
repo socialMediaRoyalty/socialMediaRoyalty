@@ -11,12 +11,15 @@ import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 
 import RootContainer from './containers/RootContainer'
+import CategoriesContainer from './containers/CategoriesContainer'
+import ProductsContainer from './containers/ProductsContainer'
 
-// const mapStateToProps = (state, ownProps) => {
-//    const auth = state.auth
-//    const product = state.product
-//    return {user: auth}
-// }
+import {getAllCategories} from './reducers/category'
+import {getAllProducts} from './reducers/product'
+
+const onProductsEnter = () => {
+  store.dispatch(getAllProducts())
+}
 
 const ExampleApp = connect(
   // mapStateToProps
@@ -36,7 +39,10 @@ render(
     <Router history={browserHistory}>
       <Route path="/" component={ExampleApp}>
         <IndexRedirect to="/index" />
-        <Route path="/index" component={RootContainer} />
+        <Route path="/index" component={RootContainer} >
+          <Route path="/categories" components={CategoriesContainer} />
+          <Route path="/products" components={ProductsContainer} onEnter={onProductsEnter}/>
+        </Route>
       </Route>
       <Route path='*' component={NotFound} />
     </Router>

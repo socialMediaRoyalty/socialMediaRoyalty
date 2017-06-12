@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
+import store from '../store'
+
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
-import FeaturedProducts from '../components/FeaturedProducts'
 
-import CategoriesContainer from './CategoriesContainer'
+import getAllProducts from '../reducers/product'
 
 export default class RootContainer extends Component {
   componentDidMount() {
@@ -18,9 +20,16 @@ export default class RootContainer extends Component {
         </div>
         <div className="row">
           <Sidebar />
-          <CategoriesContainer />
+          {
+            this.props.children
+          }
         </div>
       </div>
     )
   }
 }
+
+// export default connect(
+//   ({ product }) => ({ products: product }), // state => ({}),
+//   {getAllProducts},
+// )(RootContainer)
