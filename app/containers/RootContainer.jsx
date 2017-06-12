@@ -19,7 +19,6 @@ export default class RootContainer extends Component {
         </div>
         <div className="row">
           <Sidebar />
-          <CategoriesContainer />
           { this.props.children }
           <Footer />
         </div>

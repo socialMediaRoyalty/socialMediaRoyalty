@@ -11,17 +11,24 @@ import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
 import UsersContainer from './components/UsersContainer'
-import { fetchAllUsers } from './reducers/user'
 import RootContainer from './containers/RootContainer'
 
+import { fetchAllUsers } from './reducers/user'
+import { getAllCategories } from './reducers/category'
+
 /* OnEnter Functions go Here */
+const fetchInitialData = (newRouterState) => {
+  store.dispatch(getAllCategories())
+// store.dispatch to get all Products too
+}
+
 const onUsersEnter = (newRouterState) =>
   store.dispatch(fetchAllUsers())
 
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={RootContainer}>
+      <Route path="/" component={RootContainer} onEnter={fetchInitialData}>
         <IndexRoute component={Home} />
         <Route path="/admin/users"
           component={UsersContainer}
