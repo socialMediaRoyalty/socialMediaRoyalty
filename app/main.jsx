@@ -13,6 +13,7 @@ import RootContainer from './containers/RootContainer'
 import ProfileContainer from './containers/ProfileContainer'
 import UsersContainer from './containers/UsersContainer'
 
+import HomeContainer from './containers/HomeContainer'
 import CategoriesContainer from './containers/CategoriesContainer'
 import ProductsContainer from './containers/ProductsContainer'
 import ProductContainer from './containers/ProductContainer'
@@ -42,15 +43,13 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={RootContainer} onEnter={fetchInitialData}>
-        <IndexRoute component={Home} />
+        <IndexRoute component={HomeContainer} />
         <Route path="/categories" components={CategoriesContainer} />
         <Route path="/products" components={ProductsContainer} />
         <Route path="/products/categories/:cid" components={ProductsContainer} onEnter={onProductByCategoryEnter}/>
         <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
         <Route path="/profile" component={ ProfileContainer } />
-        <Route path="/admin/users"
-          component={UsersContainer}
-          onEnter={onUsersEnter} />
+        <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>

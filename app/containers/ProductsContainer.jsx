@@ -7,9 +7,7 @@ import {Grid, Row, Col, Thumbnail, Button} from 'react-bootstrap'
 import { getAllProducts } from '../reducers/product'
 
 export const CategoriesContainer = (props) => {
-  const productsByCategories = store.getState()
   const products = props.products
-  console.log('>>>>>>>>>', props)
   return (
     <div>
       <h1>This is Products Container</h1>
@@ -41,15 +39,3 @@ export default connect(
   ({ product }) => ({ products: product }), // state => ({}),
   {getAllProducts},
 )(CategoriesContainer)
-
-const filterProductsByCategory = (products, cid) => {
-  products = products.filter(product => {
-    let categories = product.categories
-    categories.forEach(category => {
-      if (category.id === cid) {
-        return true
-      }
-    })
-    return false
-  })
-}
