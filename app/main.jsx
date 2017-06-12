@@ -13,12 +13,17 @@ import NotFound from './components/NotFound'
 import RootContainer from './containers/RootContainer'
 import CategoriesContainer from './containers/CategoriesContainer'
 import ProductsContainer from './containers/ProductsContainer'
+import ProductContainer from './containers/ProductContainer'
 
 import {getAllCategories} from './reducers/category'
-import {getAllProducts} from './reducers/product'
+import {getAllProducts, getProductById} from './reducers/product'
 
 const onProductsEnter = () => {
   store.dispatch(getAllProducts())
+}
+
+const onProductEnter = (state) => {
+  store.dispatch(getProductById(2))
 }
 
 const ExampleApp = connect(
@@ -42,6 +47,7 @@ render(
         <Route path="/index" component={RootContainer} >
           <Route path="/categories" components={CategoriesContainer} />
           <Route path="/products" components={ProductsContainer} onEnter={onProductsEnter}/>
+          <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
         </Route>
       </Route>
       <Route path='*' component={NotFound} />
