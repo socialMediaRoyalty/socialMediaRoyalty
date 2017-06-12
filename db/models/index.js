@@ -18,10 +18,10 @@ const app = require('APP')
       Category: require('./category'),
       // ---------- Add new models here ----------
       Cart: require('./cart'),
-      CartDetail: require('./cartDetail'),
+      CartDetail: require('./cart_detail'),
       Order: require('./order'),
       Review: require('./review'),
-      OrderDetail: require('./order-detail')
+      OrderDetail: require('./order_detail')
     }
     , {mapValues} = require('lodash')
 
