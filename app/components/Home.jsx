@@ -10,9 +10,7 @@ const Home = connect(
 )(
   ({ user, children }) =>
     <div>
-      <nav>
-        {user ? <WhoAmI/> : <Login/>}
-      </nav>
+      <h1>Hi this is Home</h1>
       {children}
     </div>
 )

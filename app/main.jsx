@@ -14,8 +14,6 @@ import ProfileContainer from './containers/ProfileContainer'
 import UsersContainer from './containers/UsersContainer'
 
 import { fetchAllUsers } from './reducers/user'
-
-import { fetchAllUsers } from './reducers/user'
 import { getAllCategories } from './reducers/category'
 
 /* OnEnter Functions go Here */
