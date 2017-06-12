@@ -11,7 +11,7 @@ module.exports = require('express').Router()
       product_id: req.params.pid
     }
   }).then(reviews => {
-    res.send(reviews)
+    res.json(reviews)
   }).catch(next)
 })
 
@@ -19,6 +19,6 @@ module.exports = require('express').Router()
 .post('/', (req, res, next) => {
   Reviews.create(req.body)
   .then(review => {
-    res.send(review)
+    res.json(review)
   }).catch(next)
 })

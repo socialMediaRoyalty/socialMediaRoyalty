@@ -9,7 +9,7 @@ import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
-import RootContainer from './containers/RootContainer'
+import RootContainer from './containers/RootContainer.jsx'
 import ProfileContainer from './containers/ProfileContainer'
 import UsersContainer from './containers/UsersContainer'
 
