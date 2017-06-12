@@ -178,7 +178,7 @@ const orders = seed(Order,
       user_id: users.god.id,
     },
     'order2': {
-      status: 'delivered',
+      status: 'shipped',
       purchaseDate: new Date(),
       user_id: users.barack.id,
     },
@@ -356,3 +356,4 @@ function seed(Model, rows) {
 }
 
 module.exports = Object.assign(seed, {users, products, carts, cartDetails, reviews, orders, categories, orderDetails, categoryProduct, productReview})
+
