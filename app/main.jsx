@@ -5,14 +5,16 @@ import {render} from 'react-dom'
 import {connect, Provider} from 'react-redux'
 
 import store from './store'
-import Jokes from './components/jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
-import UsersContainer from './components/UsersContainer'
-import { fetchAllUsers } from './reducers/user'
+
 import RootContainer from './containers/RootContainer'
+import ProfileContainer from './containers/ProfileContainer'
+import UsersContainer from './containers/UsersContainer'
+
+import { fetchAllUsers } from './reducers/user'
 
 /* OnEnter Functions go Here */
 const onUsersEnter = (newRouterState) =>
@@ -26,8 +28,7 @@ render(
         <Route path="/admin/users"
           component={UsersContainer}
           onEnter={onUsersEnter} />
-        <Route path="/jokes" component={Jokes} />
-
+        <Route path="/profile" component={ ProfileContainer } />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>

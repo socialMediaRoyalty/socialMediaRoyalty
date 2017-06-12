@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import { Table, Button } from 'react-bootstrap'
 
-import UserRow from './UserRow'
+import UserRow from '../components/UserRow'
 import { fetchUser, updateUser, removeUser } from '../reducers/user'
 
 /* -----------------    COMPONENT     ------------------ */
