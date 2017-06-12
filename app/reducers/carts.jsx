@@ -40,7 +40,7 @@ export const fetchCart = () => {
     axios.get(`/api/carts`)
     .then(res => {
       dispatch(getCart(res.data))
-    })
+    }).catch(console.error)
   }
 }
 
@@ -49,7 +49,7 @@ export const saveCart = () => {
     axios.post(`/api/carts`)
     .then(res => {
       dispatch(addCart(res.data))
-    })
+    }).catch(console.error)
   }
 }
 
@@ -58,7 +58,7 @@ export const addProduct = () => {
     axios.post(`/api/carts`)
     .then(res => {
       dispatch(addProd(res.data))
-    })
+    }).catch(console.error)
   }
 }
 
@@ -67,6 +67,6 @@ export const deleteCart = () => {
     axios.delete(`/api/carts`)
     .then(res => {
       dispatch(delCart(res.data))
-    })
+    }).catch(console.error)
   }
 }
