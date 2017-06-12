@@ -57,7 +57,7 @@ export const getProductById = (pid) => dispatch => {
   return axios.get(`/api/products/${pid}`)
     .then(resToData)
     .then(prodcuts => {
-      dispatch(getById(prodcuts))
+      dispatch(getById(pid))
     })
     .catch(console.error)
 }
@@ -66,7 +66,7 @@ export const getProductByCategory = (cid) => dispatch => {
   return axios.get(`/api/products/?category_id=${cid}`)
     .then(resToData)
     .then(prodcuts => {
-      dispatch(get(prodcuts))
+      dispatch(getByCategory(cid))
     })
     .catch(console.error)
 }
