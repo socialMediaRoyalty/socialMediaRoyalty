@@ -4,8 +4,9 @@ const db = require('APP/db')
 const User = db.model('users')
 const Order = db.model('orders')
 const Cart = db.model('carts')
-const CartDetail = db.model('cartDetail')
+// const CartDetail = db.model('cartDetail')
 const Product = db.model('products')
+const OrderDetail = db.model('order_detail')
 
 const { mustBeLoggedIn, assertAdmin, selfOnly } = require('./auth.filters')
 
@@ -74,7 +75,16 @@ module.exports = require('express').Router()
 
   // get one order detail
   .get('/:oid', (req, res, next) => {
-    res.json(req.order)
+    OrderDetail.findOne({
+      where: {
+        order_id: req.params.oid
+      },
+      include: [{
+        model: Order
+      }]
+    }).then(orderDetail => {
+      res.json(orderDetail)
+    })
   })
 
   // put update order status (ADMIN)
