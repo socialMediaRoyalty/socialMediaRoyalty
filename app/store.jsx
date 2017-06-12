@@ -6,6 +6,7 @@ import thunkMiddleware from 'redux-thunk'
 
 import {whoami} from './reducers/auth'
 import { getAllCategories } from './reducers/category'
+import { getAllProducts } from './reducers/product'
 
 const store = createStore(
   rootReducer,
