@@ -7,7 +7,7 @@ const Review = db.model('reviews')
 const {assertAdmin} = require('./auth.filters')
 
 module.exports = require('express').Router()
-  // get all products, filter the available product in frontend
+// get all products, filter the available product in frontend
 // if there is query, get the products for a query (eg, ?category_id=1)
   .get('/',
     (req, res, next) =>

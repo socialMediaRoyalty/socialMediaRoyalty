@@ -294,9 +294,9 @@ function seed(Model, rows) {
                 )
             }
           }).reduce(
-            (all, one) => Object.assign({}, all, {[one.key]: one.value}),
-            {}
-          )
+          (all, one) => Object.assign({}, all, {[one.key]: one.value}),
+          {}
+        )
         )
       )
       .then(seeded => {
@@ -309,3 +309,4 @@ function seed(Model, rows) {
 }
 
 module.exports = Object.assign(seed, {users, products, carts, cartDetails, reviews, orders, categories, orderDetails})
+
