@@ -1,8 +1,38 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Table, Button } from 'react-bootstrap'
+import ContentEditable from 'react-contenteditable'
+import { Link, browserHistory } from 'react-router'
 
 import { fetchUser, updateUser, removeUser } from '../reducers/user'
+
+/* -----------------    NESTED COMPONENT     ------------------ */
+
+const ProfileRow =
+  ({disableEdit, currentUser, handleChange, field, title}) => {
+    const editStyle = {
+      color: 'gray',
+      border: '1px dashed lightblue'
+    }
+
+    const readStyle = {
+      color: 'black'
+    }
+
+    return (
+      <tr>
+        <td><b>{title}</b></td>
+        <td>
+          <ContentEditable
+            style={disableEdit ? readStyle : editStyle}
+            disabled={disableEdit}
+            html={currentUser[field]}
+            onChange={handleChange(field)}
+          />
+        </td>
+      </tr>
+    )
+  }
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -10,16 +40,24 @@ class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.handleEdit = this.handleEdit.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
-    this.handleInput = this.handleInput.bind(this)
+    this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleName = this.handleName.bind(this)
-    this.handleCampus = this.handleCampus.bind(this)
-    this.handleEmail = this.handleEmail.bind(this)
   }
 
   componentWillReceiveProps(newProps, oldProps) {
-    this.setState(newProps.auth)
+    this.setState({
+      currentUser: newProps.auth,
+      disableEdit: true
+    })
+  }
+
+  handleEdit(event) {
+    this.setState({
+      disableEdit: false
+    })
+    event.preventDefault()
   }
 
   handleDelete(event) {
@@ -27,59 +65,98 @@ class Profile extends Component {
     event.preventDefault()
   }
 
-  handleInput(field, event) {
-    const value = event.target.value
-    this.setState({
-      [field]: value
-    })
-  }
-
-  handleName(event) {
-    this.handleInput('name', event)
-  }
-
-  handleEmail(event) {
-    this.handleInput('email', event)
-  }
-
-  handleCampus(event) {
-    this.handleInput('HomeCampusId', event)
+  handleChange(field) {
+    return (event) => {
+      console.log(event.target.value)
+      const newState = Object.assign({}, this.state)
+      newState.currentUser[field] = event.target.value
+      this.setState(newState)
+    }
   }
 
   handleSubmit(event) {
-    this.props.sendUpdatedStudent(this.state)
     event.preventDefault()
+    this.props.updateUser(this.state.currentUser.id, this.state.currentUser)
+    this.setState({
+      disableEdit: true
+    })
   }
 
   render() {
-    let currentUser = this.props.auth
+    const currentUser = this.state.currentUser
     if (!currentUser || !currentUser.id) return <div />
 
     return (
       <div className="container">
-        <h2 className="cool-font">Profile</h2>
+        <h2>Profile</h2>
 
-        <Table bordered condensed hover>
+        <Button
+          bsStyle="info"
+          bsSize="small"
+          onClick={this.handleEdit}>
+          Edit Profile
+        </Button>
+
+        <Button
+          bsStyle="success"
+          bsSize="small"
+          onClick={this.handleSubmit}>
+          Save Changes
+        </Button>
+
+        <Table hover>
           <tbody>
-            <tr>
-              <td>Name</td>
-              <td>currentUser.name</td>
-            </tr>
+            <ProfileRow
+              disableEdit={this.state.disableEdit}
+              currentUser={this.state.currentUser}
+              handleChange={this.handleChange}
+              field={'name'}
+              title={'Name'}
+            />
+            <ProfileRow
+              disableEdit={this.state.disableEdit}
+              currentUser={this.state.currentUser}
+              handleChange={this.handleChange}
+              field={'email'}
+              title={'Email'}
+            />
+            <ProfileRow
+              disableEdit={this.state.disableEdit}
+              currentUser={this.state.currentUser}
+              handleChange={this.handleChange}
+              field={'address'}
+              title={'Address'}
+            />
+            <ProfileRow
+              disableEdit={this.state.disableEdit}
+              currentUser={this.state.currentUser}
+              handleChange={this.handleChange}
+              field={'facebookLink'}
+              title={'Facebook'}
+            />
+            <ProfileRow
+              disableEdit={this.state.disableEdit}
+              currentUser={this.state.currentUser}
+              handleChange={this.handleChange}
+              field={'instagramHandle'}
+              title={'Instagram'}
+            />
+            <ProfileRow
+              disableEdit={this.state.disableEdit}
+              currentUser={this.state.currentUser}
+              handleChange={this.handleChange}
+              field={'twitterHandle'}
+              title={'Twitter'}
+            />
+            <ProfileRow
+              disableEdit={this.state.disableEdit}
+              currentUser={this.state.currentUser}
+              handleChange={this.handleChange}
+              field={'snapChatHandle'}
+              title={'SnapChat'}
+            />
           </tbody>
         </Table>
-
-        <button
-          className="btn btn-primary"
-          onClick={this.handleSubmit}
-        >
-          Update Profile
-        </button>
-        <button
-          className="btn btn-danger"
-          onClick={this.handleDelete}
-        >
-          Delete Account
-        </button>
       </div>
     )
   }
@@ -92,41 +169,3 @@ const mapState = ({auth}) => ({auth})
 const mapDispatch = { fetchUser, updateUser, removeUser }
 
 export default connect(mapState, mapDispatch)(Profile)
-
-
-        // <table className="table">
-        //   <tbody>
-        //     <tr>
-        //       <td>Id</td>
-        //       <td>
-        //         {student.id}
-        //       </td>
-        //     </tr>
-        //     <tr>
-        //       <td>Name</td>
-        //       <td>
-        //         <ContentEditable
-        //           html={student.name}
-        //           onChange={this.handleName}
-        //         />
-        //       </td>
-        //     </tr>
-        //     <tr>
-        //       <td>Email</td>
-        //       <td>
-        //         <ContentEditable
-        //           html={student.email}
-        //           onChange={this.handleEmail}
-        //         />
-        //       </td>
-        //     </tr>
-        //     <tr>
-        //       <td>Home Campus</td>
-        //       <td>
-        //         <Link to={`/campus/${campus ? campus.id : ''}`}>
-        //           {`${campus ? campus.name : ''}`}
-        //         </Link>
-        //       </td>
-        //     </tr>
-        //   </tbody>
-        // </table>
