@@ -3,6 +3,7 @@
 const {STRING, INTEGER, DECIMAL, ENUM, DATE} = require('sequelize')
 
 module.exports = db => db.define('order_detail', {
+
   purchasedPrice: {
     type: DECIMAL(10, 2),
     validate: {

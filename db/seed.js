@@ -18,6 +18,7 @@ function seedEverything() {
   seeded.categories = categories(seeded)
   seeded.orderDetails = orderDetails(seeded)
   seeded.categoryProduct = categoryProduct(seeded)
+
   seeded.productReview = productReview(seeded)
 
   return Promise.props(seeded)
@@ -354,4 +355,5 @@ function seed(Model, rows) {
   }
 }
 
-module.exports = Object.assign(seed, {users, products, carts, cartDetails, reviews, orders, categories, orderDetails, categoryProduct})
+module.exports = Object.assign(seed, {users, products, carts, cartDetails, reviews, orders, categories, orderDetails, categoryProduct, productReview})
+
