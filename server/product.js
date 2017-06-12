@@ -12,9 +12,9 @@ module.exports = require('express').Router()
   .get('/',
     (req, res, next) =>
       Product.findAll({
-        where: req.query,
         include: [{
-          model: Category
+          model: Category,
+          where: req.query
         }, {
           model: Review
         }]
