@@ -22,14 +22,17 @@ const UserRow =
         <td>
           {isAdmin ? 'Admin'
             : <Button
-              onClick={handleUpgrade}
-              >Upgrade</Button> }
+                onClick={handleUpgrade}>
+                Upgrade
+              </Button>
+          }
         </td>
         <td>
           <Button
             bsStyle="danger"
-            onClick={handleDelete}
-            >X</Button>
+            onClick={handleDelete}>
+            X
+          </Button>
         </td>
       </tr>
     )

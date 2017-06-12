@@ -5,29 +5,66 @@ import {render} from 'react-dom'
 import {connect, Provider} from 'react-redux'
 
 import store from './store'
-import Jokes from './components/jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
-import UsersContainer from './components/UsersContainer'
-import { fetchAllUsers } from './reducers/user'
 import RootContainer from './containers/RootContainer'
+import ProfileContainer from './containers/ProfileContainer'
+import UsersContainer from './containers/UsersContainer'
+
+import CategoriesContainer from './containers/CategoriesContainer'
+import ProductsContainer from './containers/ProductsContainer'
+import ProductContainer from './containers/ProductContainer'
+
+import {getAllCategories} from './reducers/category'
+import {getAllProducts, getProductById} from './reducers/product'
+import { fetchAllUsers } from './reducers/user'
+
 
 /* OnEnter Functions go Here */
+const fetchInitialData = (newRouterState) => {
+  store.dispatch(getAllCategories())
+// store.dispatch to get all Products too
+}
+
 const onUsersEnter = (newRouterState) =>
   store.dispatch(fetchAllUsers())
+
+const onProductsEnter = () => {
+  store.dispatch(getAllProducts())
+}
+
+const onProductEnter = (state) => {
+  store.dispatch(getProductById(state.params.pid))
+}
+
+const ExampleApp = connect(
+  // mapStateToProps
+  ({ auth }) => ({ user: auth })
+)(
+  ({ user, children }) =>
+    <div>
+      <nav>
+        {user ? <WhoAmI/> : <Login/>}
+      </nav>
+      {children}
+    </div>
+)
 
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={RootContainer}>
+      <Route path="/" component={RootContainer} onEnter={fetchInitialData}>
         <IndexRoute component={Home} />
+        <IndexRedirect to="/" />
+        <Route path="/categories" components={CategoriesContainer} />
+        <Route path="/products" components={ProductsContainer} onEnter={onProductsEnter}/>
+        <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
+        <Route path="/profile" component={ ProfileContainer } />
         <Route path="/admin/users"
           component={UsersContainer}
           onEnter={onUsersEnter} />
-        <Route path="/jokes" component={Jokes} />
-
       </Route>
       <Route path='*' component={NotFound} />
     </Router>
