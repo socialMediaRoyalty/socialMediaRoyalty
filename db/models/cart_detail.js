@@ -9,4 +9,3 @@ module.exports = db => db.define('cart_detail', {
   }
 })
 
-
