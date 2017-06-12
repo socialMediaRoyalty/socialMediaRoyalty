@@ -30,7 +30,10 @@ module.exports = require('express').Router()
         'description': req.body.description,
         'price': req.body.price,
         'quantity': req.body.quantity,
-        'imageUrl': req.body.imageUrl
+        'imageUrl': req.body.imageUrl,
+        'categories': req.body.categories || [] // array of category objects
+      }, {
+        include: [Category]
       })
         .then(createdProduct =>
           createdProduct.addCategory(req.body.categoriesId) // array of category IDs
