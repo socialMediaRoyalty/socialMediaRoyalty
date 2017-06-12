@@ -9,17 +9,11 @@ export const CategoriesContainer = ({categories}) => {
       <h1>This is Categories Container</h1>
       {
         categories && categories.map(category => {
-          return <h3> >> {category.name}</h3>
+          return <h3 key={category.name}> >> {category.name}</h3>
         })
       }
     </div>
   )
-}
-
-const mapStateToProps = function(state) {
-  return {
-    categories: store.dispatch(getAllCategories)
-  }
 }
 
 export default connect(

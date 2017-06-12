@@ -21,7 +21,6 @@ import {getAllCategories} from './reducers/category'
 import {getAllProducts, getProductById} from './reducers/product'
 import { fetchAllUsers } from './reducers/user'
 
-
 /* OnEnter Functions go Here */
 const fetchInitialData = (newRouterState) => {
   store.dispatch(getAllCategories())
@@ -57,7 +56,6 @@ render(
     <Router history={browserHistory}>
       <Route path="/" component={RootContainer} onEnter={fetchInitialData}>
         <IndexRoute component={Home} />
-        <IndexRedirect to="/" />
         <Route path="/categories" components={CategoriesContainer} />
         <Route path="/products" components={ProductsContainer} onEnter={onProductsEnter}/>
         <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
