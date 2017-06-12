@@ -14,11 +14,11 @@ export default class RootContainer extends Component {
     return (
       <div className="container">
         <div className="row">
+          <h1>Social Media Royalty</h1>
           <Navbar />
         </div>
         <div className="row">
           <Sidebar />
-          <CategoriesContainer />
           { this.props.children }
           <Footer />
         </div>
