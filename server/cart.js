@@ -5,7 +5,7 @@ const Cart = db.model('carts')
 const CartDetail = db.model('cart_detail')
 const Product = db.model('products')
 const Order = db.model('orders')
-const OrderDetail = db.model('order_details')
+const OrderDetail = db.model('order_detail')
 const User = db.model('users')
 
 module.exports = require('express').Router()
