@@ -2,7 +2,7 @@
 
 const {STRING, INTEGER, DECIMAL, ENUM, DATE} = require('sequelize')
 
-module.exports = db => db.define('order_details', {
+module.exports = db => db.define('order_detail', {
   purchasedPrice: {
     type: DECIMAL(10, 2),
     validate: {
@@ -22,5 +22,4 @@ module.exports = db => db.define('order_details', {
 
 module.exports.associations = (OrderDetails, {Order, Product}) => {
   OrderDetails.belongsTo(Order)
-  OrderDetails.belongsToMany(Product, {as: 'products', through: 'order_products'})
 }

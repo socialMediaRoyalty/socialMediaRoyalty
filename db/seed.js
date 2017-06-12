@@ -4,21 +4,20 @@ const db = require('APP/db')
     , {User, CartDetail, Cart, Product, Review, Order, Category, OrderDetail, CategoryProduct, OrderProducts, ProductReview, Promise} = db
     , {mapValues} = require('lodash')
     , catProd = db.models.category_product
-    , ordProd = db.models.order_products
-    , prodRev = db.models.product.product_review
+    , prodRev = db.models.product_review
+
 function seedEverything() {
   const seeded = {
     users: users(),
     products: products()
   }
   seeded.carts = carts(seeded)
-  seeded.cart_details = cart_details(seeded)
+  seeded.cartDetails = cartDetails(seeded)
   seeded.reviews = reviews(seeded)
   seeded.orders = orders(seeded)
   seeded.categories = categories(seeded)
   seeded.orderDetails = orderDetails(seeded)
   seeded.categoryProduct = categoryProduct(seeded)
-  seeded.orderProducts = orderProducts(seeded)
   seeded.productReview = productReview(seeded)
 
   return Promise.props(seeded)
@@ -113,7 +112,7 @@ const products = seed(Product, {
   }
 })
 
-const cart_details = seed(CartDetail,
+const cartDetails = seed(CartDetail,
 ({carts, products}) => ({
   '1': {
     quantity: 2,
@@ -140,28 +139,28 @@ const cart_details = seed(CartDetail,
 
 const reviews = seed(Review,
 ({users, products}) => ({
-  '1': {
+  'rev1': {
     rating: 4,
     date: Date(),
     comment: 'All the comments were great, but I wish they could be more detailed',
     user_id: users.god.id,
     product_id: products.prod3.id
   },
-  '2': {
+  'rev2': {
     rating: 1,
     date: Date(),
     comment: 'The Facebook likes have not increased my popularity on Facebook which is what I expected it would do',
     user_id: users.bo.id,
     product_id: products.prod1.id
   },
-  '3': {
+  'rev3': {
     rating: 5,
     date: Date(),
     comment: 'The more views I get, the more people watch my videos! This is a great product.',
     user_id: users.michelle.id,
     product_id: products.prod4.id
   },
-  '4': {
+  'rev4': {
     rating: 3,
     date: Date(),
     comment: 'My photos have the most likes of all my friends! They all think I am so popular! So cool!',
@@ -266,47 +265,26 @@ const categoryProduct = seed(catProd,
   })
 )
 
-const orderProducts = seed(ordProd,
-  ({ordersDetails, products}) => ({
+const productReview = seed(prodRev,
+  ({products, reviews}) => ({
     '1': {
-      order_detail_id: orderDetails.ordDet1.id,
-      product_id: products.prod1.id
+      product_id: products.prod3.id,
+      review_id: reviews.rev1.id
     },
     '2': {
-      order_detail_id: orderDetails.ordDet2.id,
-      product_id: products.prod4.id
+      product_id: products.prod1.id,
+      review_id: reviews.rev2.id
     },
     '3': {
-      order_detail_id: orderDetails.ordDet3.id,
-      product_id: products.prod2.id
+      product_id: products.prod4.id,
+      review_id: reviews.rev3.id
     },
     '4': {
-      order_detail_id: orderDetails.ordDet4.id,
-      product_id: products.prod3.id
+      product_id: products.prod2.id,
+      review_id: reviews.rev4.id
     },
   })
 )
-
-// const categoryProduct = seed(CategoryProduct,
-//   ({categories, products}) => ({
-//     '1': {
-//       product_id: products.prod1.id,
-//       category_id: categories.cat1.id,
-//     },
-//     '2': {
-//       product_id: products.prod2.id,
-//       category_id: categories.cat1.id,
-//     },
-//     '3': {
-//       product_id: products.prod3.id,
-//       category_id: categories.cat1.id,
-//     },
-//     '4': {
-//       product_id: products.prod4.id,
-//       category_id: categories.cat1.id,
-//     },
-//   })
-// )
 
 if (module === require.main) {
   db.didSync
@@ -376,4 +354,4 @@ function seed(Model, rows) {
   }
 }
 
-module.exports = Object.assign(seed, {users, products, carts, cart_details, reviews, orders, categories, orderDetails, categoryProduct})
+module.exports = Object.assign(seed, {users, products, carts, cartDetails, reviews, orders, categories, orderDetails, categoryProduct})
