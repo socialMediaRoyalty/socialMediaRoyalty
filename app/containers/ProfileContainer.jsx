@@ -39,7 +39,10 @@ const ProfileRow =
 class Profile extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      currentUser: this.props.auth,
+      disableEdit: true
+    }
     this.handleEdit = this.handleEdit.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleChange = this.handleChange.bind(this)
