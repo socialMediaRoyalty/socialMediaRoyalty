@@ -18,7 +18,6 @@ export default class RootContainer extends Component {
           <Navbar />
         </div>
         <div className="row">
-          <Sidebar />
           { this.props.children }
           <Footer />
         </div>
