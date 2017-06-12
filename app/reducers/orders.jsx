@@ -3,7 +3,7 @@ import axios from 'axios'
 /* -----------------    ACTIONS     ------------------ */
 
 const FETCH_ORDERS = 'FETCH_ORDERS'
-const FETCH_USER_ORDER = 'FETCH_USER_ORDER'
+const FETCH_USER_ORDERS = 'FETCH_USER_ORDER'
 const FETCH_BY_STATUS = 'FETCH_BY_STATUS'
 const UPDATE_STATUS = 'UPDATE_STATUS'
 const ADD_ORDER = 'ADD_ORDER'
@@ -11,7 +11,7 @@ const ADD_ORDER = 'ADD_ORDER'
 /* ------------   ACTION CREATORS     ------------------ */
 
 const getAllOrders = (orders) => ({type: FETCH_ORDERS, orders})
-const getUserOrders = (orders) => ({type: FETCH_USER_ORDER, orders})
+const getUserOrders = (orders) => ({type: FETCH_USER_ORDERS, orders})
 const getByStatus = (orders) => ({type: FETCH_BY_STATUS, orders})
 const updateStatus = (order) => ({type: UPDATE_STATUS, order})
 const createOrder = (order) => ({type: ADD_ORDER, order})
@@ -22,7 +22,7 @@ const reducer = (orders=[], action) => {
   switch (action.type) {
   case FETCH_ORDERS:
     return action.orders
-  case FETCH_USER_ORDER:
+  case FETCH_USER_ORDERS:
     return action.orders
   case FETCH_BY_STATUS:
     return action.orders
