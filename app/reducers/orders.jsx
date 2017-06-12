@@ -44,7 +44,7 @@ export const fetchAllOrders = () => {
     axios.get(`/api/orders`)
     .then(res => {
       dispatch(getAllOrders(res.data))
-    })
+    }).catch(console.error)
   }
 }
 
@@ -53,7 +53,7 @@ export const fetchUserOrders = () => {
     axios.get(`/api/orders`)
     .then(res => {
       dispatch(getUserOrders(res.data))
-    })
+    }).catch(console.error)
   }
 }
 
@@ -62,7 +62,7 @@ export const fetchOrdersByStatus = () => {
     axios.get(`/api/orders`)
     .then(res => {
       dispatch(getByStatus(res.data))
-    })
+    }).catch(console.error)
   }
 }
 
@@ -71,7 +71,7 @@ export const updateOrderStatus = (orderId) => {
     axios.put(`/api/orders/${orderId}`)
     .then(res => {
       dispatch(updateStatus(res.data))
-    })
+    }).catch(console.error)
   }
 }
 
@@ -80,7 +80,7 @@ export const createNewOrder = () => {
     axios.post(`/api/orders`)
     .then(res => {
       dispatch(createOrder(res.data))
-    })
+    }).catch(console.error)
   }
 }
 
