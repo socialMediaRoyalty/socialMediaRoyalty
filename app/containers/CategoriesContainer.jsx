@@ -16,12 +16,6 @@ export const CategoriesContainer = ({categories}) => {
   )
 }
 
-const mapStateToProps = function(state) {
-  return {
-    categories: store.dispatch(getAllCategories)
-  }
-}
-
 export default connect(
   ({ category }) => ({ categories: category }), // state => ({}),
   {getAllCategories},
