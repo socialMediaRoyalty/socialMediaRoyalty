@@ -16,40 +16,26 @@ const getByStatus = (orders) => ({type: FETCH_BY_STATUS, orders})
 const updateStatus = (order) => ({type: UPDATE_STATUS, order})
 const createOrder = (order) => ({type: ADD_ORDER, order})
 
-/* ------------       INITIAL STATE     ------------------ */
-
-const initialState = {
-  orders: []
-}
-
 /* ------------       REDUCER     ------------------ */
 
-export const reducer = (state=initialState, action) => {
-  const newState = Object.assing({}, state)
-
+const reducer = (orders=[], action) => {
   switch (action.type) {
   case FETCH_ORDERS:
-    newState.orders = action.orders
-    break
+    return action.orders
   case FETCH_USER_ORDER:
-    newState.orders = action.orders
-    break
+    return action.orders
   case FETCH_BY_STATUS:
-    newState.orders = action.orders
-    break
+    return action.orders
   case UPDATE_STATUS:
-    newState.orders = action.orders
-    break
+    return action.orders
   case ADD_ORDER:
-    newState.orders = action.orders
-    break
-
+    return action.orders
   default:
-    return state
+    return orders
   }
-
-  return newState
 }
+
+export default reducer
 
 /* ------------       DISPATCHERS     ------------------ */
 
