@@ -1,7 +1,9 @@
 import React from 'react'
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import {connect} from 'react-redux'
 
-export const Navigation = ({ login }) => (
+import {login} from 'APP/app/reducers/auth'
+export const Navigation = ({ auth, login }) => (
 
   <Navbar>
     <Navbar.Header>
@@ -17,16 +19,20 @@ export const Navigation = ({ login }) => (
         <MenuItem divider />
         <MenuItem eventKey={1.4}>Separated link</MenuItem>
       </NavDropdown>
-      <NavItem eventKey={2} href="#">Sign in</NavItem>
-      <NavItem eventKey={3} href="#">Cart</NavItem>
+      { !auth ? <NavItem eventKey={2} href="#">Sign in</NavItem>
+        : <NavItem eventKey={3} href="#">Account</NavItem>
+      }
+      <NavItem eventKey={4} href="#">Cart</NavItem>
     </Nav>
   </Navbar>
 )
 
-import {login} from 'APP/app/reducers/auth'
-import {connect} from 'react-redux'
 
-export default connect(
-  state => ({}),
-  {login},
-)(Navigation)
+
+/* -----------------    CONTAINER     ------------------ */
+
+const mapState = ({auth, login}) => ({auth, login})
+
+const mapDispatch = {}
+
+export default connect(mapState, mapDispatch)(Navigation)
