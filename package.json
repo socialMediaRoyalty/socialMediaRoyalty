@@ -11,7 +11,7 @@
     "validate": "check-node-version --node '>= 7.0.0'",
     "setup": "./bin/setup",
     "prep": "npm run validate && npm run setup",
-    "postinstall": "npm run prep",
+    "postinstall": "npm run prep && npm run build",
     "build": "webpack",
     "build-watch": "npm run build -- -w",
     "build-dev": "cross-env NODE_ENV=development npm run build-watch",
@@ -62,6 +62,7 @@
     "pg": "^6.1.0",
     "pretty-error": "^2.0.2",
     "react": "^15.3.2",
+    "react-bootstrap": "^0.31.0",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "react-router": "^3.0.0",
@@ -71,9 +72,7 @@
     "redux-thunk": "^2.1.0",
     "sequelize": "^3.24.6",
     "sinon": "^1.17.6",
-    "sinon-chai": "^2.8.0"
-  },
-  "devDependencies": {
+    "sinon-chai": "^2.8.0",
     "babel": "^6.5.2",
     "babel-core": "^6.18.0",
     "babel-eslint": "^7.2.2",
@@ -98,5 +97,8 @@
     "volleyball": "^1.4.1",
     "webpack": "^2.2.1",
     "webpack-livereload-plugin": "^0.10.0"
+  },
+  "devDependencies": {
+
   }
 }

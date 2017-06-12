@@ -11,7 +11,7 @@ module.exports = db => db.define('reviews', {
     }
   },
   date: DATE,
-  comment: STRING(50)
+  comment: STRING(100)
 })
 
 module.exports.associations = (Review, {User, Product}) => {
