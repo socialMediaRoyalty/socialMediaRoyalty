@@ -1,23 +1,41 @@
 import axios from 'axios'
+import { browserHistory } from 'react-router';
 
-const reducer = (state=null, action) => {
+/* ------------------    ACTIONS    --------------------- */
+
+const AUTHENTICATED = 'AUTHENTICATED'
+const NEW_USER = 'NEW_USER'
+
+/* --------------    ACTION CREATORS    ----------------- */
+
+export const authenticated = user => ({
+  type: AUTHENTICATED, 
+  user
+})
+
+/* ------------------    REDUCER    --------------------- */
+
+export default function reducer(state = null, action) {
   switch (action.type) {
-  case AUTHENTICATED:
-    return action.user
-  }
+    case AUTHENTICATED:
+      return action.user
+    } 
   return state
 }
 
-const AUTHENTICATED = 'AUTHENTICATED'
-export const authenticated = user => ({
-  type: AUTHENTICATED, user
-})
+/* ------------------    DISPATCHERS    --------------------- */
 
 export const login = (username, password) =>
   dispatch =>
     axios.post('/api/auth/login/local',
       {username, password})
       .then(() => dispatch(whoami()))
+      .catch(() => dispatch(whoami()))
+
+export const signup = (email, password) => 
+    axios.post('/api/users',
+    {email, password})
+      .then(() => login(email, password))
       .catch(() => dispatch(whoami()))
 
 export const logout = () =>
@@ -34,5 +52,3 @@ export const whoami = () =>
         dispatch(authenticated(user))
       })
       .catch(failed => dispatch(authenticated(null)))
-
-export default reducer
