@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { createNewOrder } from 'APP/app/reducers/orders'
-import { Radio, Form, Button, FormControl, FormGroup, ControlLabel } from 'react-bootstrap'
+import { Grid, Col, Row, Radio, Form, Button, FormControl, FormGroup, ControlLabel } from 'react-bootstrap'
 import store from '../store'
 
 export class SubmitPayment extends Component {
@@ -24,32 +24,39 @@ export class SubmitPayment extends Component {
     console.log('state', this.props)
     browserHistory.push(`/submitted`)
   }
-
+// put form in a table to format correctly 
   render() {
     return (
 <div>
         <h3>Payment Option</h3>
             <Radio/> <Radio/>
 
-
+        <Grid>
+        <Row>
         <h3>Shipping Information</h3>
+        </Row>
+        <Row>
         <Form inline>
+        <Col>
         <FormGroup controlId="formInlineName">
           <ControlLabel>Address</ControlLabel>
            {' '}
           <FormControl type="text"/>
         </FormGroup>
+        </Col>
          {' '}
+        <Col>
         <FormGroup controlId="formInlineName">
           <ControlLabel>Apartment / Suite / Unit / Bldg #</ControlLabel>
            {' '}
           <FormControl type="text"/>
         </FormGroup>
+        </Col>
         </Form>
-        <div><span></span>{' '}<span></span></div>
-        {' '}
+        </Row>
+        <tr></tr>
+        <tr>
         <Form inline>
-        
         <FormGroup controlId="formInlineName">
           <ControlLabel>Zip Code</ControlLabel>
            {' '}
@@ -68,9 +75,11 @@ export class SubmitPayment extends Component {
           <FormControl type="text"/>
         </FormGroup>
         </Form>
+        </tr>
 				<Button onClick={this.handleSubmit}>
         Submit Order
 				</Button>
+        </Grid>
 </div>
 
     )

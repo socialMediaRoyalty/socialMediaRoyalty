@@ -51,7 +51,6 @@ module.exports = require('express').Router()
         model: Product
       }]
     }).then(order => {
-      console.log(order)
       return res.json(order)
     }).then(cart => Order.create({
       status: 'received',
