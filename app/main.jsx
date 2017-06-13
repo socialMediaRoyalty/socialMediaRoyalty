@@ -31,6 +31,7 @@ import {getAllProducts, getProductById, getProductByCategory} from './reducers/p
 import { fetchAllUsers } from './reducers/user'
 import {getReviewsByProduct} from './reducers/reviews'
 
+
 /* OnEnter Functions go Here */
 const fetchInitialData = (newRouterState) => {
   store.dispatch(getAllCategories())

@@ -5,6 +5,7 @@ const Reviews = db.model('reviews')
 
 module.exports = require('express').Router()
 // get product reviews
+
 .get('/', (req, res, next) => {
   Reviews.findAll({
     where: req.query
