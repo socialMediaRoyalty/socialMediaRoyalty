@@ -39,49 +39,42 @@ export default reducer
 
 /* ------------       DISPATCHERS     ------------------ */
 
-export const fetchAllOrders = () => {
+export const fetchAllOrders = () => 
   dispatch => {
     axios.get(`/api/orders`)
     .then(res => {
       dispatch(getAllOrders(res.data))
     }).catch(console.error)
-  }
-}
 
-export const fetchUserOrders = () => {
+
+export const fetchUserOrders = () => 
   dispatch => {
     axios.get(`/api/orders`)
     .then(res => {
       dispatch(getUserOrders(res.data))
     }).catch(console.error)
-  }
-}
 
-export const fetchOrdersByStatus = () => {
-  dispatch => {
+
+export const fetchOrdersByStatus = () => 
+  dispatch => 
     axios.get(`/api/orders`)
     .then(res => {
       dispatch(getByStatus(res.data))
     }).catch(console.error)
-  }
-}
 
-export const updateOrderStatus = (orderId) => {
-  dispatch => {
+export const updateOrderStatus = (orderId) => 
+  dispatch => 
     axios.put(`/api/orders/${orderId}`)
     .then(res => {
       dispatch(updateStatus(res.data))
     }).catch(console.error)
-  }
-}
+  
 
-export const createNewOrder = () => {
-  dispatch => {
+export const createNewOrder = () => 
+  dispatch => 
     axios.post(`/api/orders`)
     .then(res => {
       dispatch(createOrder(res.data))
     }).catch(console.error)
-  }
-}
 
 
