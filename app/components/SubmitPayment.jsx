@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 import { createNewOrder } from 'APP/app/reducers/orders'
-import { Form, Button } from 'react-bootstrap'
+import { Radio, Form, Button, FormControl, FormGroup, ControlLabel } from 'react-bootstrap'
+import store from '../store'
 
 export class SubmitPayment extends Component {
   constructor(props) {
@@ -16,20 +18,60 @@ export class SubmitPayment extends Component {
     })
   }
 
-  handleSubmit(event) { 
+  handleSubmit(event) {
     event.preventDefault()
-    console.log('submitted')
     this.props.createNewOrder()
+    console.log('state', this.props)
+    browserHistory.push(`/submitted`)
   }
-
 
   render() {
     return (
-			<Form>
+<div>
+        <h3>Payment Option</h3>
+            <Radio/> <Radio/>
+
+
+        <h3>Shipping Information</h3>
+        <Form inline>
+        <FormGroup controlId="formInlineName">
+          <ControlLabel>Address</ControlLabel>
+           {' '}
+          <FormControl type="text"/>
+        </FormGroup>
+         {' '}
+        <FormGroup controlId="formInlineName">
+          <ControlLabel>Apartment / Suite / Unit / Bldg #</ControlLabel>
+           {' '}
+          <FormControl type="text"/>
+        </FormGroup>
+        </Form>
+        <div><span></span>{' '}<span></span></div>
+        {' '}
+        <Form inline>
+        
+        <FormGroup controlId="formInlineName">
+          <ControlLabel>Zip Code</ControlLabel>
+           {' '}
+          <FormControl type="text"/>
+        </FormGroup>
+         {' '}
+        <FormGroup controlId="formInlineName">
+          <ControlLabel>City</ControlLabel>
+           {' '}
+          <FormControl type="text"/>
+        </FormGroup>
+         {' '}
+        <FormGroup controlId="formInlineName">
+          <ControlLabel>State</ControlLabel>
+           {' '}
+          <FormControl type="text"/>
+        </FormGroup>
+        </Form>
 				<Button onClick={this.handleSubmit}>
-        Submit Payment
-				</Button> 
-			</Form>
+        Submit Order
+				</Button>
+</div>
 
     )
   }
@@ -37,7 +79,7 @@ export class SubmitPayment extends Component {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({}) => ({})
+const mapState = ({orders}) => ({orders})
 
 const mapDispatch = { createNewOrder }
 

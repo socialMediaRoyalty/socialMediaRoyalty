@@ -18,6 +18,8 @@ import CategoriesContainer from './containers/CategoriesContainer.jsx'
 // import ProductContainer from './containers/ProductContainer'
 
 import SubmitPayment from './components/SubmitPayment'
+import OrderSuccess from './components/OrderSuccess'
+
 
 import {getAllCategories} from './reducers/category'
 import {getAllProducts, getProductById} from './reducers/product'
@@ -63,6 +65,7 @@ render(
         <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>*/}
         <Route path="/profile" component={ ProfileContainer } />
         <Route path="/payment" component={SubmitPayment} />
+         <Route path="/submitted" component={OrderSuccess} />
         <Route path="/admin/users"
           component={UsersContainer}
           onEnter={onUsersEnter} />

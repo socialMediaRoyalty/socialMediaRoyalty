@@ -14,7 +14,7 @@ const getAllOrders = (orders) => ({type: FETCH_ORDERS, orders})
 const getUserOrders = (orders) => ({type: FETCH_USER_ORDERS, orders})
 const getByStatus = (orders) => ({type: FETCH_BY_STATUS, orders})
 const updateStatus = (order) => ({type: UPDATE_STATUS, order})
-const createOrder = (order) => ({type: ADD_ORDER, order})
+const createOrder = (orders) => ({type: ADD_ORDER, orders})
 
 /* ------------       REDUCER     ------------------ */
 
@@ -39,50 +39,40 @@ export default reducer
 
 /* ------------       DISPATCHERS     ------------------ */
 
-export const fetchAllOrders = () => {
-  dispatch => {
+export const fetchAllOrders = () =>
+  dispatch =>
     axios.get(`/api/orders`)
     .then(res => {
       dispatch(getAllOrders(res.data))
     }).catch(console.error)
-  }
-}
 
-export const fetchUserOrders = () => {
-  dispatch => {
+export const fetchUserOrders = () =>
+  dispatch =>
     axios.get(`/api/orders`)
     .then(res => {
       dispatch(getUserOrders(res.data))
     }).catch(console.error)
-  }
-}
 
-export const fetchOrdersByStatus = () => {
-  dispatch => {
+export const fetchOrdersByStatus = () =>
+  dispatch =>
     axios.get(`/api/orders`)
     .then(res => {
       dispatch(getByStatus(res.data))
     }).catch(console.error)
-  }
-}
 
-export const updateOrderStatus = (orderId) => {
-  dispatch => {
+export const updateOrderStatus = (orderId) =>
+  dispatch =>
     axios.put(`/api/orders/${orderId}`)
     .then(res => {
       dispatch(updateStatus(res.data))
     }).catch(console.error)
-  }
-}
 
-export const createNewOrder = () => {
-  dispatch => {
+export const createNewOrder = () =>
+  dispatch =>
     axios.post(`/api/orders`)
     .then(res => {
-      console.log('axios')
       dispatch(createOrder(res.data))
     }).catch(err => console.error(`Create new order: unsuccesful`, err))
-  }
-}
+
 
 
