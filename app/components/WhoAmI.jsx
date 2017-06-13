@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
 
 export const WhoAmI = ({ user, logout }) => (
   <div className="whoami">
