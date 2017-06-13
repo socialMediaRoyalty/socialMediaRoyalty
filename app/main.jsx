@@ -8,68 +8,65 @@ import store from './store'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
+
 import Home from './components/Home'
 import RootContainer from './containers/RootContainer.jsx'
 import ProfileContainer from './containers/ProfileContainer'
 import UsersContainer from './containers/UsersContainer'
 
-import CategoriesContainer from './containers/CategoriesContainer.jsx'
-// import ProductsContainer from './containers/ProductsContainer'
-// import ProductContainer from './containers/ProductContainer'
+
 
 import SubmitPayment from './components/SubmitPayment'
 import OrderSuccess from './components/OrderSuccess'
 
+import HomeContainer from './containers/HomeContainer'
+import CategoriesContainer from './containers/CategoriesContainer'
+import ProductsContainer from './containers/ProductsContainer'
+import ProductContainer from './containers/ProductContainer'
 
+
+import { Signup } from './containers/SignupContainer'
 import {getAllCategories} from './reducers/category'
-import {getAllProducts, getProductById} from './reducers/product'
+import {getAllProducts, getProductById, getProductByCategory} from './reducers/product'
 import { fetchAllUsers } from './reducers/user'
+import {getReviewsByProduct} from './reducers/reviews'
 
 /* OnEnter Functions go Here */
 const fetchInitialData = (newRouterState) => {
-  // store.dispatch(getAllCategories())
-// store.dispatch to get all Products too
+  store.dispatch(getAllCategories())
+  store.dispatch(getAllProducts())
 }
 
 const onUsersEnter = (newRouterState) =>
   store.dispatch(fetchAllUsers())
 
-const onProductsEnter = () => {
-  store.dispatch(getAllProducts())
+const onProductByCategoryEnter = (newRouterState) => {
+  store.dispatch(getProductByCategory(newRouterState.params.cid))
 }
 
-const onProductEnter = (state) => {
-  store.dispatch(getProductById(state.params.pid))
+const onProductEnter = (newRouterState) => {
+  store.dispatch(getProductById(newRouterState.params.pid))
+  store.dispatch(getReviewsByProduct(newRouterState.params.pid))
 }
-
-// const ExampleApp = connect(
-//   // mapStateToProps
-//   ({ auth }) => ({ user: auth })
-// )(
-//   ({ user, children }) =>
-//     <div>
-//       <nav>
-//         {user ? <WhoAmI/> : <Login/>}
-//       </nav>
-//       {children}
-//     </div>
-// )
 
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={RootContainer} onEnter={fetchInitialData}>
-        <IndexRoute component={Home} />
+        <IndexRoute component={HomeContainer} />
         <Route path="/categories" components={CategoriesContainer} />
-        {/*<Route path="/products" components={ProductsContainer} onEnter={onProductsEnter}/>
-        <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>*/}
         <Route path="/profile" component={ ProfileContainer } />
         <Route path="/payment" component={SubmitPayment} />
          <Route path="/submitted" component={OrderSuccess} />
-        <Route path="/admin/users"
-          component={UsersContainer}
-          onEnter={onUsersEnter} />
+
+        <Route path="/products" components={ProductsContainer} />
+        <Route path="/products/categories/:cid" components={ProductsContainer} onEnter={onProductByCategoryEnter}/>
+        <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
+
+        <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
+
       </Route>
+      <Route path="/signup" component={Signup} />
       <Route path='*' component={NotFound} />
     </Router>
   </Provider>,
