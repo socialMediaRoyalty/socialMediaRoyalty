@@ -49,11 +49,15 @@ const onProductEnter = (newRouterState) => {
   store.dispatch(getReviewsByProduct(newRouterState.params.pid))
 }
 
+const onHomeEnter = (newRouterState) => {
+  store.dispatch(getAllProducts())
+}
+
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={RootContainer} onEnter={fetchInitialData}>
-        <IndexRoute component={HomeContainer} />
+        <IndexRoute component={HomeContainer} onEnter={onHomeEnter}/>
         <Route path="/categories" components={CategoriesContainer} />
         <Route path="/profile" component={ ProfileContainer } />
         <Route path="/payment" component={SubmitPayment} />
