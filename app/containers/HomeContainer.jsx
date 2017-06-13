@@ -4,7 +4,6 @@ import store from '../store'
 
 import {Carousel} from 'react-bootstrap'
 
-
 export const HomeContainer = (props) => {
   const products = props.products
   return (
