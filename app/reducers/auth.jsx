@@ -2,6 +2,7 @@ import axios from 'axios'
 import { browserHistory } from 'react-router';
 
 const AUTHENTICATED = 'AUTHENTICATED'
+const LOGGED_IN = 'LOGGED_IN'
 
 /* --------------    ACTION CREATORS    ----------------- */
 
@@ -23,17 +24,27 @@ export default function reducer(state = null, action) {
 /* ------------------    DISPATCHERS    --------------------- */
 
 export const login = (username, password) =>
-  dispatch =>
-    axios.post('/api/auth/login/local',
+  dispatch => { console.log('inside login dispatch')
+   return axios.post('/api/auth/login/local',
       {username, password})
       .then(() => dispatch(whoami()))
       .catch(() => dispatch(whoami()))
+    }
 
 export const signup = (email, password) => 
+  dispatch => 
     axios.post('/api/users',
     {email, password})
-      .then(() => login(email, password))
+          .then(() => {
+            browserHistory.push('/')
+            dispatch(whoami())
+          })
       .catch(() => dispatch(whoami()))
+      // .then(() => login(email, password))
+      //.then(() => browserHistory.push('/'))
+      // .catch(() => dispatch(whoami()))
+
+
 
 export const logout = () =>
   dispatch =>
@@ -49,3 +60,4 @@ export const whoami = () =>
         dispatch(authenticated(user))
       })
       .catch(failed => dispatch(authenticated(null)))
+
