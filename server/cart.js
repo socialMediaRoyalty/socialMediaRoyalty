@@ -2,10 +2,10 @@
 
 const db = require('APP/db')
 const Cart = db.model('carts')
-const CartDetail = db.model('cartDetail')
+const CartDetail = db.model('cart_detail')
 const Product = db.model('products')
 const Order = db.model('orders')
-const OrderDetail = db.model('order-details')
+const OrderDetail = db.model('order_detail')
 const User = db.model('users')
 
 module.exports = require('express').Router()
@@ -107,9 +107,9 @@ module.exports = require('express').Router()
         product_id: productId
       }
     })
-    .then(([cartDetail, createdBool]) => {
+    .then(([cart_detail, createdBool]) => {
       if (!createdBool) {
-        cartDetail.update({
+        cart_detail.update({
           quantity: quantity
         })
       } else {
