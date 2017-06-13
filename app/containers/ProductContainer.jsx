@@ -59,7 +59,13 @@ export const ProductContainer = (props) => {
   )
 }
 
+const mapStateToProps = (state) => {
+  return {
+    product: state.product.product
+  }
+}
+
 export default connect(
-  ({ product }) => ({ product }),
+  mapStateToProps,
   {},
 )(ProductContainer)
