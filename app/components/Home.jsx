@@ -9,7 +9,6 @@ import { getAllProducts } from '../reducers/product'
 export const CategoriesContainer = (props) => {
   const productsByCategories = store.getState()
   const products = props.products
-  console.log('>>>>>>>>>', props)
   return (
     <div>
       <h1>This is Products Container</h1>

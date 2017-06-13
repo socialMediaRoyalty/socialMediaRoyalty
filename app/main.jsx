@@ -21,6 +21,7 @@ import ProductContainer from './containers/ProductContainer'
 import {getAllCategories} from './reducers/category'
 import {getAllProducts, getProductById, getProductByCategory} from './reducers/product'
 import { fetchAllUsers } from './reducers/user'
+import {getReviewsByProduct} from './reducers/reviews'
 
 /* OnEnter Functions go Here */
 const fetchInitialData = (newRouterState) => {
@@ -37,6 +38,7 @@ const onProductByCategoryEnter = (newRouterState) => {
 
 const onProductEnter = (newRouterState) => {
   store.dispatch(getProductById(newRouterState.params.pid))
+  store.dispatch(getReviewsByProduct(newRouterState.params.pid))
 }
 
 render(
