@@ -49,8 +49,8 @@ export const saveCart = () =>
       dispatch(addCart(res.data))
     }).catch(console.error)
 
-export const addProduct = () =>
-  dispatch =>
+export const addProduct = () => 
+  dispatch => 
     axios.post(`/api/carts`)
     .then(res => {
       dispatch(addProd(res.data))
@@ -62,3 +62,12 @@ export const deleteCart = () =>
     .then(res => {
       dispatch(delCart(res.data))
     }).catch(console.error)
+
+export const deleteCart = () => 
+  dispatch =>
+    axios.delete(`/api/carts`)
+    .then(res => {
+      dispatch(delCart(res.data))
+    }).catch(console.error)
+
+

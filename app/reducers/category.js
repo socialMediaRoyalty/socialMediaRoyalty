@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router'
 /* ------------------    ACTIONS    --------------------- */
 
 const GET_ALL_CATEGORIES = 'GET_ALL_CATEGORIES'
+const SELECT_CATEGORY = 'SELECT_CATEGORY'
 const ADD_CATEGORY = 'ADD_CATEGORY'
 const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
 const REMOVE_CATEGORY = 'DELETE_CATEGORY'
@@ -36,38 +37,30 @@ export default function reducer(state = null, action) {
 
 const resToData = res => res.data
 
-export const getAllCategories = () => dispatch => {
-  return axios.get('/api/categories')
+export const getAllCategories = () => dispatch => axios.get('/api/categories')
     .then(resToData)
     .then(categories => {
       dispatch(get(categories))
     })
     .catch(console.error)
-}
 
 // categoryInfo is an object of all the category information
-export const addCategory = (categoryInfo) => dispatch => {
-  return axios.post('/api/categories', categoryInfo)
+export const addCategory = (categoryInfo) => dispatch => axios.post('/api/categories', categoryInfo)
     .then(resToData)
     .then(category => {
       dispatch(add(category))
     })
     .catch(console.error)
-}
 
-export const updateCategory = (categoryInfo) => dispatch => {
-  return axios.put(`/api/categories/${categoryInfo.id}`, categoryInfo)
+export const updateCategory = (categoryInfo) => dispatch => axios.put(`/api/categories/${categoryInfo.id}`, categoryInfo)
     .then(resToData)
     .then(category => {
       dispatch(update(category))
     })
     .catch(console.error)
-}
 
-export const removeCategory = (cid) => dispatch => {
-  return axios.delete(`/api/categories/cid`)
+export const removeCategory = (cid) => dispatch => axios.delete(`/api/categories/cid`)
     .then(() => {
       dispatch(remove())
     })
     .catch(console.error)
-}

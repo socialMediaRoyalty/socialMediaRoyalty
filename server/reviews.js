@@ -5,20 +5,20 @@ const Reviews = db.model('reviews')
 
 module.exports = require('express').Router()
 // get product reviews
-.get('/:pid', (req, res, next) => {
+.get('/', (req, res, next) => {
   Reviews.findAll({
-    where: {
-      product_id: req.params.pid
-    }
-  }).then(reviews => {
-    res.send(reviews)
-  }).catch(next)
+    where: req.query
+  })
+    .then(reviews => {
+      res.json(reviews)
+    })
+    .catch(next)
 })
 
 // post product review
 .post('/', (req, res, next) => {
   Reviews.create(req.body)
   .then(review => {
-    res.send(review)
+    res.json(review)
   }).catch(next)
 })
