@@ -341,9 +341,9 @@ function seed(Model, rows) {
                 )
             }
           }).reduce(
-            (all, one) => Object.assign({}, all, {[one.key]: one.value}),
-            {}
-          )
+          (all, one) => Object.assign({}, all, {[one.key]: one.value}),
+          {}
+        )
         )
       )
       .then(seeded => {
