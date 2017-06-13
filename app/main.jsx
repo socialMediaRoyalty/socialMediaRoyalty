@@ -8,6 +8,7 @@ import store from './store'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
+
 import Home from './components/Home'
 import RootContainer from './containers/RootContainer.jsx'
 import ProfileContainer from './containers/ProfileContainer'
@@ -18,6 +19,7 @@ import CategoriesContainer from './containers/CategoriesContainer'
 import ProductsContainer from './containers/ProductsContainer'
 import ProductContainer from './containers/ProductContainer'
 
+import { Signup } from './containers/SignupContainer'
 import {getAllCategories} from './reducers/category'
 import {getAllProducts, getProductById, getProductByCategory} from './reducers/product'
 import { fetchAllUsers } from './reducers/user'
@@ -53,6 +55,7 @@ render(
         <Route path="/profile" component={ ProfileContainer } />
         <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
       </Route>
+      <Route path="/signup" component={Signup} />
       <Route path='*' component={NotFound} />
     </Router>
   </Provider>,
