@@ -5,7 +5,7 @@ import FeaturedProducts from '../components/FeaturedProducts'
 import Footer from '../components/Footer'
 import CategoriesContainer from './CategoriesContainer'
 
-export default class RootContainer extends Component {
+export default class RootContainer extends Component { // make me dumb and then destructure props in function definition. Change me to regular component (not container) -- KHLP
   componentDidMount() {
     // this.nextJoke()
   }

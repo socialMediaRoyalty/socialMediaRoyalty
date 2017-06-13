@@ -24,7 +24,7 @@ const ProfileRow =
         <td><b>{title}</b></td>
         <td>
           <ContentEditable
-            style={disableEdit ? readStyle : editStyle}
+            style={disableEdit ? readStyle : editStyle} {/* don't hard code styles in component add dynamic classes and put these styles in your css that you add to your index.html (the src) */}
             disabled={disableEdit}
             html={currentUser[field]}
             onChange={handleChange(field)}
@@ -48,7 +48,7 @@ const profileData = [
 
 /* -----------------    COMPONENT     ------------------ */
 
-class Profile extends Component {
+class Profile extends Component { // this on seems like a container to me -- KHLP
   constructor(props) {
     super(props)
     this.state = {
@@ -72,17 +72,17 @@ class Profile extends Component {
     this.setState({
       disableEdit: false
     })
-    event.preventDefault()
+    event.preventDefault() // this is for submit because the browser does a refresh when you use a form submit. Not needed here -- KHLP
   }
 
-  handleDelete(event) {
+  handleDelete(event) { // in backend make sure only admin or self, for front have logic where only admin (or potentially self) can see the button for this -- KHLP
     this.props.removeUser(this.auth.id)
-    event.preventDefault()
+    event.preventDefault() // delete me -- kHLP
   }
 
   handleChange(field) {
     return (event) => {
-      console.log(event.target.value)
+      console.log(event.target.value) // remove me -- KHLP
       const newState = Object.assign({}, this.state)
       newState.currentUser[field] = event.target.value
       this.setState(newState)
@@ -97,11 +97,14 @@ class Profile extends Component {
     })
   }
 
-  render() {
+  render() { // this to be split into component and container -- KHLP
     const currentUser = this.state.currentUser
-    if (!currentUser || !currentUser.id) return <div />
+    if (!currentUser || !currentUser.id) return <div /> // this could also be in the 1 return statement as a ternary or something -- KHLP
 
     return (
+    { (!currentUser || !currentUser.id) ? <div> No valid user </div> :
+      <Profile {...this.state} onClick={this.handleEdit} />
+    }
       <div className="container">
         <h2>Profile</h2>
 

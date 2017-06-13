@@ -31,7 +31,8 @@ module.exports = require('express').Router()
       res.json(req.requestedUser)
       .catch(next))
   .post('/',
-  (req, res, next) => {
+  (req, res, next) => { // allow admin to set admin on post potentially? Or leave it like you have to create user and then upgrade -- kHLP
+    // with your findOrCreate find by email and then use instance method to check password with digest password 
     User.findOrCreate({
       where: {
         email: req.body.email
@@ -42,7 +43,7 @@ module.exports = require('express').Router()
     })
     .spread((user, created) => {
       if (created) {
-        req.logIn(user, err => {
+        req.logIn(user, err => { // only login if not admin -- KHLP
           if (err) return next(err)
           res.json(user)
         })
@@ -52,6 +53,7 @@ module.exports = require('express').Router()
         throw err
       }
     })
+    // .catch(next) !!! -- KHLP
   })
   .put('/:uid',
       assertSelfOrAdmin,

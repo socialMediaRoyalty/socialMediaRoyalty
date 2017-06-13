@@ -5,8 +5,8 @@ import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 
 import {whoami} from './reducers/auth'
-import { getAllCategories } from './reducers/category'
-import { getAllProducts } from './reducers/product'
+import { getAllCategories } from './reducers/category' // delete me -- KHLP
+import { getAllProducts } from './reducers/product' // delete me -- KHLP
 
 const store = createStore(
   rootReducer,
@@ -22,4 +22,4 @@ export default store
 
 // Set the auth info at start
 store.dispatch(whoami())
-store.dispatch(getAllCategories())
+store.dispatch(getAllCategories()) // no - I am in the initialFetch in main.jsx -- KHLP

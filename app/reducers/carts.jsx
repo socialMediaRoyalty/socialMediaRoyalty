@@ -63,11 +63,11 @@ export const deleteCart = () =>
       dispatch(delCart(res.data))
     }).catch(console.error)
 
-export const deleteCart = () => 
-  dispatch =>
-    axios.delete(`/api/carts`)
-    .then(res => {
-      dispatch(delCart(res.data))
-    }).catch(console.error)
+// export const deleteCart = () => // delete me -- KHLP 
+//   dispatch =>
+//     axios.delete(`/api/carts`)
+//     .then(res => {
+//       dispatch(delCart(res.data))
+//     }).catch(console.error)
 
 

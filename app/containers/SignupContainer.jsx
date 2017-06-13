@@ -11,11 +11,11 @@ export class Signup extends Component {
       password: ''
     }
     this.onSignupSubmit = this.onSignupSubmit.bind(this)
-    this.onEmailChange = this.onEmailChange.bind(this)
+    this.onEmailChange = this.onEmailChange.bind(this) // am I necessary? -- KHLP
     this.onPasswordChange = this.onPasswordChange.bind(this)
   }
 
-  onSignupSubmit(event) {
+  onSignupSubmit(event) { // if we put a name (I think) on the FormControls, we should be able to see event.target.email.value and use those -- kHLP
     event.preventDefault();
     const email = this.state.email
     const password = this.state.password
@@ -51,7 +51,7 @@ export class Signup extends Component {
             />
           </Col>
         </FormGroup>
-        <FormGroup controlId="formHorizontalEmail">
+        <FormGroup controlId="formHorizontalEmail"> {/* unique ids*/}
           <Col componentClass={ControlLabel} sm={2}>
             Password
           </Col>

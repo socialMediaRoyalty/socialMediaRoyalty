@@ -14,9 +14,7 @@ import RootContainer from './containers/RootContainer.jsx'
 import ProfileContainer from './containers/ProfileContainer'
 import UsersContainer from './containers/UsersContainer'
 
-
-
-import SubmitPayment from './components/SubmitPayment'
+import SubmitPayment from './components/SubmitPayment' // put all components together (organize) -- KHLP
 import OrderSuccess from './components/OrderSuccess'
 
 import HomeContainer from './containers/HomeContainer'
@@ -32,12 +30,12 @@ import { fetchAllUsers } from './reducers/user'
 import {getReviewsByProduct} from './reducers/reviews'
 
 /* OnEnter Functions go Here */
-const fetchInitialData = (newRouterState) => {
+const fetchInitialData = (newRouterState) => { // do we need newRouterState -- KHLP
   store.dispatch(getAllCategories())
   store.dispatch(getAllProducts())
 }
 
-const onUsersEnter = (newRouterState) =>
+const onUsersEnter = (newRouterState) => // do we need newRouterState -- KHLP
   store.dispatch(fetchAllUsers())
 
 const onProductByCategoryEnter = (newRouterState) => {
@@ -46,7 +44,7 @@ const onProductByCategoryEnter = (newRouterState) => {
 
 const onProductEnter = (newRouterState) => {
   store.dispatch(getProductById(newRouterState.params.pid))
-  store.dispatch(getReviewsByProduct(newRouterState.params.pid))
+  store.dispatch(getReviewsByProduct(newRouterState.params.pid)) // a product already has its reviews on it -- KHLP
 }
 
 render(
@@ -57,13 +55,14 @@ render(
         <Route path="/categories" components={CategoriesContainer} />
         <Route path="/profile" component={ ProfileContainer } />
         <Route path="/payment" component={SubmitPayment} />
-         <Route path="/submitted" component={OrderSuccess} />
+         <Route path="/submitted" component={OrderSuccess} /> {/* tabbing consistency -- KHLP*/}
 
         <Route path="/products" components={ProductsContainer} />
         <Route path="/products/categories/:cid" components={ProductsContainer} onEnter={onProductByCategoryEnter}/>
         <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
 
         <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
+          {/* admin home and the routes for users and orders nested inside */}
 
       </Route>
       <Route path="/signup" component={Signup} />

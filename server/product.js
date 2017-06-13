@@ -50,19 +50,21 @@ module.exports = require('express').Router()
         include: [{
           model: Category
         }, {
-          model: Review
+          model: Review // YAY -- KHLP
         }]
       })
         .then(foundProduct => {
           if (!foundProduct) {
             var err = new Error('Product Not Found')
             err.status = 404
-            next(err)
+            next(err) // throw error is what I like to see; no issue currently, but if you add code, you could run into data flow issues with 2 responses trying to be sent -- KHLP
           } else {
             req.foundProduct = foundProduct
             next()
           }
         })
+        // .catch(next) === .catch((err)=>next(err))
+        // no catch of errors -- KHLP
   )
   // get a product by ID
   .get('/:pid',

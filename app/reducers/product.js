@@ -21,7 +21,7 @@ const remove = () => ({type: REMOVE_PRODUCT})
 
 /* ------------------    REDUCER    --------------------- */
 
-export default function reducer(state = null, action) {
+export default function reducer(state = null, action) { // I expect initial state and for the type of item you return to be consistent; I would expect a products and a product reducer if you want to do it this way. Product initial state of {} and products initial state of [] -- KHLP
   switch (action.type) {
   case GET_ALL_PRODUCTS:
     return action.products
@@ -44,13 +44,13 @@ export default function reducer(state = null, action) {
 
 const resToData = res => res.data
 
-export const getAllProducts = () => dispatch => {
+export const getAllProducts = () => dispatch => { // if you wanted just most popular make a new function; could DRY it by having getProducts(allOrPop) which invokes either getAll or getPopular -- KHLP
   return axios.get('/api/products')
     .then(resToData)
     .then(products => {
       dispatch(get(products))
     })
-    .catch(console.error)
+    .catch(console.error) // bind to console. Also, show the user that something has gone wrong -- KHLP
 }
 
 export const getProductById = (pid) => dispatch => {

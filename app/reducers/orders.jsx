@@ -78,12 +78,12 @@ export const createNewOrder = () =>
       dispatch(createOrder(res.data))
     }).catch(err => console.error(`Create new order: unsuccesful`, err))
 
-export const createNewOrder = () => 
-  dispatch => 
-    axios.post(`/api/orders`)
-    .then(res => {
-      dispatch(createOrder(res.data))
-
+// export const createNewOrder = () => 
+//   dispatch => 
+//     axios.post(`/api/orders`)
+//     .then(res => {
+//       dispatch(createOrder(res.data))
+//     }) // delete me -- KHLP
 
 
 
