@@ -9,6 +9,7 @@ import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 
+import Stripe from './components/Stripe'
 import Home from './components/Home'
 import RootContainer from './containers/RootContainer.jsx'
 import ProfileContainer from './containers/ProfileContainer'
@@ -64,7 +65,7 @@ render(
         <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
 
         <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
-
+        <Route path="/payment" component={Stripe} />
       </Route>
       <Route path="/signup" component={Signup} />
       <Route path='*' component={NotFound} />
