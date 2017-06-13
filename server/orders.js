@@ -26,6 +26,7 @@ module.exports = require('express').Router()
           res.json(statusOrders)
         })
       } else {
+
         OrderDetail.findAll({
           include: [{
             model: Product,
@@ -33,12 +34,12 @@ module.exports = require('express').Router()
               model: Order
             }]
           }]
-        })
-          .then(orders => {
+        }).then(orders => {
             res.json(orders)
           })
       }
     } else {
+
       OrderDetail.findAll({
         where: {
           user_id: req.user.id

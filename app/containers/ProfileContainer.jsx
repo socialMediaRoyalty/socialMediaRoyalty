@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Table, Button } from 'react-bootstrap'
-import ContentEditable from 'react-contenteditable'
+//import ContentEditable from 'react-contenteditable'
 import { Link, browserHistory } from 'react-router'
 
 import { fetchUser, updateUser, removeUser } from '../reducers/user'
@@ -34,12 +34,27 @@ const ProfileRow =
     )
   }
 
+/* -----------------  INFO FOR PROFILE ROW     ------------------ */
+
+const profileData = [
+  {field: 'name', title: 'Name'},
+  {field: 'email', title: 'Email'},
+  {field: 'address', title: 'Address'},
+  {field: 'facebookLink', title: 'Facebook'},
+  {field: 'instagramHandle', title: 'Instagram'},
+  {field: 'twitterHandle', title: 'Twitter'},
+  {field: 'snapChatHandle', title: 'SnapChat'}
+]
+
 /* -----------------    COMPONENT     ------------------ */
 
 class Profile extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      currentUser: this.props.auth,
+      disableEdit: true
+    }
     this.handleEdit = this.handleEdit.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -90,71 +105,35 @@ class Profile extends Component {
       <div className="container">
         <h2>Profile</h2>
 
-        <Button
-          bsStyle="info"
-          bsSize="small"
-          onClick={this.handleEdit}>
-          Edit Profile
-        </Button>
-
-        <Button
-          bsStyle="success"
-          bsSize="small"
-          onClick={this.handleSubmit}>
-          Save Changes
-        </Button>
+        {
+          this.state.disableEdit ?
+            <Button
+              bsStyle="info"
+              bsSize="small"
+              onClick={this.handleEdit}>
+              Edit Profile
+            </Button>
+          : <Button
+            bsStyle="success"
+            bsSize="small"
+            onClick={this.handleSubmit}>
+            Save Changes
+          </Button>
+        }
 
         <Table hover>
           <tbody>
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'name'}
-              title={'Name'}
-            />
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'email'}
-              title={'Email'}
-            />
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'address'}
-              title={'Address'}
-            />
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'facebookLink'}
-              title={'Facebook'}
-            />
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'instagramHandle'}
-              title={'Instagram'}
-            />
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'twitterHandle'}
-              title={'Twitter'}
-            />
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'snapChatHandle'}
-              title={'SnapChat'}
-            />
+            {
+              profileData.map(entry =>
+                <ProfileRow
+                  disableEdit={this.state.disableEdit}
+                  currentUser={this.state.currentUser}
+                  handleChange={this.handleChange}
+                  field={entry.field}
+                  title={entry.title}
+                />
+              )
+            }
           </tbody>
         </Table>
       </div>

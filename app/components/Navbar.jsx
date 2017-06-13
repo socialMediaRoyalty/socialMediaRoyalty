@@ -1,8 +1,11 @@
 import React from 'react'
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { Link } from 'react-router';
+import { Link } from 'react-router'
 import { login } from 'APP/app/reducers/auth'
+import { LinkContainer } from 'react-router-bootstrap'
+import Login from './Login'
+import WhoAmI from './WhoAmI'
 
 export const Navigation = ({ auth, login, category }) => (
 
@@ -18,28 +21,52 @@ export const Navigation = ({ auth, login, category }) => (
       <NavDropdown eventKey={1} title="Categories" id="basic-nav-dropdown">
         {
           category && category.map(categ =>
-            <MenuItem eventKey={`1.${categ.id}`}>
-              {categ.name}
-            </MenuItem>)
+            <LinkContainer to={`/products/categories/${categ.id}`}>
+              <MenuItem
+                key={categ.id}>
+                {categ.name}
+              </MenuItem>
+            </LinkContainer>
+            )
         }
+        <MenuItem divider />
+        <LinkContainer to="/products">
+          <MenuItem>All Products</MenuItem>
+        </LinkContainer>
       </NavDropdown>
 
-      { !auth ? <NavItem eventKey={2} href="#">Sign in</NavItem>
-        : <NavItem eventKey={3} href="#">Account</NavItem>
+      {
+        !auth ? null
+        :<LinkContainer to="/profile">
+          <NavItem>My Account</NavItem>
+        </LinkContainer>
       }
 
-      { auth && auth.isAdmin ? <NavItem eventKey={4} href="#">Admin</NavItem>
-        : null
+
+      { !(auth && auth.isAdmin) ? null
+        : <NavDropdown eventKey={4} title="Admin" id="basic-nav-dropdown">
+
+            <LinkContainer to="/admin/users">
+              <MenuItem eventKey={4.1}>Users</MenuItem>
+            </LinkContainer>
+
+            <MenuItem eventKey={4.2}>Orders</MenuItem>
+            <MenuItem eventKey={4.3}>Products</MenuItem>
+          </NavDropdown>
       }
 
-      <NavItem eventKey={5} href="#">Cart</NavItem>
+      <NavItem eventKey={2} href="#">Cart</NavItem>
+
+      <Navbar.Form pullRight>
+        <FormGroup>
+          {auth ? <WhoAmI/> : <Login/>}
+        </FormGroup>
+      </Navbar.Form>
 
     </Nav>
 
   </Navbar>
 )
-
-
 
 /* -----------------    CONTAINER     ------------------ */
 
