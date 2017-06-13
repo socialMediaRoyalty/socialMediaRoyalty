@@ -54,10 +54,17 @@ export const Navigation = ({ auth, login, category }) => (
       }
 
       <NavItem href="#">Cart</NavItem>
+
+          <LinkContainer to="/signup">
+          <NavItem>Sign Up</NavItem>
+          </LinkContainer>
     </Nav>
 
-    <Navbar.Form pullRight>
-        {auth ? <WhoAmI/> : <Login/>}
+    <Navbar.Form>
+        {
+          auth ? <WhoAmI/> :
+          <Login/>
+      }
     </Navbar.Form>
 
   </Navbar>
