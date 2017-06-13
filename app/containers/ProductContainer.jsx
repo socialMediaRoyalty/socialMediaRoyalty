@@ -3,11 +3,9 @@ import {connect} from 'react-redux'
 import {browserHistory, Link} from 'react-router'
 import store from '../store'
 import {Button, Image, Well, FieldGroup, FormGroup, FormControl, Panel, Table, ListGroup, ListGroupItem} from 'react-bootstrap'
-import { getProductById } from '../reducers/product'
 
 export const ProductContainer = (props) => {
   const product = props.product
-  const reviews = props.reviews
   return (
     product && <div key={product.id}>
       <Table striped bordered={false} condensed hover>
@@ -42,7 +40,7 @@ export const ProductContainer = (props) => {
             <Panel header="REVIEWS" bsStyle="info">
               <ListGroup>
                 {
-                  reviews && reviews.map(review => {
+                  product.reviews && product.reviews.map(review => {
                     return (
                       <ListGroupItem key={review.id}>
                         <h4>User ID: {review.user_id} Rating: {review.rating} Date: {review.date.slice(0, 10)}</h4>
@@ -62,6 +60,6 @@ export const ProductContainer = (props) => {
 }
 
 export default connect(
-  ({ product, reviews }) => ({ product, reviews }),
-  {getProductById},
+  ({ product }) => ({ product }),
+  {},
 )(ProductContainer)

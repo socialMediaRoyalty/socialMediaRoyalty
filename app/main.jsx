@@ -14,6 +14,9 @@ import RootContainer from './containers/RootContainer.jsx'
 import ProfileContainer from './containers/ProfileContainer'
 import UsersContainer from './containers/UsersContainer'
 
+import SubmitPayment from './components/SubmitPayment'
+import OrderSuccess from './components/OrderSuccess'
+
 import HomeContainer from './containers/HomeContainer'
 import CategoriesContainer from './containers/CategoriesContainer'
 import ProductsContainer from './containers/ProductsContainer'
@@ -23,7 +26,6 @@ import { Signup } from './containers/SignupContainer'
 import {getAllCategories} from './reducers/category'
 import {getAllProducts, getProductById, getProductByCategory} from './reducers/product'
 import { fetchAllUsers } from './reducers/user'
-import {getReviewsByProduct, getReviewsByUser} from './reducers/reviews'
 
 /* OnEnter Functions go Here */
 const fetchInitialData = (newRouterState) => {
@@ -44,7 +46,6 @@ const onProductByCategoryEnter = (newRouterState) => {
 
 const onProductEnter = (newRouterState) => {
   store.dispatch(getProductById(newRouterState.params.pid))
-  store.dispatch(getReviewsByProduct(newRouterState.params.pid))
 }
 
 const onProfileEnter = (newRouterState) => {
@@ -57,11 +58,16 @@ render(
       <Route path="/" component={RootContainer} onEnter={fetchInitialData}>
         <IndexRoute component={HomeContainer} onEnter={onHomeEnter} />
         <Route path="/categories" components={CategoriesContainer} />
+        <Route path="/profile" component={ ProfileContainer } />
+        <Route path="/payment" component={SubmitPayment} />
+         <Route path="/submitted" component={OrderSuccess} />
+
         <Route path="/products" components={ProductsContainer} />
         <Route path="/products/categories/:cid" components={ProductsContainer} onEnter={onProductByCategoryEnter}/>
         <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
         <Route path="/profile" component={ ProfileContainer } onEnter={onProfileEnter} />
         <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
+
       </Route>
       <Route path="/signup" component={Signup} />
       <Route path='*' component={NotFound} />
