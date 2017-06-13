@@ -25,11 +25,12 @@ import ProductsContainer from './containers/ProductsContainer'
 import ProductContainer from './containers/ProductContainer'
 
 
-import { Signup } from './containers/SignupContainer'
+import SignupContainer from './containers/SignupContainer'
 import {getAllCategories} from './reducers/category'
 import {getAllProducts, getProductById, getProductByCategory} from './reducers/product'
 import { fetchAllUsers } from './reducers/user'
 import {getReviewsByProduct} from './reducers/reviews'
+
 
 /* OnEnter Functions go Here */
 const fetchInitialData = (newRouterState) => {
@@ -66,7 +67,7 @@ render(
         <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
 
       </Route>
-      <Route path="/signup" component={Signup} />
+      <Route path="/signup" component={SignupContainer} />
       <Route path='*' component={NotFound} />
     </Router>
   </Provider>,
