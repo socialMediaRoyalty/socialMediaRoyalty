@@ -1,10 +1,7 @@
 import axios from 'axios'
 import { browserHistory } from 'react-router';
 
-/* ------------------    ACTIONS    --------------------- */
-
 const AUTHENTICATED = 'AUTHENTICATED'
-const NEW_USER = 'NEW_USER'
 
 /* --------------    ACTION CREATORS    ----------------- */
 

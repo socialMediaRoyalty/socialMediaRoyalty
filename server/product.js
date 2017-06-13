@@ -7,14 +7,14 @@ const Review = db.model('reviews')
 const {assertAdmin} = require('./auth.filters')
 
 module.exports = require('express').Router()
-  // get all products, filter the available product in frontend
+// get all products, filter the available product in frontend
 // if there is query, get the products for a query (eg, ?category_id=1)
   .get('/',
     (req, res, next) =>
       Product.findAll({
-        where: req.query,
         include: [{
-          model: Category
+          model: Category,
+          where: req.query
         }, {
           model: Review
         }]
@@ -30,7 +30,10 @@ module.exports = require('express').Router()
         'description': req.body.description,
         'price': req.body.price,
         'quantity': req.body.quantity,
-        'imageUrl': req.body.imageUrl
+        'imageUrl': req.body.imageUrl,
+        'categories': req.body.categories || [] // array of category objects
+      }, {
+        include: [Category]
       })
         .then(createdProduct =>
           createdProduct.addCategory(req.body.categoriesId) // array of category IDs

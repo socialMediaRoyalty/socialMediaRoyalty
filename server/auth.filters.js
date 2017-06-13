@@ -69,11 +69,11 @@ const assertAdmin = (req, res, next) => {
   if (!req.user) {
     const err = new Error('You must be logged in')
     err.status = 401
-    throw err
+    next(err)
   } else if (!req.user.isAdmin) {
     const err = new Error('You are unauthorized to view this page')
     err.status = 403
-    throw err
+    next(err)
   }
   next()
 }

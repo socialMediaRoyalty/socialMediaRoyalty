@@ -1,85 +1,291 @@
 'use strict'
 
 const db = require('APP/db')
-    , {User, Category, Promise} = db
+    , {User, CartDetail, Cart, Product, Review, Order, Category, OrderDetail, CategoryProduct, OrderProducts, ProductReview, Promise} = db
     , {mapValues} = require('lodash')
+    , catProd = db.models.category_product
+    , prodRev = db.models.product_review
 
 function seedEverything() {
   const seeded = {
-    users: users()
+    users: users(),
+    products: products()
   }
+  seeded.carts = carts(seeded)
+  seeded.cartDetails = cartDetails(seeded)
+  seeded.reviews = reviews(seeded)
+  seeded.orders = orders(seeded)
+  seeded.categories = categories(seeded)
+  seeded.orderDetails = orderDetails(seeded)
+  seeded.categoryProduct = categoryProduct(seeded)
 
-  // seeded.favorites = favorites(seeded)
+  seeded.productReview = productReview(seeded)
 
   return Promise.props(seeded)
 }
 
 const users = seed(User, {
-  god: {
-    email: 'god@example.com',
+  'god': {
     name: 'So many names',
+    email: 'god@example.com',
     password: '1234',
+    isAdmin: true,
+    facebookLink: 'https://www.facebook.com/TheGoodLordAbove/god',
+    twitterHandle: '@TheGoodGodAbove',
+    instagramHandle: '@goodgodabove',
+    snapChatHandle: '@goodlordabove',
+    address: 'Everywhere'
   },
-  barack: {
+  'barack': {
     name: 'Barack Obama',
     email: 'barack@example.gov',
-    password: '1234'
+    password: '1234',
+    isAdmin: true,
+    facebookLink: 'https://www.facebook.com/TheGoodLordAbove/god',
+    twitterHandle: '@BarackObama',
+    instagramHandle: '@BarackObama',
+    snapChatHandle: '@BarackObama',
+    address: '100 Pennsylvania Avenue, Washington D.C. 94108'
+  },
+  'bo': {
+    name: 'Bo Obama',
+    email: 'bo@example.gov',
+    password: '1234',
+    facebookLink: 'https://www.facebook.com/boobama',
+    twitterHandle: '@BoObama',
+    instagramHandle: '@BoObama',
+    snapChatHandle: '@BoObama',
+    address: '100 Pennsylvania Avenue, Washington D.C. 94108'
+  },
+  'michelle': {
+    name: 'Michelle Obama',
+    email: 'michelle@example.gov',
+    password: '1234',
+    facebookLink: 'https://www.facebook.com/michelleobama',
+    twitterHandle: '@MichelleObama',
+    instagramHandle: '@MichelleObama',
+    snapChatHandle: '@MichelleObama',
+    address: '100 Pennsylvania Avenue, Washington D.C. 94108'
   },
 })
 
-const categories = seed(Category, {
-  facebook: {
-    name: 'FaceBook'
+const carts = seed(Cart,
+  ({users}) => ({
+    'cart1': { user_id: users.god.id },
+    'cart2': { user_id: users.barack.id },
+    'cart3': { user_id: users.bo.id },
+    'cart4': { user_id: users.michelle.id },
+  })
+)
+
+const products = seed(Product, {
+  'prod1': {
+    name: 'Facebook Fanpage Likes',
+    available: true,
+    quantity: 100,
+    price: 5.99,
+    ratings: 4,
+    description: 'Increase your fan base!'
   },
-  twitter: {
-    name: 'Twitter'
+  'prod2': {
+    name: 'Facebook Post/ Photo Likes',
+    available: true,
+    quantity: 100,
+    price: 5.99,
+    ratings: 4,
+    description: 'Get more likes!'
   },
-  likes: {
-    name: 'Likes'
+  'prod3': {
+    name: 'Facebook Comments',
+    available: true,
+    quantity: 100,
+    price: 5.99,
+    ratings: 4,
+    description: 'Get more love!'
   },
-  followers: {
-    name: 'Followers'
-  },
+  'prod4': {
+    name: 'Facebook Video Views',
+    available: true,
+    quantity: 100,
+    price: 5.99,
+    ratings: 4,
+    description: 'Get more viewers!'
+  }
 })
-//
-// const things = seed(Thing, {
-//   surfing: {name: 'surfing'},
-//   smiting: {name: 'smiting'},
-//   puppies: {name: 'puppies'},
-// })
-//
-// const favorites = seed(Favorite,
-//   // We're specifying a function here, rather than just a rows object.
-//   // Using a function lets us receive the previously-seeded rows (the seed
-//   // function does this wiring for us).
-//   //
-//   // This lets us reference previously-created rows in order to create the join
-//   // rows. We can reference them by the names we used above (which is why we used
-//   // Objects above, rather than just arrays).
-//   ({users, things}) => ({
-//     // The easiest way to seed associations seems to be to just create rows
-//     // in the join table.
-//     'obama loves surfing': {
-//       user_id: users.barack.id,    // users.barack is an instance of the User model
-//                                    // that we created in the user seed above.
-//                                    // The seed function wires the promises so that it'll
-//                                    // have been created already.
-//       thing_id: things.surfing.id  // Same thing for things.
-//     },
-//     'god is into smiting': {
-//       user_id: users.god.id,
-//       thing_id: things.smiting.id
-//     },
-//     'obama loves puppies': {
-//       user_id: users.barack.id,
-//       thing_id: things.puppies.id
-//     },
-//     'god loves puppies': {
-//       user_id: users.god.id,
-//       thing_id: things.puppies.id
-//     },
-//   })
-// )
+
+const cartDetails = seed(CartDetail,
+({carts, products}) => ({
+  '1': {
+    quantity: 2,
+    cart_id: carts.cart1.id,
+    product_id: products.prod1.id
+  },
+  '2': {
+    quantity: 2,
+    cart_id: carts.cart2.id,
+    product_id: products.prod2.id
+  },
+  '3': {
+    quantity: 1,
+    cart_id: carts.cart3.id,
+    product_id: products.prod3.id
+  },
+  '4': {
+    quantity: 3,
+    cart_id: carts.cart4.id,
+    product_id: products.prod4.id
+  }
+})
+)
+
+const reviews = seed(Review,
+({users, products}) => ({
+  'rev1': {
+    rating: 4,
+    date: Date(),
+    comment: 'All the comments were great, but I wish they could be more detailed',
+    user_id: users.god.id,
+    product_id: products.prod3.id
+  },
+  'rev2': {
+    rating: 1,
+    date: Date(),
+    comment: 'The Facebook likes have not increased my popularity on Facebook which is what I expected it would do',
+    user_id: users.bo.id,
+    product_id: products.prod1.id
+  },
+  'rev3': {
+    rating: 5,
+    date: Date(),
+    comment: 'The more views I get, the more people watch my videos! This is a great product.',
+    user_id: users.michelle.id,
+    product_id: products.prod4.id
+  },
+  'rev4': {
+    rating: 3,
+    date: Date(),
+    comment: 'My photos have the most likes of all my friends! They all think I am so popular! So cool!',
+    user_id: users.barack.id,
+    product_id: products.prod2.id
+  }
+}))
+
+const orders = seed(Order,
+  ({users}) => ({
+    'order1': {
+      status: 'received',
+      purchaseDate: new Date(),
+      user_id: users.god.id,
+    },
+    'order2': {
+      status: 'shipped',
+      purchaseDate: new Date(),
+      user_id: users.barack.id,
+    },
+    'order3': {
+      status: 'processed',
+      purchaseDate: new Date(),
+      user_id: users.bo.id,
+    },
+    'order4': {
+      status: 'received',
+      purchaseDate: new Date(),
+      user_id: users.michelle.id,
+    }
+  })
+)
+
+const categories = seed(Category,
+  ({products}) => ({
+    'cat1': {
+      name: 'Facebook',
+      product_id: products.prod1.id,
+    },
+    'cat2': {
+      name: 'Instagram',
+      product_id: products.prod2.id,
+    },
+    'cat3': {
+      name: 'Youtube',
+      product_id: products.prod3.id,
+    },
+    'cat4': {
+      name: 'Snapchat',
+      product_id: products.prod4.id,
+    }
+  })
+)
+
+const orderDetails = seed(OrderDetail,
+  ({orders, products}) => ({
+    'ordDet1': {
+      purchasedPrice: 5.99,
+      quantity: 2,
+      order_id: orders.order1.id,
+      product_id: products.prod1.id,
+    },
+    'ordDet2': {
+      purchasedPrice: 5.99,
+      quantity: 1,
+      order_id: orders.order2.id,
+      product_id: products.prod4.id,
+    },
+    'ordDet3': {
+      purchasedPrice: 5.99,
+      quantity: 3,
+      order_id: orders.order3.id,
+      product_id: products.prod2.id,
+    },
+    'ordDet4': {
+      purchasedPrice: 5.99,
+      quantity: 2,
+      order_id: orders.order4.id,
+      product_id: products.prod3.id,
+    }
+  })
+)
+
+const categoryProduct = seed(catProd,
+  ({categories, products}) => ({
+    '1': {
+      product_id: products.prod1.id,
+      category_id: categories.cat1.id,
+    },
+    '2': {
+      product_id: products.prod2.id,
+      category_id: categories.cat1.id,
+    },
+    '3': {
+      product_id: products.prod3.id,
+      category_id: categories.cat1.id,
+    },
+    '4': {
+      product_id: products.prod4.id,
+      category_id: categories.cat1.id,
+    },
+  })
+)
+
+const productReview = seed(prodRev,
+  ({products, reviews}) => ({
+    '1': {
+      product_id: products.prod3.id,
+      review_id: reviews.rev1.id
+    },
+    '2': {
+      product_id: products.prod1.id,
+      review_id: reviews.rev2.id
+    },
+    '3': {
+      product_id: products.prod4.id,
+      review_id: reviews.rev3.id
+    },
+    '4': {
+      product_id: products.prod2.id,
+      review_id: reviews.rev4.id
+    },
+  })
+)
 
 if (module === require.main) {
   db.didSync
@@ -135,9 +341,9 @@ function seed(Model, rows) {
                 )
             }
           }).reduce(
-            (all, one) => Object.assign({}, all, {[one.key]: one.value}),
-            {}
-          )
+          (all, one) => Object.assign({}, all, {[one.key]: one.value}),
+          {}
+        )
         )
       )
       .then(seeded => {
@@ -149,4 +355,5 @@ function seed(Model, rows) {
   }
 }
 
-module.exports = Object.assign(seed, {users, categories})
+module.exports = Object.assign(seed, {users, products, carts, cartDetails, reviews, orders, categories, orderDetails, categoryProduct, productReview})
+
