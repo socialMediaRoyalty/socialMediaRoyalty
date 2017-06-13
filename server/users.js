@@ -30,6 +30,29 @@ module.exports = require('express').Router()
     (req, res, next) =>
       res.json(req.requestedUser)
       .catch(next))
+  .post('/',
+  (req, res, next) => {
+    User.findOrCreate({
+      where: {
+        email: req.body.email
+      },
+      defaults: {
+        password: req.body.password
+      }
+    })
+    .spread((user, created) => {
+      if (created) {
+        req.logIn(user, err => {
+          if (err) return next(err)
+          res.json(user)
+        })
+      } else {
+        const err = new Error('This email is already in use')
+        err.status = 401
+        throw err
+      }
+    })
+  })
   .put('/:uid',
       assertSelfOrAdmin,
       (req, res, next) => {
