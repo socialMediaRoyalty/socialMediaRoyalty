@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Table, Button } from 'react-bootstrap'
-import ContentEditable from 'react-contenteditable'
+//import ContentEditable from 'react-contenteditable'
 import { Link, browserHistory } from 'react-router'
 
 import { fetchUser, updateUser, removeUser } from '../reducers/user'

@@ -35,38 +35,31 @@ export default reducer
 
 /* ------------       DISPATCHERS     ------------------ */
 
-export const fetchCart = () => {
-  dispatch => {
+export const fetchCart = () =>
+  dispatch =>
     axios.get(`/api/carts`)
     .then(res => {
       dispatch(getCart(res.data))
     }).catch(console.error)
-  }
-}
 
-export const saveCart = () => {
-  dispatch => {
+export const saveCart = () =>
+  dispatch =>
     axios.post(`/api/carts`)
     .then(res => {
       dispatch(addCart(res.data))
     }).catch(console.error)
-  }
-}
 
-export const addProduct = () => {
-  dispatch => {
+export const addProduct = () => 
+  dispatch => 
     axios.post(`/api/carts`)
     .then(res => {
       dispatch(addProd(res.data))
     }).catch(console.error)
-  }
-}
 
-export const deleteCart = () => {
-  dispatch => {
+export const deleteCart = () =>
+  dispatch =>
     axios.delete(`/api/carts`)
     .then(res => {
       dispatch(delCart(res.data))
     }).catch(console.error)
-  }
-}
+
