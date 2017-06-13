@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import store from '../store'
 import { Table, Button } from 'react-bootstrap'
 import ContentEditable from 'react-contenteditable'
 import { Link, browserHistory } from 'react-router'
 
 import { fetchUser, updateUser, removeUser } from '../reducers/user'
+import {getReviewsByProduct, getReviewsByUser} from '../reducers/reviews'
 
 /* -----------------    NESTED COMPONENT     ------------------ */
 
@@ -53,6 +55,7 @@ class Profile extends Component {
     super(props)
     this.state = {
       currentUser: this.props.auth,
+      reviews: this.props.reviews,
       disableEdit: true
     }
     this.handleEdit = this.handleEdit.bind(this)
@@ -106,8 +109,8 @@ class Profile extends Component {
         <h2>Profile</h2>
 
         {
-          this.state.disableEdit ?
-            <Button
+          this.state.disableEdit
+            ? <Button
               bsStyle="info"
               bsSize="small"
               onClick={this.handleEdit}>
@@ -136,6 +139,13 @@ class Profile extends Component {
             }
           </tbody>
         </Table>
+        {/*{*/}
+        {/*this.state.reviews && this.state.reviews.map(review => (*/}
+        {/*<Panel header={`${review.date} rating: ${review.rating}`} bsStyle="info" key={review.id}>*/}
+        {/*{review.comment}*/}
+        {/*</Panel>*/}
+        {/*))*/}
+        {/*}*/}
       </div>
     )
   }
@@ -143,7 +153,7 @@ class Profile extends Component {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({auth}) => ({auth})
+const mapState = ({auth, reviews}) => ({auth, reviews})
 
 const mapDispatch = { fetchUser, updateUser, removeUser }
 

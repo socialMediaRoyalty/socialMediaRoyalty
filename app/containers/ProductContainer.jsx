@@ -62,6 +62,6 @@ export const ProductContainer = (props) => {
 }
 
 export default connect(
-  ({ product, reviews }) => ({ product, reviews }), // state => ({}),
+  ({ product, reviews }) => ({ product, reviews }),
   {getProductById},
 )(ProductContainer)

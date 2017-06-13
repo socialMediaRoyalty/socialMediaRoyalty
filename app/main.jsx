@@ -23,11 +23,15 @@ import { Signup } from './containers/SignupContainer'
 import {getAllCategories} from './reducers/category'
 import {getAllProducts, getProductById, getProductByCategory} from './reducers/product'
 import { fetchAllUsers } from './reducers/user'
-import {getReviewsByProduct} from './reducers/reviews'
+import {getReviewsByProduct, getReviewsByUser} from './reducers/reviews'
 
 /* OnEnter Functions go Here */
 const fetchInitialData = (newRouterState) => {
   store.dispatch(getAllCategories())
+  store.dispatch(getAllProducts())
+}
+
+const onHomeEnter = (newRouterState) => {
   store.dispatch(getAllProducts())
 }
 
@@ -43,16 +47,20 @@ const onProductEnter = (newRouterState) => {
   store.dispatch(getReviewsByProduct(newRouterState.params.pid))
 }
 
+const onProfileEnter = (newRouterState) => {
+  // store.dispatch(getReviewsByUser(uid)) -- how to get user info
+}
+
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={RootContainer} onEnter={fetchInitialData}>
-        <IndexRoute component={HomeContainer} />
+        <IndexRoute component={HomeContainer} onEnter={onHomeEnter} />
         <Route path="/categories" components={CategoriesContainer} />
         <Route path="/products" components={ProductsContainer} />
         <Route path="/products/categories/:cid" components={ProductsContainer} onEnter={onProductByCategoryEnter}/>
         <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
-        <Route path="/profile" component={ ProfileContainer } />
+        <Route path="/profile" component={ ProfileContainer } onEnter={onProfileEnter} />
         <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
       </Route>
       <Route path="/signup" component={Signup} />
