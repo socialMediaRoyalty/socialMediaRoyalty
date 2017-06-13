@@ -34,6 +34,18 @@ const ProfileRow =
     )
   }
 
+/* -----------------  INFO FOR PROFILE ROW     ------------------ */
+
+const profileData = [
+  {field: 'name', title: 'Name'},
+  {field: 'email', title: 'Email'},
+  {field: 'address', title: 'Address'},
+  {field: 'facebookLink', title: 'Facebook'},
+  {field: 'instagramHandle', title: 'Instagram'},
+  {field: 'twitterHandle', title: 'Twitter'},
+  {field: 'snapChatHandle', title: 'SnapChat'}
+]
+
 /* -----------------    COMPONENT     ------------------ */
 
 class Profile extends Component {
@@ -93,71 +105,35 @@ class Profile extends Component {
       <div className="container">
         <h2>Profile</h2>
 
-        <Button
-          bsStyle="info"
-          bsSize="small"
-          onClick={this.handleEdit}>
-          Edit Profile
-        </Button>
-
-        <Button
-          bsStyle="success"
-          bsSize="small"
-          onClick={this.handleSubmit}>
-          Save Changes
-        </Button>
+        {
+          this.state.disableEdit ?
+            <Button
+              bsStyle="info"
+              bsSize="small"
+              onClick={this.handleEdit}>
+              Edit Profile
+            </Button>
+          : <Button
+            bsStyle="success"
+            bsSize="small"
+            onClick={this.handleSubmit}>
+            Save Changes
+          </Button>
+        }
 
         <Table hover>
           <tbody>
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'name'}
-              title={'Name'}
-            />
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'email'}
-              title={'Email'}
-            />
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'address'}
-              title={'Address'}
-            />
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'facebookLink'}
-              title={'Facebook'}
-            />
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'instagramHandle'}
-              title={'Instagram'}
-            />
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'twitterHandle'}
-              title={'Twitter'}
-            />
-            <ProfileRow
-              disableEdit={this.state.disableEdit}
-              currentUser={this.state.currentUser}
-              handleChange={this.handleChange}
-              field={'snapChatHandle'}
-              title={'SnapChat'}
-            />
+            {
+              profileData.map(entry =>
+                <ProfileRow
+                  disableEdit={this.state.disableEdit}
+                  currentUser={this.state.currentUser}
+                  handleChange={this.handleChange}
+                  field={entry.field}
+                  title={entry.title}
+                />
+              )
+            }
           </tbody>
         </Table>
       </div>
