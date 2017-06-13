@@ -18,7 +18,7 @@ export const Navigation = ({ auth, login, category }) => (
       <NavDropdown eventKey={1} title="Categories" id="basic-nav-dropdown">
         {
           category && category.map(categ =>
-            <MenuItem eventKey={`1.${categ.id}`}>
+            <MenuItem key={categ.id} eventKey={`1.${categ.id}`}>
               {categ.name}
             </MenuItem>)
         }

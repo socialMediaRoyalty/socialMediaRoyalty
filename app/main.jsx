@@ -14,8 +14,10 @@ import ProfileContainer from './containers/ProfileContainer'
 import UsersContainer from './containers/UsersContainer'
 
 import CategoriesContainer from './containers/CategoriesContainer.jsx'
-import ProductsContainer from './containers/ProductsContainer'
-import ProductContainer from './containers/ProductContainer'
+// import ProductsContainer from './containers/ProductsContainer'
+// import ProductContainer from './containers/ProductContainer'
+
+import SubmitPayment from './components/SubmitPayment'
 
 import {getAllCategories} from './reducers/category'
 import {getAllProducts, getProductById} from './reducers/product'
@@ -57,9 +59,10 @@ render(
       <Route path="/" component={RootContainer} onEnter={fetchInitialData}>
         <IndexRoute component={Home} />
         <Route path="/categories" components={CategoriesContainer} />
-        <Route path="/products" components={ProductsContainer} onEnter={onProductsEnter}/>
-        <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
+        {/*<Route path="/products" components={ProductsContainer} onEnter={onProductsEnter}/>
+        <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>*/}
         <Route path="/profile" component={ ProfileContainer } />
+        <Route path="/payment" component={SubmitPayment} />
         <Route path="/admin/users"
           component={UsersContainer}
           onEnter={onUsersEnter} />
