@@ -49,8 +49,10 @@ export const Navigation = ({ auth, login, category }) => (
             <LinkContainer to="/admin/users">
               <MenuItem eventKey={4.1}>Users</MenuItem>
             </LinkContainer>
+            <LinkContainer to="/admin/orders">
+              <MenuItem eventKey={4.2}>Orders</MenuItem>
+            </LinkContainer>
 
-            <MenuItem eventKey={4.2}>Orders</MenuItem>
             <MenuItem eventKey={4.3}>Products</MenuItem>
           </NavDropdown>
       }

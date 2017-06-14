@@ -65,6 +65,7 @@ render(
         <Route path="/payment" component={SubmitPayment} />
          <Route path="/submitted" component={OrderSuccess} />
         <Route path="/orders" component={Orders} onEnter={onOrdersEnter} />
+        <Route path="/admin/orders" component={Orders} onEnter={onOrdersEnter} />
         <Route path="/products" component={ProductsContainer} />
         <Route path="/products/categories/:cid" component={ProductsContainer} onEnter={onProductByCategoryEnter}/>
         <Route path="/products/:pid" component={ProductContainer} onEnter={onProductEnter}/>

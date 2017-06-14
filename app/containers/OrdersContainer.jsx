@@ -14,10 +14,11 @@ export class Orders extends Component {
     return (
 
       <div>
-            {console.log('why?', this.props.orders)}
+      <h1>Order History</h1>
       <Table>
       <thead>
         <tr>
+          <th>Order Number</th>
           <th>Product</th>
           <th>Price</th>
           <th>Quantity</th>
@@ -28,6 +29,7 @@ export class Orders extends Component {
         <tbody>
         {this.props.orders && this.props.orders.map(order => {
           return <tr>
+            <td key={order.id}>{order.product.id}</td>
             <td key={order.id}>{order.product.name}</td>
             <td key={order.id}>{order.purchasedPrice}</td>
             <td key={order.id}>{order.product.quantity}</td>
