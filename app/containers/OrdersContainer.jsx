@@ -14,7 +14,7 @@ export class Orders extends Component {
     return (
 
       <div>
-            {console.log('why?', this.props.orders)}
+            {console.log('why?', this.props)}
       <Table>
       <thead>
         <tr>

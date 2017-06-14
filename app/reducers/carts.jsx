@@ -6,7 +6,7 @@ const FETCH_CART = 'FETCH_CART'
 const GET_CART_BY_ID = 'GET_CART_BY_ID'
 const FIND_CART_FOR_USER = 'FIND_CART_FOR_USER'
 const ADD_CART = 'ADD_CART'
-const ADD_PRODUCT = 'ADD_PRODUCT'
+const ADD_PRODUCT_TO_CART = 'ADD_PRODUCT_TO_CART'
 const DELETE_CART = 'DELETE_CART'
 
 /* ------------   ACTION CREATORS     ------------------ */
@@ -15,7 +15,7 @@ const getCart = (cart) => ({type: FETCH_CART, cart})
 const getById = (cart) => ({type: GET_CART_BY_ID, cart})
 const findCart = (cart) => ({type: FIND_CART_FOR_USER, cart})
 const addCart = (cart) => ({type: ADD_CART, cart})
-const addProd = (cart) => ({type: ADD_PRODUCT, cart})
+const addProd = (cart) => ({type: ADD_PRODUCT_TO_CART, cart})
 const delCart = (cart) => ({type: DELETE_CART, cart})
 
 /* ------------       REDUCER     ------------------ */
@@ -30,7 +30,7 @@ const reducer = (cart = [], action) => {
     return action.cart
   case ADD_CART:
     return action.cart
-  case ADD_PRODUCT:
+  case ADD_PRODUCT_TO_CART:
     return action.cart
   case DELETE_CART:
     return action.cart

@@ -81,6 +81,7 @@ render(
         <Route path="/orders" component={Orders} onEnter={onOrdersEnter} />
         <Route path="/carts/:cid" components={CartContainer} onEnter={onCartEnter} />
         <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
+        <Route path="/admin/orders" component={Orders} onEnter={onOrdersEnter}/>
         <Route path="/admin/products" component={Products} />
         <Route path="/admin/editproducts" component={EditProducts} />
         <Route path="/signup" component={SignupContainer} />

@@ -10,15 +10,14 @@ export class Products extends Component {
     super(props)
   }
 
-
-
   render() {
     return (
 			<div>
+      {console.log(this.props)}
       <Grid>
       <Row>
         {
-					this.props.products && this.props.products.map(product => (
+					this.props.products.products && this.props.products.products.map(product => (
           <Col xs={6} md={4} key={product.id}>
           <Thumbnail src={product.imageUrl} alt="242x200">
           <h3>{product.name}</h3>
