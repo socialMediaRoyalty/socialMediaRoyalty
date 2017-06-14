@@ -20,6 +20,11 @@ export default class EditProducts extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+	handleSubmit(event) {
+		event.preventDefault()
+		console.log(this.state)
+	}
+
   handleNameChange(event) {
     this.setState({
       name: event.target.value
@@ -50,16 +55,7 @@ export default class EditProducts extends Component {
     })
   }
 
-  handleSubmit(event) {
-    console.log(this.state)
-    event.preventDefault()
-		// const name = this.state.name
-		// const description = this.state.description
-		// const quantity = this.state.quantity
-		// const price = this.state.price
-		// const image = this.state.image
-    this.props.addProduct(this.state)
-  }
+
 
   render() {
     return (
