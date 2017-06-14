@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import store from '../store'
+import {Link} from 'react-router'
 
 import {Carousel} from 'react-bootstrap'
 
@@ -14,7 +15,9 @@ export const HomeContainer = (props) => {
               if (idx === 4) return
               return (
                 <Carousel.Item key={product.id}>
-                  <img width={600} height={300} alt="600x300" src={product.imageUrl}/>
+                  <Link to = {`/products/${product.id}`}>
+                    <img id="CarImg" width={600} height={300} alt="600x300" src={product.imageUrl}/>
+                  </Link>
                   <Carousel.Caption>
                     <h3>{product.name}</h3>
                     <p>{product.description}</p>

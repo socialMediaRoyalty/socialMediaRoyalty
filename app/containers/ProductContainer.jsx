@@ -62,7 +62,7 @@ export class ProductContainer extends React.Component {
           <tbody>
           <tr>
             <td>
-              <Image src={product.imageUrl} />
+              <Image className="prodImg" src={product.imageUrl} />
             </td>
             <td>
               <Well bsSize="large">

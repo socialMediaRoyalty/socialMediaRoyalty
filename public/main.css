@@ -28,8 +28,6 @@
     margin-left: 17%;
 }
 
-
-
 #companyName {
     margin-top: 0;
     padding: 15px 10px;
@@ -41,5 +39,9 @@
 
 .container {
     width: 100%
+}
+
+.prodImg {
+    width: 100vh
 }
 
