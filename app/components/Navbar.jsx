@@ -9,7 +9,7 @@ import WhoAmI from './WhoAmI'
 
 export const Navigation = ({ auth, login, category }) => (
 
-  <Navbar>
+  <Navbar className="navbar">
     <Navbar.Header>
       <Navbar.Brand>
         <Link to="/">Home</Link>
