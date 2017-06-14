@@ -67,6 +67,7 @@ const users = seed(User, {
     snapChatHandle: '@MichelleObama',
     address: '100 Pennsylvania Avenue, Washington D.C. 94108'
   },
+
 })
 
 const carts = seed(Cart,
@@ -85,15 +86,17 @@ const products = seed(Product, {
     quantity: 100,
     price: 5.99,
     ratings: 4,
+    imageUrl: 'https://en.facebookbrand.com/wp-content/themes/fb-branding/prj-fb-branding/assets/images/thumb-drawn.svg',
     description: 'Increase your fan base!'
   },
   'prod2': {
-    name: 'Facebook Post/ Photo Likes',
+    name: 'Animal Friends Post',
     available: true,
     quantity: 100,
     price: 5.99,
     ratings: 4,
-    description: 'Get more likes!'
+    imageUrl: 'http://kids.nationalgeographic.com/content/dam/kids/photos/articles/Other%20Explore%20Photos/R-Z/Wacky%20Weekend/Animal%20Friendships/ww-animal-friendships-kitten-chick.adapt.945.1.jpg',
+    description: 'Get more likes with these cute animal friends!'
   },
   'prod3': {
     name: 'Facebook Comments',
@@ -101,16 +104,90 @@ const products = seed(Product, {
     quantity: 100,
     price: 5.99,
     ratings: 4,
+    imageUrl: 'http://newwallpapershd.com/wp-content/uploads/2014/10/Funny-Facebook-Comment-Pictures-download-2.jpg',
     description: 'Get more love!'
   },
   'prod4': {
-    name: 'Facebook Video Views',
+    name: 'Mean Facebook Post',
     available: true,
     quantity: 100,
     price: 5.99,
     ratings: 4,
-    description: 'Get more viewers!'
-  }
+    imageUrl: 'https://www.postplanner.com/hs-fs/hub/513577/file-2882290107-png/blog-files/screen-shot-2015-01-06-at-5.03.27-pm.png?t=1497029622634&width=428&height=285&name=screen-shot-2015-01-06-at-5.03.27-pm.png',
+    description: 'Be snarky'
+  },
+  'prod5': {
+    name: 'Instagram Foodie Post',
+    available: true,
+    quantity: 100,
+    price: 5.99,
+    ratings: 4,
+    imageUrl: 'https://themuslimvibe.com/wp-content/uploads/2016/08/insta-food.jpg',
+    description: 'Be the best Instagram Foodie!'
+  },
+  'prod6': {
+    name: 'Become a Sponsored Instagrammer',
+    available: true,
+    quantity: 100,
+    price: 5.99,
+    ratings: 4,
+    imageUrl: 'https://news.starbucks.com/uploads/images/Beverages/Caramel_Cocoa_Cluster_Low_Res.JPG',
+    description: 'Get paid to eat pretty food'
+  },
+  'prod7': {
+    name: 'Vacation Photo Post',
+    available: true,
+    quantity: 100,
+    price: 5.99,
+    ratings: 4,
+    imageUrl: 'https://i.redditmedia.com/GR-wAcP9LdcCUqEpPFyp75fk91xptLSkdlWWAgXYJNQ.jpg?w=768&s=7fe05719f636626c78fbe4523a2e73e2',
+    description: 'Make your friends jealous!'
+  },
+  'prod8': {
+    name: 'Youtube Subscribers',
+    available: true,
+    quantity: 100,
+    price: 5.99,
+    ratings: 4,
+    imageUrl: 'https://www.youtube.com/yt/brand/media/image/YouTube-icon-full_color.png',
+    description: 'Become a Youtube Superstar!'
+  },
+  'prod9': {
+    name: 'Start a Makeup Youtube Channel',
+    available: true,
+    quantity: 100,
+    price: 5.99,
+    ratings: 4,
+    imageUrl: 'https://fashionista.com/.image/t_share/MTIwOTExMDU3MTAyMzY5ODIy/primary-photo.jpg',
+    description: 'Become a Youtube Superstar!'
+  },
+  'prod10': {
+    name: 'SnapChat Story',
+    available: true,
+    quantity: 100,
+    price: 5.99,
+    ratings: 4,
+    imageUrl: 'https://tctechcrunch2011.files.wordpress.com/2016/03/2-snapcode-to-special-discover-channel.png?w=320&h=320',
+    description: 'A hilarious Snapchat story'
+  },
+  'prod11': {
+    name: 'SnapChat Story',
+    available: true,
+    quantity: 100,
+    price: 5.99,
+    ratings: 4,
+    imageUrl: 'https://static1.businessinsider.com/image/55f97e93dd08952e3a8b4724/snapchats-new-selfie-filters-are-super-trippy.jpg',
+    description: 'A hilarious Snapchat filtered photo'
+  },
+  'prod12': {
+    name: 'Youtube Views',
+    available: true,
+    quantity: 100,
+    price: 5.99,
+    ratings: 4,
+    imageUrl: 'https://i.ytimg.com/vi/QcC9v9ANTWU/maxresdefault.jpg',
+    description: 'SO MANY VIEWS!!!'
+  },
 })
 
 const cartDetails = seed(CartDetail,
@@ -263,6 +340,38 @@ const categoryProduct = seed(catProd,
       product_id: products.prod4.id,
       category_id: categories.cat1.id,
     },
+    '5': {
+      product_id: products.prod5.id,
+      category_id: categories.cat2.id,
+    },
+    '6': {
+      product_id: products.prod6.id,
+      category_id: categories.cat2.id,
+    },
+    '7': {
+      product_id: products.prod7.id,
+      category_id: categories.cat2.id,
+    },
+    '8': {
+      product_id: products.prod8.id,
+      category_id: categories.cat3.id,
+    },
+    '9': {
+      product_id: products.prod9.id,
+      category_id: categories.cat3.id,
+    },
+    '10': {
+      product_id: products.prod10.id,
+      category_id: categories.cat4.id,
+    },
+    '11': {
+      product_id: products.prod11.id,
+      category_id: categories.cat4.id,
+    },
+    '12': {
+      product_id: products.prod12.id,
+      category_id: categories.cat3.id,
+    }
   })
 )
 
