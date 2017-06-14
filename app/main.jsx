@@ -29,7 +29,6 @@ import {fetchAllUsers} from './reducers/user'
 import {getCartById} from './reducers/carts'
 import { fetchAllOrders } from './reducers/orders'
 
-
 /* OnEnter Functions go Here */
 const fetchInitialData = (newRouterState) => {
   store.dispatch(getAllCategories())
