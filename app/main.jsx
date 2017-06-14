@@ -6,10 +6,10 @@ import {connect, Provider} from 'react-redux'
 
 import store from './store'
 import NotFound from './components/NotFound'
+import Products from './components/Products'
 import SubmitPayment from './components/SubmitPayment'
 import OrderSuccess from './components/OrderSuccess'
-import SubmitPayment from './components/SubmitPayment'
-import OrderSuccess from './components/OrderSuccess'
+import EditProducts from './components/EditProducts'
 
 import RootContainer from './containers/RootContainer.jsx'
 import ProfileContainer from './containers/ProfileContainer'
@@ -82,6 +82,8 @@ render(
         <Route path="/orders" component={Orders} onEnter={onOrdersEnter} />
         <Route path="/carts/:cid" components={CartContainer} onEnter={onCartEnter} />
         <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
+        <Route path="/admin/products" component={Products} />
+        <Route path="/admin/editproducts" component={EditProducts} />
         <Route path="/signup" component={SignupContainer} />
       </Route>
       <Route path='*' component={NotFound} />
