@@ -8,24 +8,24 @@ import store from './store'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
-
-import Home from './components/Home'
-import RootContainer from './containers/RootContainer.jsx'
-import ProfileContainer from './containers/ProfileContainer'
-import UsersContainer from './containers/UsersContainer'
-
 import SubmitPayment from './components/SubmitPayment'
 import OrderSuccess from './components/OrderSuccess'
 
+import RootContainer from './containers/RootContainer.jsx'
 import HomeContainer from './containers/HomeContainer'
 import CategoriesContainer from './containers/CategoriesContainer'
 import ProductsContainer from './containers/ProductsContainer'
 import ProductContainer from './containers/ProductContainer'
+import UsersContainer from './containers/UsersContainer'
+import ProfileContainer from './containers/ProfileContainer'
+import SignupContainer from './containers/SignupContainer'
 
-import { Signup } from './containers/SignupContainer'
 import {getAllCategories} from './reducers/category'
 import {getAllProducts, getProductById, getProductByCategory} from './reducers/product'
 import { fetchAllUsers } from './reducers/user'
+import {getReviewsByProduct} from './reducers/reviews'
+import { fetchAllOrders } from './reducers/orders'
+
 
 /* OnEnter Functions go Here */
 const fetchInitialData = (newRouterState) => {
@@ -52,24 +52,26 @@ const onProfileEnter = (newRouterState) => {
   // store.dispatch(getReviewsByUser(uid)) -- how to get user info
 }
 
+const onOrdersEnter = (newRouterState) => {
+  store.dispatch(fetchAllOrders())
+}
+
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={RootContainer} onEnter={fetchInitialData}>
         <IndexRoute component={HomeContainer} onEnter={onHomeEnter} />
         <Route path="/categories" components={CategoriesContainer} />
-        <Route path="/profile" component={ ProfileContainer } />
-        <Route path="/payment" component={SubmitPayment} />
-         <Route path="/submitted" component={OrderSuccess} />
-
         <Route path="/products" components={ProductsContainer} />
         <Route path="/products/categories/:cid" components={ProductsContainer} onEnter={onProductByCategoryEnter}/>
         <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
-        <Route path="/profile" component={ ProfileContainer } onEnter={onProfileEnter} />
+        <Route path="/payment" component={SubmitPayment} />
+        <Route path="/submitted" component={OrderSuccess} />
+        <Route path="/orders" component={Orders} onEnter={onOrdersEnter} />
+        <Route path="/profile" component={ProfileContainer} />
         <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
-
+        <Route path="/signup" component={SignupContainer} />
       </Route>
-      <Route path="/signup" component={Signup} />
       <Route path='*' component={NotFound} />
     </Router>
   </Provider>,

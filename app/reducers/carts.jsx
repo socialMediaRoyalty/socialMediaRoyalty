@@ -62,3 +62,4 @@ export const deleteCart = () =>
     .then(res => {
       dispatch(delCart(res.data))
     }).catch(console.error)
+

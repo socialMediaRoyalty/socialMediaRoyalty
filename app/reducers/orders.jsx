@@ -73,3 +73,4 @@ export const createNewOrder = () =>
     .then(res => {
       dispatch(createOrder(res.data))
     }).catch(err => console.error(`Create new order: unsuccesful`, err))
+
