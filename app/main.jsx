@@ -14,10 +14,12 @@ import RootContainer from './containers/RootContainer.jsx'
 import ProfileContainer from './containers/ProfileContainer'
 import UsersContainer from './containers/UsersContainer'
 import Orders from './containers/OrdersContainer'
+import Products from './components/Products'
 
 
 import SubmitPayment from './components/SubmitPayment'
 import OrderSuccess from './components/OrderSuccess'
+import EditProducts from './components/EditProducts'
 
 import HomeContainer from './containers/HomeContainer'
 import CategoriesContainer from './containers/CategoriesContainer'
@@ -70,7 +72,8 @@ render(
         <Route path="/products/:pid" component={ProductContainer} onEnter={onProductEnter}/>
 
         <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
-
+        <Route path="/admin/products" component={Products} />
+        <Route path="/admin/editproducts" component={EditProducts} />
       </Route>
       <Route path="/signup" component={SignupContainer} />
       <Route path='*' component={NotFound} />

@@ -8,7 +8,6 @@ import store from '../store'
 export class SubmitPayment extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
