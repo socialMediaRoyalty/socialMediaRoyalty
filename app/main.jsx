@@ -5,37 +5,38 @@ import {render} from 'react-dom'
 import {connect, Provider} from 'react-redux'
 
 import store from './store'
-import Login from './components/Login'
-import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
+import SubmitPayment from './components/SubmitPayment'
+import OrderSuccess from './components/OrderSuccess'
+import SubmitPayment from './components/SubmitPayment'
+import OrderSuccess from './components/OrderSuccess'
 
-import Home from './components/Home'
 import RootContainer from './containers/RootContainer.jsx'
 import ProfileContainer from './containers/ProfileContainer'
 import UsersContainer from './containers/UsersContainer'
 import Orders from './containers/OrdersContainer'
-
-
-import SubmitPayment from './components/SubmitPayment'
-import OrderSuccess from './components/OrderSuccess'
-
+import SignupContainer from './containers/SignupContainer'
 import HomeContainer from './containers/HomeContainer'
 import CategoriesContainer from './containers/CategoriesContainer'
 import ProductsContainer from './containers/ProductsContainer'
 import ProductContainer from './containers/ProductContainer'
+import CartContainer from './containers/CartContainer'
 
-
-import SignupContainer from './containers/SignupContainer'
 import {getAllCategories} from './reducers/category'
 import {getAllProducts, getProductById, getProductByCategory} from './reducers/product'
-import { fetchAllUsers } from './reducers/user'
+import {fetchAllUsers} from './reducers/user'
+import {getCartById} from './reducers/carts'
+
 import {getReviewsByProduct} from './reducers/reviews'
 import { fetchAllOrders } from './reducers/orders'
-
 
 /* OnEnter Functions go Here */
 const fetchInitialData = (newRouterState) => {
   store.dispatch(getAllCategories())
+  store.dispatch(getAllProducts())
+}
+
+const onHomeEnter = (newRouterState) => {
   store.dispatch(getAllProducts())
 }
 
@@ -48,7 +49,10 @@ const onProductByCategoryEnter = (newRouterState) => {
 
 const onProductEnter = (newRouterState) => {
   store.dispatch(getProductById(newRouterState.params.pid))
-  store.dispatch(getReviewsByProduct(newRouterState.params.pid))
+}
+
+const onCartEnter = (newRouterState) => {
+  store.dispatch(getCartById(newRouterState.params.cid))
 }
 
 const onOrdersEnter = (newRouterState) => {
@@ -68,7 +72,7 @@ render(
         <Route path="/products" component={ProductsContainer} />
         <Route path="/products/categories/:cid" component={ProductsContainer} onEnter={onProductByCategoryEnter}/>
         <Route path="/products/:pid" component={ProductContainer} onEnter={onProductEnter}/>
-
+        <Route path="/carts/:cid" components={CartContainer} onEnter={onCartEnter} />
         <Route path="/admin/users" component={UsersContainer} onEnter={onUsersEnter} />
 
       </Route>

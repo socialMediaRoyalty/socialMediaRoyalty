@@ -21,23 +21,32 @@ const remove = () => ({type: REMOVE_PRODUCT})
 
 /* ------------------    REDUCER    --------------------- */
 
-export default function reducer(state = null, action) {
+export default function reducer(state = {product: null, products: []}, action) {
+  let newState = Object.assign({}, state)
+
   switch (action.type) {
   case GET_ALL_PRODUCTS:
-    return action.products
+    newState.products = action.products
+    break
   case GET_PRODUCT_BY_ID:
-    return action.product
+    newState.product = action.product
+    break
   case GET_PRODUCT_BY_CATEGORY:
-    return action.products
+    newState.products = action.products
+    break
   case ADD_PRODUCT:
-    return action.product
+    newState.product = action.product
+    break
   case UPDATE_PRODUCT:
-    return action.product
+    newState.product = action.product
+    break
   case REMOVE_PRODUCT:
-    return action.product
+    newState.product = action.product
+    break
   default:
-    return state
+    return newState
   }
+  return newState
 }
 
 /* ------------       DISPATCHERS     ------------------ */

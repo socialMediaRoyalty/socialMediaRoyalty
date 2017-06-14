@@ -4,8 +4,6 @@ import store from '../store'
 
 import {Carousel} from 'react-bootstrap'
 
-import { getAllProducts } from '../reducers/product'
-
 export const HomeContainer = (props) => {
   const products = props.products
   return (
@@ -30,7 +28,13 @@ export const HomeContainer = (props) => {
   )
 }
 
+const mapStateToProps = (state) => {
+  return {
+    products: state.product.products
+  }
+}
+
 export default connect(
-  ({ product }) => ({ products: product }), // state => ({}),
-  {getAllProducts},
+  mapStateToProps,
+  {},
 )(HomeContainer)

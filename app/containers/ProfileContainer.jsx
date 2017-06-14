@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import store from '../store'
 import { Table, Button } from 'react-bootstrap'
 import ContentEditable from 'react-contenteditable'
 import { Link, browserHistory } from 'react-router'
+import { fetchUser, updateUser, removeUser } from '../reducers/user'
+import {getReviewsByProduct, getReviewsByUser} from '../reducers/reviews'
 
-import { updateUser } from '../reducers/user'
 
 /* -----------------    NESTED PROFILE ROW COMPONENT   ------------------ */
 
@@ -95,6 +97,7 @@ class ProfileContainer extends Component {
     super(props)
     this.state = {
       currentUser: this.props.auth,
+      reviews: this.props.reviews,
       disableEdit: true
     }
     this.handleEdit = this.handleEdit.bind(this)
@@ -151,7 +154,7 @@ class ProfileContainer extends Component {
 
 /* -----------------   REACT-REDUX CONTAINER     ------------------ */
 
-const mapState = ({auth}) => ({auth})
+const mapState = ({auth, reviews}) => ({auth, reviews})
 
 const mapDispatch = { updateUser }
 

@@ -23,7 +23,7 @@ module.exports = require('express').Router()
         .catch(next))
   // create a new product
   .post('/',
-    // assertAdmin,
+    assertAdmin,
     (req, res, next) => {
       Product.create({
         'name': req.body.name,
@@ -71,13 +71,13 @@ module.exports = require('express').Router()
   )
   // Edit a product, find the product by Id first, then edit it
   .put('/:pid',
-    // assertAdmin,
+    assertAdmin,
     (req, res, next) => {
       req.foundProduct.update(req.body)
         .catch(next)
     })
   .delete('/:pid',
-    // assertAdmin,
+    assertAdmin,
     (req, res, next) =>
       req.foundProduct.destroy()
         .then(() => res.sendStatus(204))
