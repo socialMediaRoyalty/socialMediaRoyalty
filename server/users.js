@@ -2,6 +2,8 @@
 
 const db = require('APP/db')
 const User = db.model('users')
+const Cart = db.model('carts')
+const Review = db.model('reviews')
 
 const {mustBeLoggedIn, assertAdmin, selfOnly, assertSelfOrAdmin} = require('./auth.filters')
 
@@ -32,26 +34,14 @@ module.exports = require('express').Router()
       .catch(next))
   .post('/',
   (req, res, next) => {
-    User.findOrCreate({
-      where: {
-        email: req.body.email
-      },
-      defaults: {
-        password: req.body.password
-      }
-    })
-    .spread((user, created) => {
-      if (created) {
+    User.create(req.body)
+      .then(user => {
         req.logIn(user, err => {
           if (err) return next(err)
-          res.json(user)
+          res.sendStatus(201)
         })
-      } else {
-        const err = new Error('This email is already in use')
-        err.status = 401
-        throw err
-      }
     })
+    .catch(next)
   })
   .put('/:uid',
       assertSelfOrAdmin,
