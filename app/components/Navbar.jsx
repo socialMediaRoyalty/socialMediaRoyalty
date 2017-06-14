@@ -17,11 +17,10 @@ export const Navigation = ({ auth, login, category }) => (
     </Navbar.Header>
 
     <Nav>
-
-      <NavDropdown eventKey={1} title="Categories" id="basic-nav-dropdown">
+      <NavDropdown title="Categories" id="basic-nav-dropdown">
         {
-          category && category.map(categ =>
-            <LinkContainer to={`/products/categories/${categ.id}`}>
+          category && category.map((categ, idx) =>
+            <LinkContainer key={idx} to={`/products/categories/${categ.id}`}>
               <MenuItem
                 key={categ.id}>
                 {categ.name}
@@ -42,28 +41,30 @@ export const Navigation = ({ auth, login, category }) => (
         </LinkContainer>
       }
 
-
-      { !(auth && auth.isAdmin) ? null
-        : <NavDropdown eventKey={4} title="Admin" id="basic-nav-dropdown">
+      {
+        !(auth && auth.isAdmin) ? null
+        : <NavDropdown title="Admin" id="basic-nav-dropdown">
 
             <LinkContainer to="/admin/users">
-              <MenuItem eventKey={4.1}>Users</MenuItem>
+              <MenuItem>Users</MenuItem>
             </LinkContainer>
 
-            <MenuItem eventKey={4.2}>Orders</MenuItem>
-            <MenuItem eventKey={4.3}>Products</MenuItem>
           </NavDropdown>
       }
 
-      <NavItem eventKey={2} href="#">Cart</NavItem>
+      <NavItem href="#">Cart</NavItem>
 
-      <Navbar.Form pullRight>
-        <FormGroup>
-          {auth ? <WhoAmI/> : <Login/>}
-        </FormGroup>
-      </Navbar.Form>
-
+          <LinkContainer to="/signup">
+          <NavItem>Sign Up</NavItem>
+          </LinkContainer>
     </Nav>
+
+    <Navbar.Form>
+        {
+          auth ? <WhoAmI/> :
+          <Login/>
+      }
+    </Navbar.Form>
 
   </Navbar>
 )
