@@ -49,7 +49,9 @@ export const Navigation = ({ auth, login, category }) => (
               <MenuItem>Users</MenuItem>
             </LinkContainer>
 
+            <LinkContainer to='/admin/orders'>
             <MenuItem eventKey={4.2}>Orders</MenuItem>
+            </LinkContainer>
 
             <LinkContainer to="/admin/products">
              <MenuItem eventKey={4.3}>Products</MenuItem>

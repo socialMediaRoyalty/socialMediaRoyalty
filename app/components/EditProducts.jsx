@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Form, FormGroup, FormControl, ControlLabel, Grid, Col, Row, Button} from 'react-bootstrap'
+import { addProduct } from 'APP/app/reducers/product'
 
-export default class EditProducts extends Component {
+export class EditProducts extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -20,10 +21,11 @@ export default class EditProducts extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-	handleSubmit(event) {
-		event.preventDefault()
-		console.log(this.state)
-	}
+  handleSubmit(event) {
+    event.preventDefault()
+    console.log('Hello!!!!')
+    this.props.addProduct(this.state)
+  }
 
   handleNameChange(event) {
     this.setState({
@@ -55,12 +57,10 @@ export default class EditProducts extends Component {
     })
   }
 
-
-
   render() {
     return (
 			<div>
-			<Form onSubmit={this.handleSubmit}>
+			<Form >
 			<FormGroup controlId="formInlineName">
         <ControlLabel>Product Name</ControlLabel>
            {' '}
@@ -86,9 +86,13 @@ export default class EditProducts extends Component {
            {' '}
       <FormControl type="text" onChange={this.handleImageChange}/>
       </FormGroup>
-			<Button bsStyle="default">Submit</Button>
+			<Button bsStyle="default" onClick={this.handleSubmit}>Submit</Button>
 			</Form>
 			</div>
     )
   }
 }
+
+const mapDispatch = {addProduct}
+
+export default connect(null, mapDispatch)(EditProducts)
