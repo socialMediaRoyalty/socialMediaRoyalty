@@ -26,7 +26,6 @@ module.exports = require('express').Router()
           res.json(statusOrders)
         })
       } else {
-
         OrderDetail.findAll({
           include: [{
             model: Product,
@@ -35,11 +34,10 @@ module.exports = require('express').Router()
             }]
           }]
         }).then(orders => {
-            res.json(orders)
-          })
+          res.json(orders)
+        })
       }
     } else {
-
       OrderDetail.findAll({
         where: {
           user_id: req.user.id
@@ -61,9 +59,7 @@ module.exports = require('express').Router()
       include: [{
         model: Product
       }]
-    }).then(order => {
-      return res.json(order)
-    }).then(cart => Order.create({
+    }).then(order => res.json(order)).then(cart => Order.create({
       status: 'received',
       user_id: req.user.id
     })).catch(next)
