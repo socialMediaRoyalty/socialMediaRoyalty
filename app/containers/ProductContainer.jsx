@@ -2,13 +2,14 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {browserHistory, Link} from 'react-router'
 import store from '../store'
+import {findCartForUser, addProductToCart} from '../reducers/carts'
 import {Button, Image, Well, FieldGroup, FormGroup, FormControl, Panel, Table, ListGroup, ListGroupItem} from 'react-bootstrap'
 
 export class ProductContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      quantity: 1,
+      quantity: null,
       dirty: false,
       warning: ''
     }
@@ -27,10 +28,22 @@ export class ProductContainer extends React.Component {
 
   onAddToCart(evt) {
     evt.preventDefault()
-    console.log('quantity>>>', this.state.quantity)
+    const productInfo = {
+      productId: this.props.product.id,
+      quantity: this.state.quantity
+    }
     // add product to cart
+    const userId = this.props.user.id
+    store.dispatch(findCartForUser(userId))
+
+    console.log('>>>>', this.props.carts)
+    if (this.props.carts.length > 0) {
+      const cart = this.props.carts[0]
+      store.dispatch(addProductToCart(cart.id, productInfo))
+    }
+    console.log('>>>>', this.props.carts)
     this.setState({
-      quantity: 0,
+      quantity: null,
       dirty: false
     })
   }
@@ -42,7 +55,7 @@ export class ProductContainer extends React.Component {
     let warning = ''
 
     if ((!quantity || typeof quantity !== 'number') && dirty) warning = 'You must enter a name'
-    else if (product && quantity > product.quantity) warning = 'Quantity must not be greater than available quantity'
+    else if (product && (quantity > product.quantity || quantity < 1)) warning = 'Quantity must not be greater than available quantity'
 
     return (
       product && <div key={product.id}>
@@ -105,6 +118,7 @@ export class ProductContainer extends React.Component {
 const mapStateToProps = (state) => {
   return {
     product: state.product.product,
+    carts: state.carts,
     user: state.auth
   }
 }

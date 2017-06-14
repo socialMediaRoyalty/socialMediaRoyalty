@@ -8,4 +8,3 @@ module.exports = db => db.define('cart_detail', {
     defaultValue: 1
   }
 })
-

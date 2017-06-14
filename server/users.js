@@ -2,6 +2,8 @@
 
 const db = require('APP/db')
 const User = db.model('users')
+const Cart = db.model('carts')
+const Review = db.model('reviews')
 
 const {mustBeLoggedIn, assertAdmin, selfOnly, assertSelfOrAdmin} = require('./auth.filters')
 

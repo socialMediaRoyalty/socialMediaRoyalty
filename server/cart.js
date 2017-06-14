@@ -7,20 +7,48 @@ const Product = db.model('products')
 const Order = db.model('orders')
 const OrderDetail = db.model('order_detail')
 const User = db.model('users')
+const {assertSelfOrAdmin} = require('./auth.filters')
 
 module.exports = require('express').Router()
 
 // JUST A TESTING ROUTE
 // get all carts - test to check Carts model
-  .get('/', (req, res, next) => {
-    Cart.findAll()
-    .then(carts => {
-      res.status(201).json(carts)
+  .get('/',
+    // assertSelfOrAdmin,
+    (req, res, next) => {
+      Cart.findAll({
+        include: [{
+          model: User,
+          where: req.query
+        }, {
+          model: Product
+        }]
+      })
+      .then(carts => {
+        res.status(201).json(carts)
+      })
+      .catch(next)
     })
-    .catch(next)
-  })
+  // get cart for specific user
+  .get('/user',
+    // assertSelfOrAdmin,
+    (req, res, next) => {
+      Cart.findAll({
+        include: [{
+          model: User,
+          where: req.query
+        }, {
+          model: Product
+        }]
+      })
+        .then(carts => {
+          res.status(201).json(carts)
+        })
+        .catch(next)
+    })
   // create an empty cart for new user
   .post('/',
+    assertSelfOrAdmin,
     (req, res, next) =>
       Cart.create(req.body)
         .then(createdCart => {
@@ -34,10 +62,11 @@ module.exports = require('express').Router()
   .param('cid', (req, res, next, cid) => {
     Cart.findOne({
       where: { id: cid },
-      include: [
-        {
-          model: Product
-        }]
+      include: [{
+        model: User
+      }, {
+        model: Product
+      }]
     }).then(cart => {
       if (!cart) {
         const err = new Error('Cart Not Found')
@@ -53,76 +82,54 @@ module.exports = require('express').Router()
   })
 
 // ** get a cart by id
-  .get('/:cid', (req, res, next) => {
-    res.status(201).json(req.cart)
-  })
+  .get('/:cid',
+   assertSelfOrAdmin,
+    (req, res, next) => {
+      res.status(201).json(req.cart)
+    })
 
-// ** add a new cart
-  .post('/', (req, res, next) => {
-    if (true) {  // if authorized user. replace 'true' with req.user when implemented, or other way to verify user
-      Cart.findOrCreate({
-        where: {
-          user_id: 1 // replace with req.user.id
-        },
-        include: [
-          {
-            model: Product
-          }
-        ]
-      })
-      .spread((cart, Bool) => {
-        if (Bool) {
-          res.status(201).json(cart)
-        } else {
-          res.status(200).json(cart)
-        }
-      })
-      .catch(next)
-    } else {
-      // unauthorized user, should use localStorage
-      res.end()
-    }
-  })
 // **  add product to cart and update quantity
-  .put('/:cid', (req, res, next) => {
-    const products = req.cart.products
-    const productId = req.body.productId
-    const quantity = req.body.quantity
-    let match = false
+  .put('/:cid',
+    // assertSelfOrAdmin,
+    (req, res, next) => {
+    console.log('>>>>>>inside put cart route')
+      const productId = req.body.productId
+      const quantity = req.body.quantity
+      if (quantity === '0') {
+        CartDetail.destroy({
+          where: {
+            cart_id: req.cart.id,
+            product_id: productId
+          }
+        })
+        .then(() => res.sendStatus(204))
+        .catch(next)
+      }
 
-    if (quantity === '0') {
-      CartDetail.destroy({
+      CartDetail.findOrCreate({
         where: {
           cart_id: req.cart.id,
           product_id: productId
         }
       })
-      .then(() => res.sendStatus(204))
+      .then(([cartDetail, createdBool]) => {
+        if (!createdBool) {
+          cartDetail.update({
+            quantity: quantity
+          })
+        } else {
+          req.cart.addProduct(productId, { through: { quantity: quantity } })
+        }
+      })
+      .then(() => res.json(req.cart))
       .catch(next)
-    }
-
-    CartDetail.findOrCreate({
-      where: {
-        cart_id: req.cart.id,
-        product_id: productId
-      }
     })
-    .then(([cart_detail, createdBool]) => {
-      if (!createdBool) {
-        cart_detail.update({
-          quantity: quantity
-        })
-      } else {
-        req.cart.addProduct(productId, { through: { quantity: quantity } })
-      }
-    })
-    .then(() => res.json(req.cart))
-    .catch(next)
-  })
 
 // ** delete cart
-  .delete('/:cid', (req, res, next) => {
-    req.cart.destroy()
-    .then(() => res.sendStatus(204))
-    .catch(next)
-  })
+  .delete('/:cid',
+    assertSelfOrAdmin,
+    (req, res, next) => {
+      req.cart.destroy()
+      .then(() => res.sendStatus(204))
+      .catch(next)
+    })
