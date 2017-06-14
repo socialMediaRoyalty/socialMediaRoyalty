@@ -123,11 +123,6 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(
-<<<<<<< HEAD
-  ({ product, reviews }) => ({ product, reviews }),
-  {getProductById},
-=======
   mapStateToProps,
   {},
->>>>>>> 6347e0ed9d5bda13456bfff507fe20953847e12b
 )(ProductContainer)
