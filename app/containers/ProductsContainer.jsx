@@ -11,7 +11,7 @@ export const ProductsContainer = (props) => {
   const products = props.products
   return (
     <div>
-      <h1>This is Products Container</h1>
+      <h1></h1>
       <Grid>
         <Row>
           {

@@ -10,8 +10,7 @@ export const HomeContainer = (props) => {
   const products = props.products
   return (
     <div>
-      <h1>This is Home Container with Featured Products</h1>
-      <Carousel>
+      <Carousel id="carousel">
           {
             products && products.map((product, idx) => {
               if (idx === 4) return
