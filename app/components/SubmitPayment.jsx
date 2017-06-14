@@ -24,38 +24,28 @@ export class SubmitPayment extends Component {
     console.log('state', this.props)
     browserHistory.push(`/submitted`)
   }
-// put form in a table to format correctly 
   render() {
     return (
 <div>
         <h3>Payment Option</h3>
-            <Radio/> <Radio/>
-
+        <img src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/gold-rect-paypalcheckout-60px.png" alt="PayPal Checkout"/>
         <Grid>
         <Row>
         <h3>Shipping Information</h3>
         </Row>
-        <Row>
         <Form inline>
-        <Col>
         <FormGroup controlId="formInlineName">
           <ControlLabel>Address</ControlLabel>
            {' '}
           <FormControl type="text"/>
         </FormGroup>
-        </Col>
          {' '}
-        <Col>
         <FormGroup controlId="formInlineName">
           <ControlLabel>Apartment / Suite / Unit / Bldg #</ControlLabel>
            {' '}
           <FormControl type="text"/>
         </FormGroup>
-        </Col>
         </Form>
-        </Row>
-        <tr></tr>
-        <tr>
         <Form inline>
         <FormGroup controlId="formInlineName">
           <ControlLabel>Zip Code</ControlLabel>
@@ -75,7 +65,6 @@ export class SubmitPayment extends Component {
           <FormControl type="text"/>
         </FormGroup>
         </Form>
-        </tr>
 				<Button onClick={this.handleSubmit}>
         Submit Order
 				</Button>
