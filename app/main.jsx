@@ -51,6 +51,10 @@ const onProductEnter = (newRouterState) => {
   store.dispatch(getProductById(newRouterState.params.pid))
 }
 
+const onProductsEnter = (newRouterState) => {
+  store.dispatch(getAllProducts())
+}
+
 const onCartEnter = (newRouterState) => {
   store.dispatch(getCartById(newRouterState.params.cid))
 }
@@ -63,17 +67,13 @@ const onProfileEnter = (newRouterState) => {
   // store.dispatch(getReviewsByUser(uid)) -- how to get user info
 }
 
-const onHomeEnter = (newRouterState) => {
-  store.dispatch(getAllProducts())
-}
-
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={RootContainer} onEnter={fetchInitialData}>
         <IndexRoute component={HomeContainer} onEnter={onHomeEnter} />
         <Route path="/categories" components={CategoriesContainer} />
-        <Route path="/products" components={ProductsContainer} />
+        <Route path="/products" components={ProductsContainer} onEnter={onProductsEnter}/>
         <Route path="/products/categories/:cid" components={ProductsContainer} onEnter={onProductByCategoryEnter}/>
         <Route path="/products/:pid" components={ProductContainer} onEnter={onProductEnter}/>
         <Route path="/profile" component={ ProfileContainer } onEnter={onProfileEnter} />

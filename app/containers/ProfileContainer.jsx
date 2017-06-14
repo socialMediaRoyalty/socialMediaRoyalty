@@ -6,10 +6,6 @@ import ContentEditable from 'react-contenteditable'
 import { Link, browserHistory } from 'react-router'
 import { fetchUser, updateUser, removeUser } from '../reducers/user'
 import {getReviewsByProduct, getReviewsByUser} from '../reducers/reviews'
-<<<<<<< HEAD
-=======
-
->>>>>>> 6347e0ed9d5bda13456bfff507fe20953847e12b
 
 /* -----------------    NESTED PROFILE ROW COMPONENT   ------------------ */
 
@@ -139,54 +135,6 @@ class ProfileContainer extends Component {
 
   render() {
     const currentUser = this.state.currentUser
-<<<<<<< HEAD
-    if (!currentUser || !currentUser.id) return <div />
-
-    return (
-      <div className="container">
-        <h2>Profile</h2>
-
-        {
-          this.state.disableEdit
-            ? <Button
-              bsStyle="info"
-              bsSize="small"
-              onClick={this.handleEdit}>
-              Edit Profile
-            </Button>
-          : <Button
-            bsStyle="success"
-            bsSize="small"
-            onClick={this.handleSubmit}>
-            Save Changes
-          </Button>
-        }
-
-        <Table hover>
-          <tbody>
-            {
-              profileData.map(entry =>
-                <ProfileRow
-                  disableEdit={this.state.disableEdit}
-                  currentUser={this.state.currentUser}
-                  handleChange={this.handleChange}
-                  field={entry.field}
-                  title={entry.title}
-                />
-              )
-            }
-          </tbody>
-        </Table>
-        {/*{*/}
-        {/*this.state.reviews && this.state.reviews.map(review => (*/}
-        {/*<Panel header={`${review.date} rating: ${review.rating}`} bsStyle="info" key={review.id}>*/}
-        {/*{review.comment}*/}
-        {/*</Panel>*/}
-        {/*))*/}
-        {/*}*/}
-      </div>
-    )
-=======
     if (!currentUser || !currentUser.id) {
       return <div> No valid user </div>
     } else {
@@ -200,7 +148,6 @@ class ProfileContainer extends Component {
         />
       )
     }
->>>>>>> 6347e0ed9d5bda13456bfff507fe20953847e12b
   }
 }
 
