@@ -4,11 +4,14 @@ import store from '../store'
 import { Table, Button } from 'react-bootstrap'
 import ContentEditable from 'react-contenteditable'
 import { Link, browserHistory } from 'react-router'
-
 import { fetchUser, updateUser, removeUser } from '../reducers/user'
 import {getReviewsByProduct, getReviewsByUser} from '../reducers/reviews'
+<<<<<<< HEAD
+=======
 
-/* -----------------    NESTED COMPONENT     ------------------ */
+>>>>>>> 6347e0ed9d5bda13456bfff507fe20953847e12b
+
+/* -----------------    NESTED PROFILE ROW COMPONENT   ------------------ */
 
 const ProfileRow =
   ({disableEdit, currentUser, handleChange, field, title}) => {
@@ -48,9 +51,51 @@ const profileData = [
   {field: 'snapChatHandle', title: 'SnapChat'}
 ]
 
-/* -----------------    COMPONENT     ------------------ */
+/* -----------------  PROFILE COMPONENT     ------------------ */
 
-class Profile extends Component {
+const Profile = ({disableEdit, currentUser, handleChange, handleEdit, handleSubmit}) =>
+  (
+    <div className="container">
+      <h2>Profile</h2>
+
+      {
+        disableEdit
+        ? <Button
+            bsStyle="info"
+            bsSize="small"
+            onClick={handleEdit}>
+            Edit Profile
+          </Button>
+        : <Button
+          bsStyle="success"
+          bsSize="small"
+          onClick={handleSubmit}>
+          Save Changes
+        </Button>
+      }
+
+      <Table hover>
+        <tbody>
+          {
+            profileData.map((entry, idx) =>
+              <ProfileRow
+                key={idx}
+                disableEdit={disableEdit}
+                currentUser={currentUser}
+                handleChange={handleChange}
+                field={entry.field}
+                title={entry.title}
+              />
+            )
+          }
+        </tbody>
+      </Table>
+    </div>
+  )
+
+/* -----------------    CONTAINER    ------------------ */
+
+class ProfileContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -59,7 +104,6 @@ class Profile extends Component {
       disableEdit: true
     }
     this.handleEdit = this.handleEdit.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -75,17 +119,10 @@ class Profile extends Component {
     this.setState({
       disableEdit: false
     })
-    event.preventDefault()
-  }
-
-  handleDelete(event) {
-    this.props.removeUser(this.auth.id)
-    event.preventDefault()
   }
 
   handleChange(field) {
     return (event) => {
-      console.log(event.target.value)
       const newState = Object.assign({}, this.state)
       newState.currentUser[field] = event.target.value
       this.setState(newState)
@@ -102,6 +139,7 @@ class Profile extends Component {
 
   render() {
     const currentUser = this.state.currentUser
+<<<<<<< HEAD
     if (!currentUser || !currentUser.id) return <div />
 
     return (
@@ -148,13 +186,28 @@ class Profile extends Component {
         {/*}*/}
       </div>
     )
+=======
+    if (!currentUser || !currentUser.id) {
+      return <div> No valid user </div>
+    } else {
+      return (
+        <Profile
+          disableEdit={this.state.disableEdit}
+          currentUser={this.state.currentUser}
+          handleChange={this.handleChange}
+          handleEdit={this.handleEdit}
+          handleSubmit={this.handleSubmit}
+        />
+      )
+    }
+>>>>>>> 6347e0ed9d5bda13456bfff507fe20953847e12b
   }
 }
 
-/* -----------------    CONTAINER     ------------------ */
+/* -----------------   REACT-REDUX CONTAINER     ------------------ */
 
 const mapState = ({auth, reviews}) => ({auth, reviews})
 
-const mapDispatch = { fetchUser, updateUser, removeUser }
+const mapDispatch = { updateUser }
 
-export default connect(mapState, mapDispatch)(Profile)
+export default connect(mapState, mapDispatch)(ProfileContainer)

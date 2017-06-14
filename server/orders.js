@@ -26,16 +26,25 @@ module.exports = require('express').Router()
           res.json(statusOrders)
         })
       } else {
-        Order.findAll({})
-          .then(orders => {
-            res.json(orders)
-          })
+        OrderDetail.findAll({
+          include: [{
+            model: Product,
+            include: [{
+              model: Order
+            }]
+          }]
+        }).then(orders => {
+          res.json(orders)
+        })
       }
     } else {
-      Order.findAll({
+      OrderDetail.findAll({
         where: {
           user_id: req.user.id
-        }
+        },
+        include: [{
+          model: Product
+        }]
       }).then(orders => {
         res.json(orders)
       })
@@ -50,13 +59,25 @@ module.exports = require('express').Router()
       include: [{
         model: Product
       }]
-    }).then(order => {
-      return res.json(order)
-    }).then(cart => Order.create({
+    }).then(order => res.json(order)).then(cart => Order.create({
       status: 'received',
       user_id: req.user.id
     })).catch(next)
   })
+
+  // .post('/', (req, res, next) => {
+  //   const products = req.body.products
+  //   Order.create({status: 'received'})
+  //     .then(order => order.setUser(req.user))
+  //     .then((order) => {
+  //       return products.forEach(product => {
+  //         Order.addProduct(product,
+  //           {through: {quantity: product.cart_detail.quantity, purchasedPrice: product.price}})
+  //       })
+  //     })
+  //     .then(order => res.json(order))
+  //     .catch(next)
+  // })
 
   .param('oid', (req, res, next, oid) => {
     Order.findById(oid)

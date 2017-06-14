@@ -48,6 +48,7 @@ const assertSelfOrAdmin = (req, res, next) => {
     const err = new Error('You must be logged in')
     err.status = 401
     throw err
+
   } else if (!req.user.isAdmin && req.requestedUser.dataValues.id !== req.user.dataValues.id) {
     const err = new Error('You are unauthorized to view this page')
     err.status = 403

@@ -1,6 +1,7 @@
 import {connect} from 'react-redux'
 import React, {Component} from 'react'
 import {signup} from '../reducers/auth'
+import { browserHistory } from 'react-router';
 import {Form, ControlLabel, FormGroup, Col, FormControl, Button} from 'react-bootstrap'
 
 export class Signup extends Component {
@@ -13,13 +14,14 @@ export class Signup extends Component {
     this.onSignupSubmit = this.onSignupSubmit.bind(this)
     this.onEmailChange = this.onEmailChange.bind(this)
     this.onPasswordChange = this.onPasswordChange.bind(this)
+    console.log('this.props', this.props)
   }
 
   onSignupSubmit(event) {
-    event.preventDefault();
+    event.preventDefault()
     const email = this.state.email
     const password = this.state.password
-    signup(email, password)
+    this.props.signup(email, password)
   }
 
   onEmailChange(event) {
@@ -36,14 +38,14 @@ export class Signup extends Component {
 
   render() {
     return (
+      <Col xs={6} xsOffset={3}>
       <Form horizontal onSubmit={this.onSignupSubmit}>
-        <ControlLabel>Sign Up</ControlLabel>
         <FormGroup controlId="formHorizontalEmail">
           <Col componentClass={ControlLabel} sm={2}>
             Email
           </Col>
           <Col sm={10}>
-            <FormControl 
+            <FormControl
               type="text"
               value={this.state.email}
               placeholder="Enter Email"
@@ -51,12 +53,12 @@ export class Signup extends Component {
             />
           </Col>
         </FormGroup>
-        <FormGroup controlId="formHorizontalEmail">
+        <FormGroup controlId="formHorizontalPassword">
           <Col componentClass={ControlLabel} sm={2}>
             Password
           </Col>
           <Col sm={10}>
-            <FormControl 
+            <FormControl
               type="text"
               value={this.state.password}
               placeholder="Enter Password"
@@ -71,12 +73,13 @@ export class Signup extends Component {
             </Button>
           </Col>
         </FormGroup>
-      </Form>  
+      </Form> 
+      </Col> 
     )
   }
 }
   
-const mapState = {}
+const mapState = null
 
 const mapDispatch = {signup}
 
