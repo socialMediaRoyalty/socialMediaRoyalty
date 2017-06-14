@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import store from '../store'
 import { Table, Button } from 'react-bootstrap'
 import ContentEditable from 'react-contenteditable'
 import { Link, browserHistory } from 'react-router'
 
-import { updateUser } from '../reducers/user'
+import { fetchUser, updateUser, removeUser } from '../reducers/user'
+import {getReviewsByProduct, getReviewsByUser} from '../reducers/reviews'
+
 
 /* -----------------    NESTED PROFILE ROW COMPONENT   ------------------ */
 
@@ -95,6 +98,7 @@ class ProfileContainer extends Component {
     super(props)
     this.state = {
       currentUser: this.props.auth,
+      reviews: this.props.reviews,
       disableEdit: true
     }
     this.handleEdit = this.handleEdit.bind(this)
@@ -137,13 +141,22 @@ class ProfileContainer extends Component {
       return <div> No valid user </div>
     } else {
       return (
-        <Profile
-          disableEdit={this.state.disableEdit}
-          currentUser={this.state.currentUser}
-          handleChange={this.handleChange}
-          handleEdit={this.handleEdit}
-          handleSubmit={this.handleSubmit}
-        />
+        <div className="container">
+          <Profile
+            disableEdit={this.state.disableEdit}
+            currentUser={this.state.currentUser}
+            handleChange={this.handleChange}
+            handleEdit={this.handleEdit}
+            handleSubmit={this.handleSubmit}
+          />
+          {/*{*/}
+          {/*this.state.reviews && this.state.reviews.map(review => (*/}
+          {/*<Panel header={`${review.date} rating: ${review.rating}`} bsStyle="info" key={review.id}>*/}
+          {/*{review.comment}*/}
+          {/*</Panel>*/}
+          {/*))*/}
+          {/*}*/}
+         </div>
       )
     }
   }
@@ -151,7 +164,7 @@ class ProfileContainer extends Component {
 
 /* -----------------   REACT-REDUX CONTAINER     ------------------ */
 
-const mapState = ({auth}) => ({auth})
+const mapState = ({auth, reviews}) => ({auth, reviews})
 
 const mapDispatch = { updateUser }
 
