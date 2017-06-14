@@ -32,16 +32,15 @@ export class ProductContainer extends React.Component {
       productId: this.props.product.id,
       quantity: this.state.quantity
     }
-    // add product to cart
+    // find the correct cart for signed in user
     const userId = this.props.user.id
     store.dispatch(findCartForUser(userId))
 
-    console.log('>>>>', this.props.carts)
+    // add product to the cart
     if (this.props.carts.length > 0) {
       const cart = this.props.carts[0]
       store.dispatch(addProductToCart(cart.id, productInfo))
     }
-    console.log('>>>>', this.props.carts)
     this.setState({
       quantity: null,
       dirty: false

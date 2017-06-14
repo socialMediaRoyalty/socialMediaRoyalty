@@ -67,9 +67,9 @@ export const updateOrderStatus = (orderId) =>
       dispatch(updateStatus(res.data))
     }).catch(console.error)
 
-export const createNewOrder = () =>
+export const createNewOrder = (orderInfo) =>
   dispatch =>
-    axios.post(`/api/orders`)
+    axios.post(`/api/orders`, orderInfo)
     .then(res => {
       dispatch(createOrder(res.data))
     }).catch(err => console.error(`Create new order: unsuccesful`, err))

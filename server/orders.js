@@ -58,6 +58,20 @@ module.exports = require('express').Router()
     })).catch(next)
   })
 
+  // .post('/', (req, res, next) => {
+  //   const products = req.body.products
+  //   Order.create({status: 'received'})
+  //     .then(order => order.setUser(req.user))
+  //     .then((order) => {
+  //       return products.forEach(product => {
+  //         Order.addProduct(product,
+  //           {through: {quantity: product.cart_detail.quantity, purchasedPrice: product.price}})
+  //       })
+  //     })
+  //     .then(order => res.json(order))
+  //     .catch(next)
+  // })
+
   .param('oid', (req, res, next, oid) => {
     Order.findById(oid)
       .then(order => {

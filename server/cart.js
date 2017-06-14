@@ -83,7 +83,7 @@ module.exports = require('express').Router()
 
 // ** get a cart by id
   .get('/:cid',
-   assertSelfOrAdmin,
+   // assertSelfOrAdmin,
     (req, res, next) => {
       res.status(201).json(req.cart)
     })
@@ -92,7 +92,6 @@ module.exports = require('express').Router()
   .put('/:cid',
     // assertSelfOrAdmin,
     (req, res, next) => {
-    console.log('>>>>>>inside put cart route')
       const productId = req.body.productId
       const quantity = req.body.quantity
       if (quantity === '0') {

@@ -16,7 +16,7 @@ export class Signup extends Component {
   }
 
   onSignupSubmit(event) {
-    event.preventDefault();
+    event.preventDefault()
     const email = this.state.email
     const password = this.state.password
     signup(email, password)
@@ -43,7 +43,7 @@ export class Signup extends Component {
             Email
           </Col>
           <Col sm={10}>
-            <FormControl 
+            <FormControl
               type="text"
               value={this.state.email}
               placeholder="Enter Email"
@@ -56,7 +56,7 @@ export class Signup extends Component {
             Password
           </Col>
           <Col sm={10}>
-            <FormControl 
+            <FormControl
               type="text"
               value={this.state.password}
               placeholder="Enter Password"
@@ -71,11 +71,11 @@ export class Signup extends Component {
             </Button>
           </Col>
         </FormGroup>
-      </Form>  
+      </Form>
     )
   }
 }
-  
+
 const mapState = {}
 
 const mapDispatch = {signup}
